@@ -30,7 +30,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "validate": "node validate-branch-naming.js"
+    "validate": "node validate-branch-naming.js",
+    "lint": "npx eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier --write \"src/\""
   },
   "browserslist": {
     "production": [
