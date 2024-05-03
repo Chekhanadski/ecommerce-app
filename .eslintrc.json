@@ -24,5 +24,6 @@
         "extensions": [".tsx"]
       }
     ]
-  }
+  },
+  "ignores":["./validate-branch-naming.js"]
 }
