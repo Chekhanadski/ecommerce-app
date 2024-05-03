@@ -17,6 +17,12 @@
   "rules": {
     "import/no-cycle": 0,
     "react/jsx-one-expression-per-line": 0,
-    "unused-imports/no-unused-imports": "error"
+    "unused-imports/no-unused-imports": "error",
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [".tsx"]
+      }
+    ]
   }
 }
