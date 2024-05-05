@@ -117,7 +117,7 @@ This project includes several scripts for development, building, testing, and co
 
   
 
-npm run start
+`npm run start`
 
   
 
@@ -125,11 +125,11 @@ This script starts the development server.
 
   
 
-## build
+## `build`
 
   
 
-npm run build
+`npm run build`
 
   
 
@@ -137,11 +137,11 @@ This script creates a production-ready build of the application.
 
   
 
-## test
+## `test`
 
   
 
-npm run test
+`npm run test`
 
   
 
@@ -149,11 +149,11 @@ This script runs the test suite using Jest. Use to run all tests in the project 
 
   
 
-## validate
+## `validate`
 
   
 
-npm run validate
+`npm run validate`
 
   
 
@@ -161,11 +161,11 @@ This script validates the branch naming to local convention.
 
   
 
-## lint
+## `lint`
 
   
 
-npm run lint
+`npm run lint`
 
   
 
@@ -173,11 +173,11 @@ This script runs ESLint on the codebase. Use to catch and fix syntax errors, fin
 
   
 
-## format
+## `format`
 
   
 
-npm run format
+`npm run format`
 
   
 
