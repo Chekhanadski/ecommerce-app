@@ -12,6 +12,12 @@ function SignUpForm(): React.ReactElement {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  const [name, setName] = useState('');
+  const [nameError, setNameError] = useState('');
+
+  const [surname, setSurname] = useState('');
+  const [surnameError, setSurnameError] = useState('');
+
   const validateEmail = (emailString: string) => {
     const re =
       /^(([^<>()\\.,;:@"]+(\.[^<>()\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -53,6 +59,38 @@ function SignUpForm(): React.ReactElement {
     setPasswordError(error);
   };
 
+  const validateName = (nameString: string) => {
+    if (!/^[A-Za-z]+$/.test(nameString)) {
+      return 'Name can only contain English letters.';
+    }
+    if (nameString.length < 1) {
+      return 'Name must contain at least one character.';
+    }
+    return '';
+  };
+
+  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+    const error = validateName(event.target.value);
+    setNameError(error);
+  };
+
+  const validateSurname = (surnameString: string) => {
+    if (!/^[A-Za-z]+$/.test(surnameString)) {
+      return 'Surname can only contain English letters.';
+    }
+    if (surnameString.length < 1) {
+      return 'Surname must contain at least one character.';
+    }
+    return '';
+  };
+
+  const handleSurnameChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSurname(event.target.value);
+    const error = validateSurname(event.target.value);
+    setSurnameError(error);
+  };
+
   const handleCountryChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setCountry(event.target.value);
   };
@@ -65,20 +103,27 @@ function SignUpForm(): React.ReactElement {
       }}
     >
       <span>Enter your details below</span>
+
       <div className="input-container">
         <input id="email" type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
         {emailError && <div className="error">{emailError}</div>}
       </div>
+
       <div className="input-container">
         <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
         {passwordError && <div className="error">{passwordError}</div>}
       </div>
+
       <div className="input-container">
-        <input type="text" placeholder="Name" />
+        <input type="text" placeholder="Name" value={name} onChange={handleNameChange} />
+        {nameError && <div className="error">{nameError}</div>}
       </div>
+
       <div className="input-container">
-        <input type="text" placeholder="Surname" />
+        <input type="text" placeholder="Surname" value={surname} onChange={handleSurnameChange} />
+        {surnameError && <div className="error">{surnameError}</div>}
       </div>
+
       <div className="input-container">
         <input
           type={dateFocused ? 'date' : 'text'}
@@ -87,17 +132,21 @@ function SignUpForm(): React.ReactElement {
           onBlur={() => setDateFocused(false)}
         />
       </div>
+
       <span>Your Address:</span>
 
       <div className="input-container">
         <input type="text" placeholder="Street" />
       </div>
+
       <div className="input-container">
         <input type="text" placeholder="City" />
       </div>
+
       <div className="input-container">
         <input type="text" placeholder="Post code" />
       </div>
+
       <div className="input-container">
         <select
           name="country"
