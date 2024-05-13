@@ -24,6 +24,9 @@ function SignUpForm(): React.ReactElement {
   const [street, setStreet] = useState('');
   const [streetError, setStreetError] = useState('');
 
+  const [city, setCity] = useState('');
+  const [cityError, setCityError] = useState('');
+
   const validateEmail = (emailString: string) => {
     const re =
       /^(([^<>()\\.,;:@"]+(\.[^<>()\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -130,6 +133,22 @@ function SignUpForm(): React.ReactElement {
     setStreetError(error);
   };
 
+  const validateCity = (cityString: string) => {
+    if (!/^[A-Za-z\s]+$/.test(cityString)) {
+      return 'City can only contain English letters and spaces.';
+    }
+    if (cityString.length < 1) {
+      return 'City must contain at least one character.';
+    }
+    return '';
+  };
+
+  const handleCityChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setCity(event.target.value);
+    const error = validateCity(event.target.value);
+    setCityError(error);
+  };
+
   const handleCountryChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setCountry(event.target.value);
   };
@@ -183,7 +202,8 @@ function SignUpForm(): React.ReactElement {
       </div>
 
       <div className="input-container">
-        <input type="text" placeholder="City" />
+        <input type="text" placeholder="City" value={city} onChange={handleCityChange} />
+        {cityError && <div className="error">{cityError}</div>}
       </div>
 
       <div className="input-container">
