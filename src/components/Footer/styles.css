@@ -1,0 +1,17 @@
+.footer-block {
+  display: flex;
+  gap: 300px;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  background: #000000;
+}
+
+.rsschool-logo {
+  margin-left: 50px;
+  height: 50px;
+}
+
+.footer-text {
+  color: #ffffff;
+}

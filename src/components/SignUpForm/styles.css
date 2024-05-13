@@ -1,0 +1,21 @@
+.sign-up-form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  font-size: 16px;
+}
+
+.form-address {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.sign-up-form input {
+  border: none;
+  border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+.sign-up-form input:focus {
+  outline: none;
+}

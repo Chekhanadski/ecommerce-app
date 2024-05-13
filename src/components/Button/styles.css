@@ -1,0 +1,12 @@
+.button {
+  padding: 16px;
+  color: #ffffff;
+  background-color: #db4444;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.button:active {
+  transform: scale(0.99);
+}
