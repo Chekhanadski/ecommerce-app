@@ -4,7 +4,6 @@ import './styles.css';
 
 function SignUpForm(): React.ReactElement {
   const [dateFocused, setDateFocused] = useState(false);
-  const [country, setCountry] = useState('');
 
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -29,6 +28,9 @@ function SignUpForm(): React.ReactElement {
 
   const [postcode, setPostcode] = useState('');
   const [postcodeError, setPostcodeError] = useState('');
+
+  const [country, setCountry] = useState('');
+  const [countryError, setCountryError] = useState('');
 
   const validateEmail = (emailString: string) => {
     const re =
@@ -165,8 +167,17 @@ function SignUpForm(): React.ReactElement {
     setPostcodeError(error);
   };
 
+  const validateCountry = (countryString: string) => {
+    if (countryString === '') {
+      return 'You must select a country.';
+    }
+    return '';
+  };
+
   const handleCountryChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setCountry(event.target.value);
+    const error = validateCountry(event.target.value);
+    setCountryError(error);
   };
 
   return (
@@ -239,6 +250,7 @@ function SignUpForm(): React.ReactElement {
           <option value="Germany">Germany</option>
           <option value="USA">USA</option>
         </select>
+        {countryError && <div className="error">{countryError}</div>} {/* Display error */}
       </div>
 
       <Button onClick={() => () => {}}>Create Account</Button>
