@@ -18,6 +18,12 @@ function SignUpForm(): React.ReactElement {
   const [surname, setSurname] = useState('');
   const [surnameError, setSurnameError] = useState('');
 
+  const [dob, setDob] = useState('');
+  const [dobError, setDobError] = useState('');
+
+  const [street, setStreet] = useState('');
+  const [streetError, setStreetError] = useState('');
+
   const validateEmail = (emailString: string) => {
     const re =
       /^(([^<>()\\.,;:@"]+(\.[^<>()\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -91,6 +97,39 @@ function SignUpForm(): React.ReactElement {
     setSurnameError(error);
   };
 
+  const validateDob = (dobString: string) => {
+    const dobDate = new Date(dobString);
+    const currentDate = new Date();
+    let age = currentDate.getFullYear() - dobDate.getFullYear();
+    const m = currentDate.getMonth() - dobDate.getMonth();
+    if (m < 0 || (m === 0 && currentDate.getDate() < dobDate.getDate())) {
+      age -= 1;
+    }
+    if (age < 13) {
+      return 'You must be at least 13 years old.';
+    }
+    return '';
+  };
+
+  const handleDobChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setDob(event.target.value);
+    const error = validateDob(event.target.value);
+    setDobError(error);
+  };
+
+  const validateStreet = (streetString: string) => {
+    if (streetString.length < 1) {
+      return 'Street must contain at least one character.';
+    }
+    return '';
+  };
+
+  const handleStreetChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setStreet(event.target.value);
+    const error = validateStreet(event.target.value);
+    setStreetError(error);
+  };
+
   const handleCountryChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setCountry(event.target.value);
   };
@@ -128,15 +167,19 @@ function SignUpForm(): React.ReactElement {
         <input
           type={dateFocused ? 'date' : 'text'}
           placeholder="Date of Birth"
+          value={dob}
+          onChange={handleDobChange}
           onFocus={() => setDateFocused(true)}
           onBlur={() => setDateFocused(false)}
         />
+        {dobError && <div className="error">{dobError}</div>}
       </div>
 
       <span>Your Address:</span>
 
       <div className="input-container">
-        <input type="text" placeholder="Street" />
+        <input type="text" placeholder="Street" value={street} onChange={handleStreetChange} />
+        {streetError && <div className="error">{streetError}</div>}
       </div>
 
       <div className="input-container">
