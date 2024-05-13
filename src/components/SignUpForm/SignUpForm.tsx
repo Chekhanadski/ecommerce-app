@@ -27,6 +27,9 @@ function SignUpForm(): React.ReactElement {
   const [city, setCity] = useState('');
   const [cityError, setCityError] = useState('');
 
+  const [postcode, setPostcode] = useState('');
+  const [postcodeError, setPostcodeError] = useState('');
+
   const validateEmail = (emailString: string) => {
     const re =
       /^(([^<>()\\.,;:@"]+(\.[^<>()\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -149,6 +152,19 @@ function SignUpForm(): React.ReactElement {
     setCityError(error);
   };
 
+  const validatePostcode = (postcodeString: string) => {
+    if (!/^\d{5}$/.test(postcodeString)) {
+      return 'Postcode must consist of 5 digits.';
+    }
+    return '';
+  };
+
+  const handlePostcodeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPostcode(event.target.value);
+    const error = validatePostcode(event.target.value);
+    setPostcodeError(error);
+  };
+
   const handleCountryChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setCountry(event.target.value);
   };
@@ -207,7 +223,8 @@ function SignUpForm(): React.ReactElement {
       </div>
 
       <div className="input-container">
-        <input type="text" placeholder="Post code" />
+        <input type="text" placeholder="Post code" value={postcode} onChange={handlePostcodeChange} />
+        {postcodeError && <div className="error">{postcodeError}</div>}
       </div>
 
       <div className="input-container">
@@ -219,8 +236,8 @@ function SignUpForm(): React.ReactElement {
           className={country ? '' : 'placeholder'}
         >
           <option value="">Select Country</option>
-          <option value="USA">USA</option>
           <option value="Germany">Germany</option>
+          <option value="USA">USA</option>
         </select>
       </div>
 
