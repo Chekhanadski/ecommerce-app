@@ -24,10 +24,6 @@
   outline: none;
 }
 
-.placeholder {
-  color: #808080;
-}
-
 .signUpForm .error {
   position: absolute;
   left: 0;
@@ -39,4 +35,8 @@
 .error {
   font-size: 10px;
   color: red;
+}
+
+select:not(:focus) {
+  color: #808080;
 }

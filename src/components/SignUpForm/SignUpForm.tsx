@@ -1,51 +1,61 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import Button from '../Button/Button';
 import styles from './styles.module.css';
 import * as regexps from '../../constants/regexps';
 
+interface FormData {
+  email: string;
+  password: string;
+  name: string;
+  surname: string;
+  dob: string;
+  street: string;
+  city: string;
+  postcode: string;
+  country: string;
+}
+
 function SignUpForm(): React.ReactElement {
-  const [dateFocused, setDateFocused] = useState(false);
-
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-
-  const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-
-  const [name, setName] = useState('');
-  const [nameError, setNameError] = useState('');
-
-  const [surname, setSurname] = useState('');
-  const [surnameError, setSurnameError] = useState('');
-
-  const [dob, setDob] = useState('');
-  const [dobError, setDobError] = useState('');
-
-  const [street, setStreet] = useState('');
-  const [streetError, setStreetError] = useState('');
-
-  const [city, setCity] = useState('');
-  const [cityError, setCityError] = useState('');
-
-  const [postcode, setPostcode] = useState('');
-  const [postcodeError, setPostcodeError] = useState('');
-
-  const [country, setCountry] = useState('');
-  const [countryError, setCountryError] = useState('');
-
-  const validateEmail = (emailString: string) => regexps.emailRegexp.test(emailString.toLowerCase());
-  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-    if (!validateEmail(event.target.value)) {
-      setEmailError('Invalid email format');
-    } else {
-      setEmailError('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control
+  } = useForm<FormData>({
+    mode: 'all',
+    defaultValues: {
+      email: '',
+      password: '',
+      name: '',
+      surname: '',
+      dob: '',
+      street: '',
+      city: '',
+      postcode: '',
+      country: ''
     }
+  });
+
+  const [dobActivated, setDobActivated] = useState(false);
+  const handleDobFocus = () => setDobActivated(true);
+
+  const validateEmail = (emailString: string) => {
+    if (emailString.length && !regexps.emailRegexp.test(emailString.toLowerCase())) {
+      return 'Invalid email format';
+    }
+    if (emailString.length < 1) {
+      return 'Email is required';
+    }
+    return undefined;
   };
 
   const validatePassword = (passwordString: string) => {
+    if (passwordString.length < 1) {
+      return 'Password is required';
+    }
     if (!regexps.passwordRegexp.test(passwordString)) {
-      return 'Password can only contain English letters, digits, and special chars.';
+      return 'Password can only contain English letters, digits, and special chars';
     }
     if (!regexps.uppercaseLetterRegexp.test(passwordString)) {
       return 'Password must contain at least one uppercase letter';
@@ -59,45 +69,27 @@ function SignUpForm(): React.ReactElement {
     if (passwordString.length < 8) {
       return 'Password must be at least 8 characters long';
     }
-    return '';
-  };
-
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-    const error = validatePassword(event.target.value);
-    setPasswordError(error);
+    return undefined;
   };
 
   const validateName = (nameString: string) => {
-    if (!regexps.nameRegexp.test(nameString)) {
-      return 'Name can only contain English letters.';
+    if (nameString.length && !regexps.nameRegexp.test(nameString)) {
+      return 'Name can only contain English letters';
     }
     if (nameString.length < 1) {
-      return 'Name must contain at least one character.';
+      return 'Name is required';
     }
-    return '';
-  };
-
-  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-    const error = validateName(event.target.value);
-    setNameError(error);
+    return undefined;
   };
 
   const validateSurname = (surnameString: string) => {
-    if (!regexps.nameRegexp.test(surnameString)) {
-      return 'Surname can only contain English letters.';
-    }
     if (surnameString.length < 1) {
-      return 'Surname must contain at least one character.';
+      return 'Surname is required';
     }
-    return '';
-  };
-
-  const handleSurnameChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSurname(event.target.value);
-    const error = validateSurname(event.target.value);
-    setSurnameError(error);
+    if (!regexps.nameRegexp.test(surnameString)) {
+      return 'Surname can only contain English letters';
+    }
+    return undefined;
   };
 
   const validateDob = (dobString: string) => {
@@ -109,170 +101,121 @@ function SignUpForm(): React.ReactElement {
       age -= 1;
     }
     if (age < 13) {
-      return 'You must be at least 13 years old.';
+      return 'You must be at least 13 years old';
     }
-    return '';
-  };
-
-  const handleDobChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setDob(event.target.value);
-    const error = validateDob(event.target.value);
-    setDobError(error);
+    if (dobString.length < 1) {
+      return 'Date of Birth is required';
+    }
+    return true;
   };
 
   const validateStreet = (streetString: string) => {
     if (streetString.length < 1) {
-      return 'Street must contain at least one character.';
+      return 'Street is required';
     }
-    return '';
-  };
-
-  const handleStreetChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setStreet(event.target.value);
-    const error = validateStreet(event.target.value);
-    setStreetError(error);
+    return undefined;
   };
 
   const validateCity = (cityString: string) => {
-    if (!regexps.cityRegexp.test(cityString)) {
-      return 'City can only contain English letters and spaces.';
-    }
     if (cityString.length < 1) {
-      return 'City must contain at least one character.';
+      return 'City is required';
     }
-    return '';
-  };
-
-  const handleCityChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setCity(event.target.value);
-    const error = validateCity(event.target.value);
-    setCityError(error);
+    if (!regexps.cityRegexp.test(cityString)) {
+      return 'City can only contain English letters and spaces';
+    }
+    return undefined;
   };
 
   const validatePostcode = (postcodeString: string) => {
-    if (!regexps.postcodeRegexp.test(postcodeString)) {
-      return 'Postcode must consist of 5 digits.';
+    if (postcodeString.length < 1) {
+      return 'Postcode is required';
     }
-    return '';
-  };
-
-  const handlePostcodeChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPostcode(event.target.value);
-    const error = validatePostcode(event.target.value);
-    setPostcodeError(error);
+    if (!regexps.postcodeRegexp.test(postcodeString)) {
+      return 'Postcode must consist of 5 digits';
+    }
+    return undefined;
   };
 
   const validateCountry = (countryString: string) => {
     if (countryString === '') {
-      return 'You must select a country.';
+      return 'Country is required';
     }
-    return '';
+    return true;
   };
 
-  const handleCountryChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setCountry(event.target.value);
-    const error = validateCountry(event.target.value);
-    setCountryError(error);
-  };
-
-  const isFormValid = () =>
-    email &&
-    !emailError &&
-    password &&
-    !passwordError &&
-    name &&
-    !nameError &&
-    surname &&
-    !surnameError &&
-    dob &&
-    !dobError &&
-    street &&
-    !streetError &&
-    city &&
-    !cityError &&
-    postcode &&
-    !postcodeError &&
-    country &&
-    !countryError;
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (isFormValid()) {
-      // логика отправки здесь
-    }
-  };
+  const onSubmit = (data: FormData) => console.log(data);
 
   return (
-    <form className={styles.signUpForm} onSubmit={handleSubmit}>
+    <form className={styles.signUpForm} onSubmit={handleSubmit(onSubmit)}>
       <span>Enter your details below</span>
 
       <div className={styles.inputContainer}>
-        <input id="email" type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
-        {emailError && <div className={styles.error}>{emailError}</div>}
+        <input type="email" placeholder="Email" {...register('email', { validate: validateEmail })} />
+        {errors.email && <div className={styles.error}>{errors.email.message}</div>}
       </div>
 
       <div className={styles.inputContainer}>
-        <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
-        {passwordError && <div className={styles.error}>{passwordError}</div>}
+        <input type="password" placeholder="Password" {...register('password', { validate: validatePassword })} />
+        {errors.password && <div className={styles.error}>{errors.password.message}</div>}
       </div>
 
       <div className={styles.inputContainer}>
-        <input type="text" placeholder="Name" value={name} onChange={handleNameChange} />
-        {nameError && <div className={styles.error}>{nameError}</div>}
+        <input placeholder="Name" {...register('name', { validate: validateName })} />
+        {errors.name && <div className={styles.error}>{errors.name.message}</div>}
       </div>
 
       <div className={styles.inputContainer}>
-        <input type="text" placeholder="Surname" value={surname} onChange={handleSurnameChange} />
-        {surnameError && <div className={styles.error}>{surnameError}</div>}
+        <input placeholder="Surname" {...register('surname', { validate: validateSurname })} />
+        {errors.surname && <div className={styles.error}>{errors.surname.message}</div>}
       </div>
 
       <div className={styles.inputContainer}>
         <input
-          type={dateFocused ? 'date' : 'text'}
-          placeholder="Date of Birth"
-          value={dob}
-          onChange={handleDobChange}
-          onFocus={() => setDateFocused(true)}
-          onBlur={() => setDateFocused(false)}
+          type={dobActivated ? 'date' : 'text'}
+          placeholder={!dobActivated ? 'Date of Birth' : undefined}
+          onFocus={handleDobFocus}
+          {...register('dob', { validate: validateDob })}
         />
-        {dobError && <div className={styles.error}>{dobError}</div>}
+        {errors.dob && <div className={styles.error}>{errors.dob.message}</div>}
       </div>
 
       <span>Your Address:</span>
 
       <div className={styles.inputContainer}>
-        <input type="text" placeholder="Street" value={street} onChange={handleStreetChange} />
-        {streetError && <div className={styles.error}>{streetError}</div>}
+        <input placeholder="Street" {...register('street', { validate: validateStreet })} />
+        {errors.street && <div className={styles.error}>{errors.street.message}</div>}
       </div>
 
       <div className={styles.inputContainer}>
-        <input type="text" placeholder="City" value={city} onChange={handleCityChange} />
-        {cityError && <div className={styles.error}>{cityError}</div>}
+        <input placeholder="City" {...register('city', { validate: validateCity })} />
+        {errors.city && <div className={styles.error}>{errors.city.message}</div>}
       </div>
 
       <div className={styles.inputContainer}>
-        <input type="text" placeholder="Post code" value={postcode} onChange={handlePostcodeChange} />
-        {postcodeError && <div className={styles.error}>{postcodeError}</div>}
+        <input placeholder="Post code" {...register('postcode', { validate: validatePostcode })} />
+        {errors.postcode && <div className={styles.error}>{errors.postcode.message}</div>}
       </div>
 
       <div className={styles.inputContainer}>
-        <select
+        <Controller
           name="country"
-          id="country"
-          value={country}
-          onChange={handleCountryChange}
-          className={country ? '' : styles.placeholder}
-        >
-          <option value="">Select Country</option>
-          <option value="Germany">Germany</option>
-          <option value="USA">USA</option>
-        </select>
-        {countryError && <div className={styles.error}>{countryError}</div>}
+          control={control}
+          defaultValue=""
+          rules={{ validate: validateCountry }}
+          render={({ field }) => (
+            <select {...field}>
+              <option value="" disabled hidden>
+                Select Country
+              </option>
+              <option value="Germany">Germany</option>
+              <option value="USA">USA</option>
+            </select>
+          )}
+        />
+        {errors.country && <div className={styles.error}>{errors.country.message}</div>}
       </div>
 
-      <Button type="submit" disabled={!isFormValid()}>
-        Create Account
-      </Button>
+      <Button type="submit">Create Account</Button>
     </form>
   );
 }
