@@ -1,5 +1,5 @@
 import React, { CSSProperties, MouseEventHandler } from 'react';
-import './styles.css';
+import styles from './styles.module.css';
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ interface ButtonProps {
 export default function Button({
   children,
   onClick,
-  className = 'button',
+  className = styles.button,
   style = { width: '100%' },
   type = 'button',
   disabled = false
@@ -27,7 +27,7 @@ export default function Button({
 }
 
 Button.defaultProps = {
-  className: 'button',
+  className: styles.button,
   style: { width: '100%' },
   type: 'button',
   disabled: false,

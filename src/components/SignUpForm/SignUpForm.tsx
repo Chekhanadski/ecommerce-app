@@ -1,8 +1,8 @@
 import React, { useState, ChangeEvent } from 'react';
 import Button from '../Button/Button';
-import './styles.css';
+import styles from './styles.module.css';
 
-function SignUpForm() {
+function SignUpForm(): React.ReactElement {
   const [dateFocused, setDateFocused] = useState(false);
 
   const [email, setEmail] = useState('');
@@ -208,30 +208,30 @@ function SignUpForm() {
   };
 
   return (
-    <form className="sign-up-form" onSubmit={handleSubmit}>
+    <form className={styles.signUpForm} onSubmit={handleSubmit}>
       <span>Enter your details below</span>
 
-      <div className="input-container">
+      <div className={styles.inputContainer}>
         <input id="email" type="email" placeholder="Email" value={email} onChange={handleEmailChange} />
-        {emailError && <div className="error">{emailError}</div>}
+        {emailError && <div className={styles.error}>{emailError}</div>}
       </div>
 
-      <div className="input-container">
+      <div className={styles.inputContainer}>
         <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
-        {passwordError && <div className="error">{passwordError}</div>}
+        {passwordError && <div  className={styles.error}>{passwordError}</div>}
       </div>
 
-      <div className="input-container">
+      <div className={styles.inputContainer}>
         <input type="text" placeholder="Name" value={name} onChange={handleNameChange} />
-        {nameError && <div className="error">{nameError}</div>}
+        {nameError && <div  className={styles.error}>{nameError}</div>}
       </div>
 
-      <div className="input-container">
+      <div className={styles.inputContainer}>
         <input type="text" placeholder="Surname" value={surname} onChange={handleSurnameChange} />
-        {surnameError && <div className="error">{surnameError}</div>}
+        {surnameError && <div  className={styles.error}>{surnameError}</div>}
       </div>
 
-      <div className="input-container">
+      <div className={styles.inputContainer}>
         <input
           type={dateFocused ? 'date' : 'text'}
           placeholder="Date of Birth"
@@ -240,27 +240,27 @@ function SignUpForm() {
           onFocus={() => setDateFocused(true)}
           onBlur={() => setDateFocused(false)}
         />
-        {dobError && <div className="error">{dobError}</div>}
+        {dobError && <div className={styles.error}>{dobError}</div>}
       </div>
 
       <span>Your Address:</span>
 
-      <div className="input-container">
+      <div className={styles.inputContainer}>
         <input type="text" placeholder="Street" value={street} onChange={handleStreetChange} />
-        {streetError && <div className="error">{streetError}</div>}
+        {streetError && <div className={styles.error}>{streetError}</div>}
       </div>
 
-      <div className="input-container">
+      <div className={styles.inputContainer}>
         <input type="text" placeholder="City" value={city} onChange={handleCityChange} />
-        {cityError && <div className="error">{cityError}</div>}
+        {cityError && <div className={styles.error}>{cityError}</div>}
       </div>
 
-      <div className="input-container">
+      <div className={styles.inputContainer}>
         <input type="text" placeholder="Post code" value={postcode} onChange={handlePostcodeChange} />
-        {postcodeError && <div className="error">{postcodeError}</div>}
+        {postcodeError && <div className={styles.error}>{postcodeError}</div>}
       </div>
 
-      <div className="input-container">
+      <div className={styles.inputContainer}>
         <select
           name="country"
           id="country"
@@ -272,7 +272,7 @@ function SignUpForm() {
           <option value="Germany">Germany</option>
           <option value="USA">USA</option>
         </select>
-        {countryError && <div className="error">{countryError}</div>}
+        {countryError && <div className={styles.error}>{countryError}</div>}
       </div>
 
       <Button type="submit" disabled={!isFormValid()}>

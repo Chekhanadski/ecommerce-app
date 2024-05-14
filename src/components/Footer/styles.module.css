@@ -1,4 +1,4 @@
-.footer-block {
+.footerBlock {
   display: flex;
   gap: 300px;
   align-items: center;
@@ -7,11 +7,11 @@
   background: #000000;
 }
 
-.rsschool-logo {
+.rsschoolLogo {
   margin-left: 50px;
   height: 50px;
 }
 
-.footer-text {
+.footerText {
   color: #ffffff;
 }

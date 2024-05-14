@@ -1,33 +1,33 @@
 import React from 'react';
-import './styles.css';
+import styles from './styles.module.css';
 
 function Header() {
   return (
-    <header className="header">
-      <div className="header-wrapper">
-        <div className="name-shop">
+    <header className={styles.header}>
+      <div className={styles.headerWrapper}>
+        <div className={styles.nameShop}>
           <span>Exclusive</span>
         </div>
-        <nav className="header-nav">
-          <ul className="header-nav-list">
+        <nav className={styles.headerNav}>
+          <ul className={styles.headerNavList}>
             <li>
-              <a className="nav-link" href="/#">
+              <a className={styles.navLink} href="/#">
                 Home
               </a>
             </li>
             <li>
-              <a className="nav-link" href="/#">
+              <a className={styles.navLink} href="/#">
                 Sign In
               </a>
             </li>
             <li>
-              <a className="nav-link" href="/#">
+              <a className={styles.navLink} href="/#">
                 Sign Up
               </a>
             </li>
           </ul>
         </nav>
-        <div className="header-search" />
+        <div className={styles.headerSearch} />
       </div>
     </header>
   );

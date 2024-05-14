@@ -1,4 +1,4 @@
-.sign-up-form {
+.signUpForm {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -6,21 +6,21 @@
   font-size: 16px;
 }
 
-.form-address {
+.formAddress {
   display: flex;
   flex-direction: column;
   gap: 40px;
 }
 
-.sign-up-form input,
-.sign-up-form select {
+.signUpForm input,
+.signUpForm select {
   width: 100%;
   border: none;
   border-bottom: 1px solid rgb(190, 190, 190);
 }
 
-.sign-up-form input:focus,
-.sign-up-form select:focus {
+.signUpForm input:focus,
+.signUpForm select:focus {
   outline: none;
 }
 
@@ -28,7 +28,7 @@
   color: #808080;
 }
 
-.sign-up-form .error {
+.signUpForm .error {
   position: absolute;
   left: 0;
   height: 20px;
