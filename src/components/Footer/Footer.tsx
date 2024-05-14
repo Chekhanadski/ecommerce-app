@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 
-function Footer(): React.ReactElement {
+function Footer() {
   return (
     <footer className="footer-block">
       <img className="rsschool-logo" src="/img/rsschool-logo.png" alt="RSSchool Logo" />

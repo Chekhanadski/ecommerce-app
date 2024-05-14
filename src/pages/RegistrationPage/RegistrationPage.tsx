@@ -4,7 +4,7 @@ import Header from '../../components/Header/Header';
 import SignUpForm from '../../components/SignUpForm/SignUpForm';
 import './styles.css';
 
-function RegistrationPage(): React.ReactElement {
+function RegistrationPage() {
   return (
     <div className="wrapper">
       <Header />

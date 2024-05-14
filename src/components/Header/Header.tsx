@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
 
-function Header(): React.ReactElement {
+function Header() {
   return (
     <header className="header">
       <div className="header-wrapper">

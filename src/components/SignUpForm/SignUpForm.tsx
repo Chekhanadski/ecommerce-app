@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent } from 'react';
 import Button from '../Button/Button';
 import './styles.css';
 
-function SignUpForm(): React.ReactElement {
+function SignUpForm() {
   const [dateFocused, setDateFocused] = useState(false);
 
   const [email, setEmail] = useState('');
