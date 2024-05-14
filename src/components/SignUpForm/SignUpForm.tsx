@@ -1,6 +1,16 @@
 import React, { useState, ChangeEvent } from 'react';
 import Button from '../Button/Button';
 import styles from './styles.module.css';
+import {
+  emailRegexp,
+  passwordRegexp,
+  uppercaseLetterRegexp,
+  lowercaseLetterRegexp,
+  digitRegexp,
+  nameRegexp,
+  cityRegexp,
+  postcodeRegexp
+} from '../../constants/regexps';
 
 function SignUpForm(): React.ReactElement {
   const [dateFocused, setDateFocused] = useState(false);
@@ -32,13 +42,7 @@ function SignUpForm(): React.ReactElement {
   const [country, setCountry] = useState('');
   const [countryError, setCountryError] = useState('');
 
-  const validateEmail = (emailString: string) => {
-    const re =
-      /^(([^<>()\\.,;:@"]+(\.[^<>()\\.,;:@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    return re.test(emailString.toLowerCase());
-  };
-
+  const validateEmail = (emailString: string) => emailRegexp.test(emailString.toLowerCase());
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
     if (!validateEmail(event.target.value)) {
@@ -49,16 +53,16 @@ function SignUpForm(): React.ReactElement {
   };
 
   const validatePassword = (passwordString: string) => {
-    if (!/^[A-Za-z0-9!@#$%^&*()_+\-={};':"\\|,.<>?]+$/.test(passwordString)) {
+    if (!passwordRegexp.test(passwordString)) {
       return 'Password can only contain English letters, digits, and special chars.';
     }
-    if (!/[A-Z]/.test(passwordString)) {
+    if (!uppercaseLetterRegexp.test(passwordString)) {
       return 'Password must contain at least one uppercase letter';
     }
-    if (!/[a-z]/.test(passwordString)) {
+    if (!lowercaseLetterRegexp.test(passwordString)) {
       return 'Password must contain at least one lowercase letter';
     }
-    if (!/[0-9]/.test(passwordString)) {
+    if (!digitRegexp.test(passwordString)) {
       return 'Password must contain at least one digit';
     }
     if (passwordString.length < 8) {
@@ -74,7 +78,7 @@ function SignUpForm(): React.ReactElement {
   };
 
   const validateName = (nameString: string) => {
-    if (!/^[A-Za-z]+$/.test(nameString)) {
+    if (!nameRegexp.test(nameString)) {
       return 'Name can only contain English letters.';
     }
     if (nameString.length < 1) {
@@ -90,7 +94,7 @@ function SignUpForm(): React.ReactElement {
   };
 
   const validateSurname = (surnameString: string) => {
-    if (!/^[A-Za-z]+$/.test(surnameString)) {
+    if (!nameRegexp.test(surnameString)) {
       return 'Surname can only contain English letters.';
     }
     if (surnameString.length < 1) {
@@ -139,7 +143,7 @@ function SignUpForm(): React.ReactElement {
   };
 
   const validateCity = (cityString: string) => {
-    if (!/^[A-Za-z\s]+$/.test(cityString)) {
+    if (!cityRegexp.test(cityString)) {
       return 'City can only contain English letters and spaces.';
     }
     if (cityString.length < 1) {
@@ -155,7 +159,7 @@ function SignUpForm(): React.ReactElement {
   };
 
   const validatePostcode = (postcodeString: string) => {
-    if (!/^\d{5}$/.test(postcodeString)) {
+    if (!postcodeRegexp.test(postcodeString)) {
       return 'Postcode must consist of 5 digits.';
     }
     return '';
@@ -218,17 +222,17 @@ function SignUpForm(): React.ReactElement {
 
       <div className={styles.inputContainer}>
         <input type="password" placeholder="Password" value={password} onChange={handlePasswordChange} />
-        {passwordError && <div  className={styles.error}>{passwordError}</div>}
+        {passwordError && <div className={styles.error}>{passwordError}</div>}
       </div>
 
       <div className={styles.inputContainer}>
         <input type="text" placeholder="Name" value={name} onChange={handleNameChange} />
-        {nameError && <div  className={styles.error}>{nameError}</div>}
+        {nameError && <div className={styles.error}>{nameError}</div>}
       </div>
 
       <div className={styles.inputContainer}>
         <input type="text" placeholder="Surname" value={surname} onChange={handleSurnameChange} />
-        {surnameError && <div  className={styles.error}>{surnameError}</div>}
+        {surnameError && <div className={styles.error}>{surnameError}</div>}
       </div>
 
       <div className={styles.inputContainer}>
@@ -266,7 +270,7 @@ function SignUpForm(): React.ReactElement {
           id="country"
           value={country}
           onChange={handleCountryChange}
-          className={country ? '' : 'placeholder'}
+          className={country ? '' : styles.placeholder}
         >
           <option value="">Select Country</option>
           <option value="Germany">Germany</option>
