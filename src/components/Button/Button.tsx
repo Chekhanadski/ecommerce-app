@@ -3,14 +3,24 @@ import './styles.css';
 
 interface ButtonProps {
   children: React.ReactNode;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   className?: string;
   style?: CSSProperties;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean; // Добавьте это свойство
 }
 
-export default function Button({ children, onClick, className = 'button', style = { width: '100%' } }: ButtonProps) {
+export default function Button({
+  children,
+  onClick,
+  className = 'button',
+  style = { width: '100%' },
+  type = 'button',
+  disabled = false
+}: ButtonProps) {
   return (
-    <button type="button" onClick={onClick} className={className} style={style}>
+    // eslint-disable-next-line react/button-has-type
+    <button type={type} onClick={onClick} className={className} style={style} disabled={disabled}>
       {children}
     </button>
   );
@@ -18,5 +28,8 @@ export default function Button({ children, onClick, className = 'button', style 
 
 Button.defaultProps = {
   className: 'button',
-  style: { width: '100%' }
+  style: { width: '100%' },
+  type: 'button',
+  disabled: false,
+  onClick: () => {}
 };

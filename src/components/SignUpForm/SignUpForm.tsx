@@ -180,13 +180,35 @@ function SignUpForm(): React.ReactElement {
     setCountryError(error);
   };
 
+  const isFormValid = () =>
+    email &&
+    !emailError &&
+    password &&
+    !passwordError &&
+    name &&
+    !nameError &&
+    surname &&
+    !surnameError &&
+    dob &&
+    !dobError &&
+    street &&
+    !streetError &&
+    city &&
+    !cityError &&
+    postcode &&
+    !postcodeError &&
+    country &&
+    !countryError;
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (isFormValid()) {
+      // логика отправки здесь
+    }
+  };
+
   return (
-    <form
-      className="sign-up-form"
-      onSubmit={(e) => {
-        e.preventDefault(); /* your submit logic here */
-      }}
-    >
+    <form className="sign-up-form" onSubmit={handleSubmit}>
       <span>Enter your details below</span>
 
       <div className="input-container">
@@ -244,16 +266,17 @@ function SignUpForm(): React.ReactElement {
           id="country"
           value={country}
           onChange={handleCountryChange}
-          className={country ? '' : 'placeholder'}
-        >
+          className={country ? '' : 'placeholder'}>
           <option value="">Select Country</option>
           <option value="Germany">Germany</option>
           <option value="USA">USA</option>
         </select>
-        {countryError && <div className="error">{countryError}</div>} {/* Display error */}
+        {countryError && <div className="error">{countryError}</div>}
       </div>
 
-      <Button onClick={() => () => {}}>Create Account</Button>
+      <Button type="submit" disabled={!isFormValid()}>
+        Create Account
+      </Button>
     </form>
   );
 }
