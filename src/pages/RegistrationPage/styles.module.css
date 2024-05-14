@@ -1,9 +1,9 @@
-.main-block {
+.mainBlock {
   display: flex;
   margin-bottom: 140px;
 }
 
-.form-sign-up-block {
+.formSignUpBlock {
   display: flex;
   justify-content: right;
   align-items: center;
