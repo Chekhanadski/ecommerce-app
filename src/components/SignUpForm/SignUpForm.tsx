@@ -1,16 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import Button from '../Button/Button';
 import styles from './styles.module.css';
-import {
-  emailRegexp,
-  passwordRegexp,
-  uppercaseLetterRegexp,
-  lowercaseLetterRegexp,
-  digitRegexp,
-  nameRegexp,
-  cityRegexp,
-  postcodeRegexp
-} from '../../constants/regexps';
+import * as regexps from '../../constants/regexps';
 
 function SignUpForm(): React.ReactElement {
   const [dateFocused, setDateFocused] = useState(false);
@@ -42,7 +33,7 @@ function SignUpForm(): React.ReactElement {
   const [country, setCountry] = useState('');
   const [countryError, setCountryError] = useState('');
 
-  const validateEmail = (emailString: string) => emailRegexp.test(emailString.toLowerCase());
+  const validateEmail = (emailString: string) => regexps.emailRegexp.test(emailString.toLowerCase());
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
     if (!validateEmail(event.target.value)) {
@@ -53,16 +44,16 @@ function SignUpForm(): React.ReactElement {
   };
 
   const validatePassword = (passwordString: string) => {
-    if (!passwordRegexp.test(passwordString)) {
+    if (!regexps.passwordRegexp.test(passwordString)) {
       return 'Password can only contain English letters, digits, and special chars.';
     }
-    if (!uppercaseLetterRegexp.test(passwordString)) {
+    if (!regexps.uppercaseLetterRegexp.test(passwordString)) {
       return 'Password must contain at least one uppercase letter';
     }
-    if (!lowercaseLetterRegexp.test(passwordString)) {
+    if (!regexps.lowercaseLetterRegexp.test(passwordString)) {
       return 'Password must contain at least one lowercase letter';
     }
-    if (!digitRegexp.test(passwordString)) {
+    if (!regexps.digitRegexp.test(passwordString)) {
       return 'Password must contain at least one digit';
     }
     if (passwordString.length < 8) {
@@ -78,7 +69,7 @@ function SignUpForm(): React.ReactElement {
   };
 
   const validateName = (nameString: string) => {
-    if (!nameRegexp.test(nameString)) {
+    if (!regexps.nameRegexp.test(nameString)) {
       return 'Name can only contain English letters.';
     }
     if (nameString.length < 1) {
@@ -94,7 +85,7 @@ function SignUpForm(): React.ReactElement {
   };
 
   const validateSurname = (surnameString: string) => {
-    if (!nameRegexp.test(surnameString)) {
+    if (!regexps.nameRegexp.test(surnameString)) {
       return 'Surname can only contain English letters.';
     }
     if (surnameString.length < 1) {
@@ -143,7 +134,7 @@ function SignUpForm(): React.ReactElement {
   };
 
   const validateCity = (cityString: string) => {
-    if (!cityRegexp.test(cityString)) {
+    if (!regexps.cityRegexp.test(cityString)) {
       return 'City can only contain English letters and spaces.';
     }
     if (cityString.length < 1) {
@@ -159,7 +150,7 @@ function SignUpForm(): React.ReactElement {
   };
 
   const validatePostcode = (postcodeString: string) => {
-    if (!postcodeRegexp.test(postcodeString)) {
+    if (!regexps.postcodeRegexp.test(postcodeString)) {
       return 'Postcode must consist of 5 digits.';
     }
     return '';
