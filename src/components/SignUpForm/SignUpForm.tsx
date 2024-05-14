@@ -266,7 +266,8 @@ function SignUpForm(): React.ReactElement {
           id="country"
           value={country}
           onChange={handleCountryChange}
-          className={country ? '' : 'placeholder'}>
+          className={country ? '' : 'placeholder'}
+        >
           <option value="">Select Country</option>
           <option value="Germany">Germany</option>
           <option value="USA">USA</option>

@@ -12,6 +12,10 @@
 }
 
 .button:disabled {
-  background-color: #a8a8a8; 
+  background-color: #a8a8a8;
   cursor: not-allowed;
+}
+
+.button:active:disabled {
+  transform: none;
 }
