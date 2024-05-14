@@ -7,7 +7,7 @@ interface ButtonProps {
   className?: string;
   style?: CSSProperties;
   type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean; // Добавьте это свойство
+  disabled?: boolean;
 }
 
 export default function Button({
