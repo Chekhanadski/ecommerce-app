@@ -1,0 +1,45 @@
+.header {
+  display: flex;
+  height: 80px;
+  width: 100%;
+  margin-bottom: 60px;
+  border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 0 135px;
+}
+
+.nameShop {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.headerNav {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.headerNavList {
+  display: flex;
+  gap: 48px;
+  margin: 0;
+  list-style-type: none;
+}
+
+.headerSearch {
+  width: 243px;
+}
+
+.navLink {
+  color: #000000;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  text-decoration-line: underline;
+}
