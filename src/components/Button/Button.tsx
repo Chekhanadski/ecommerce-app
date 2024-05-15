@@ -25,11 +25,3 @@ export default function Button({
     </button>
   );
 }
-
-// Button.defaultProps = {
-//   className: styles.button,
-//   style: { width: '100%' },
-//   type: 'button',
-//   disabled: false,
-//   onClick: () => {}
-// };
