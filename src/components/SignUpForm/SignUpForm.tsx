@@ -143,7 +143,7 @@ function SignUpForm(): React.ReactElement {
     return true;
   };
 
-  const onSubmit = (data: FormData) => console.log(data);
+  const onSubmit = (data: FormData) => data;
 
   return (
     <form className={styles.signUpForm} onSubmit={handleSubmit(onSubmit)}>
