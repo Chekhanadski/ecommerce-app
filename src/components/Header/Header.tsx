@@ -33,10 +33,12 @@ function Header() {
             </li>
             <li>
               <a onClick={() => setIsOpen(false)} className={styles.navLink} href="/#">
+
                 Sign In
               </a>
             </li>
             <li>
+
               <a onClick={() => setIsOpen(false)} className={styles.navLink} href="/#">
                 Sign Up
               </a>
@@ -50,4 +52,3 @@ function Header() {
 }
 
 export default Header;
-
