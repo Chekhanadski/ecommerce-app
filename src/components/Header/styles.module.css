@@ -80,26 +80,26 @@
     display: block;
   }
 
-.headerNav {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.95);
-  color: white; 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 120px;
-  font-size: 30px;
-  font-weight: 600;
-  display: none;
-}
+  .headerNav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 120px;
+    font-size: 30px;
+    font-weight: 600;
+    display: none;
+  }
 
   .headerNav.open {
-    display: flex;    
+    display: flex;
   }
 
   .headerNavList {

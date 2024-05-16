@@ -3,14 +3,14 @@ import styles from './styles.module.css';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   useEffect(() => {
-    if(isOpen) {
-      document.body.style.overflow = "hidden"
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "visible"
+      document.body.style.overflow = 'visible';
     }
-  }, [isOpen])
+  }, [isOpen]);
 
   return (
     <header className={styles.header}>
@@ -33,12 +33,10 @@ function Header() {
             </li>
             <li>
               <a onClick={() => setIsOpen(false)} className={styles.navLink} href="/#">
-
                 Sign In
               </a>
             </li>
             <li>
-
               <a onClick={() => setIsOpen(false)} className={styles.navLink} href="/#">
                 Sign Up
               </a>
