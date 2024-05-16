@@ -17,3 +17,13 @@
   font-weight: 500;
   letter-spacing: 1px;
 }
+
+@media screen and (max-width: 1300px) {
+  .mainImg {
+    display: none;
+  }
+  .formSignUpBlock {
+    justify-content: center;
+    margin: 0;
+  }
+}

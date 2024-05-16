@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 function RegistrationPage() {
   return (
     <main className={styles.mainBlock}>
-      <div>
+      <div className={styles.mainImg}>
         <img src="/img/main-img.jpg" alt="Main" />
       </div>
       <div className={styles.formSignUpBlock}>
