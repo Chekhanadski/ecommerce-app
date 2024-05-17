@@ -16,6 +16,7 @@ function Header() {
     <header className={styles.header}>
       <div className={styles.headerWrapper}>
         <div className={styles.nameShop}>
+        <img className={styles.exclusiveLogo} src="/img/logo-exclusive-black.png" alt="Exclusive Logo" />
           <span>Exclusive</span>
         </div>
         <button type="button" onClick={() => setIsOpen(!isOpen)} className={styles.burger}>
