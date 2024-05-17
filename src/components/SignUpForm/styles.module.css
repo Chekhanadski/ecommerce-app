@@ -66,11 +66,23 @@ select:not(:focus) {
 
 .success {
   position: absolute;
-  top: -30px;
+  top: -25px;
   display: flex;
   justify-content: center;
   color: #00a600;
-  font-size: 18px;
+  font-size: 15px;
+  text-align: center;
+  width: 100%;
+  animation: grow 0.5s ease-out;
+}
+
+.serverError {
+  position: absolute;
+  top: -25px;
+  display: flex;
+  justify-content: center;
+  color: #ff0000;
+  font-size: 13px;
   text-align: center;
   width: 100%;
   animation: grow 0.5s ease-out;

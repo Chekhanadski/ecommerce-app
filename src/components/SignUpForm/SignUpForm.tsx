@@ -36,10 +36,17 @@ function SignUpForm(): React.ReactElement {
   const handleDobFocus = () => setDobActivated(true);
 
   const [isRegistered, setIsRegistered] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = async (data: FormData) => {
     const result = await signUp(data);
-    setIsRegistered(result);
+    if (typeof result === 'string') {
+      setErrorMessage(result);
+      setIsRegistered(false);
+    } else {
+      setIsRegistered(result);
+      setErrorMessage('');
+    }
   };
 
   const validateEmail = (emailString: string) => {
@@ -231,9 +238,10 @@ function SignUpForm(): React.ReactElement {
         />
         {errors.addresses?.[0]?.country && <div className={styles.error}>{errors.addresses[0].country.message}</div>}
       </div>
+
       <div className={styles.messageContainer}>
         {isRegistered && <div className={styles.success}>Account successfully created!</div>}
-
+        {errorMessage && <div className={styles.serverError}>{errorMessage}</div>}
         <Button type="submit">Create Account</Button>
       </div>
     </form>
