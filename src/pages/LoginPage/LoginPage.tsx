@@ -10,7 +10,7 @@ function RegistrationPage() {
       </div>
       <div className={styles.formSignUpBlock}>
         <div>
-          <h1 className={styles.h1}>Create an account</h1>
+          <h1 className={styles.h1}>Login to your account</h1>
           <LoginForm />
         </div>
       </div>
