@@ -1,5 +1,5 @@
 import React from 'react';
-import SignUpForm from '../../components/SignUpForm/SignUpForm';
+import LoginForm from '../../components/LoginForm/LoginForm';
 import styles from './styles.module.css';
 
 function RegistrationPage() {
@@ -11,7 +11,7 @@ function RegistrationPage() {
       <div className={styles.formSignUpBlock}>
         <div>
           <h1 className={styles.h1}>Create an account</h1>
-          <SignUpForm />
+          <LoginForm />
         </div>
       </div>
     </main>

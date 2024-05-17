@@ -7,16 +7,9 @@ import * as regexps from '../../constants/regexps';
 interface FormData {
   email: string;
   password: string;
-  name: string;
-  surname: string;
-  dob: string;
-  street: string;
-  city: string;
-  postcode: string;
-  country: string;
 }
 
-function SignUpForm(): React.ReactElement {
+export default function LoginForm(): React.ReactElement {
   const {
     register,
     handleSubmit,
@@ -219,5 +212,3 @@ function SignUpForm(): React.ReactElement {
     </form>
   );
 }
-
-export default SignUpForm;
