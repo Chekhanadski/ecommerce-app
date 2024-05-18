@@ -87,3 +87,10 @@ select:not(:focus) {
   width: 100%;
   animation: grow 0.5s ease-out;
 }
+
+.checkboxLabel {
+  display: flex;
+  justify-content: left;
+  gap: 10px;
+  font-size: 13px;
+}

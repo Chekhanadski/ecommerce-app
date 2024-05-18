@@ -6,12 +6,14 @@ import * as regexps from '../../constants/regexps';
 import { signUp } from '../../api/auth';
 import { FormData } from '../../store/types/auth';
 
+const DEFAULT_ADDRESS_INDEX = 0;
+
 function SignUpForm(): React.ReactElement {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    control
+    control,
   } = useForm<FormData>({
     mode: 'all',
     defaultValues: {
@@ -28,7 +30,9 @@ function SignUpForm(): React.ReactElement {
           postalCode: '',
           country: ''
         }
-      ]
+      ],
+      defaultShippingAddress: null,
+      defaultBillingAddress: null,
     }
   });
 
@@ -38,8 +42,24 @@ function SignUpForm(): React.ReactElement {
   const [isRegistered, setIsRegistered] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const [isDefaultAddress, setIsDefaultAddress] = useState(false);
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsDefaultAddress(event.target.checked);
+  };
+
   const onSubmit = async (data: FormData) => {
-    const result = await signUp(data);
+    let fullData: FormData = data;
+
+    if (isDefaultAddress) {
+      fullData = {
+        ...data,
+        defaultShippingAddress: DEFAULT_ADDRESS_INDEX,
+        defaultBillingAddress: DEFAULT_ADDRESS_INDEX
+      };
+    }
+
+    const result = await signUp(fullData);
     if (typeof result === 'string') {
       setErrorMessage(result);
       setIsRegistered(false);
@@ -238,6 +258,19 @@ function SignUpForm(): React.ReactElement {
         />
         {errors.addresses?.[0]?.country && <div className={styles.error}>{errors.addresses[0].country.message}</div>}
       </div>
+
+      <label className={styles.checkboxLabel} htmlFor="defaultAddress">
+        <span>
+          <input
+            type="checkbox"
+            id="defaultAddress"
+            name="defaultAddress"
+            checked={isDefaultAddress}
+            onChange={handleCheckboxChange}
+          />
+        </span>
+        <span>Set as default address.</span>
+      </label>
 
       <div className={styles.messageContainer}>
         {isRegistered && <div className={styles.success}>Account successfully created!</div>}
