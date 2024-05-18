@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   useEffect(() => {
-    if(isOpen) {
-      document.body.style.overflow = "hidden"
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "visible"
+      document.body.style.overflow = 'visible';
     }
-  }, [isOpen])
+  }, [isOpen]);
 
   return (
     <header className={styles.header}>
@@ -27,21 +29,19 @@ function Header() {
           </button>
           <ul className={styles.headerNavList}>
             <li>
-              <a onClick={() => setIsOpen(false)} className={styles.navLink} href="/#">
+              <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a onClick={() => setIsOpen(false)} className={styles.navLink} href="/#">
-
+              <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/login">
                 Sign In
-              </a>
+              </Link>
             </li>
             <li>
-
-              <a onClick={() => setIsOpen(false)} className={styles.navLink} href="/#">
+              <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/register">
                 Sign Up
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
