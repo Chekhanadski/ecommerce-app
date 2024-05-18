@@ -53,7 +53,7 @@ export default function LoginForm(): React.ReactElement {
   const onSubmit = (data: FormData) => data;
 
   return (
-    <form className={styles.signUpForm} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.loginForm} onSubmit={handleSubmit(onSubmit)}>
       <span>Enter your details below</span>
 
       <div className={styles.inputContainer}>

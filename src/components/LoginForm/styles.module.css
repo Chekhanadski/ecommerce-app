@@ -1,4 +1,4 @@
-.signUpForm {
+.loginForm {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -6,25 +6,19 @@
   font-size: 16px;
 }
 
-.formAddress {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-.signUpForm input,
-.signUpForm select {
+.loginForm input,
+.loginForm select {
   width: 100%;
   border: none;
   border-bottom: 1px solid rgb(190, 190, 190);
 }
 
-.signUpForm input:focus,
-.signUpForm select:focus {
+.loginForm input:focus,
+.loginForm select:focus {
   outline: none;
 }
 
-.signUpForm .error {
+.loginForm .error {
   position: absolute;
   left: 0;
   height: 20px;

@@ -8,7 +8,7 @@ function RegistrationPage() {
       <div>
         <img src="/img/main-img.jpg" alt="Main" />
       </div>
-      <div className={styles.formSignUpBlock}>
+      <div className={styles.formLoginBlock}>
         <div>
           <h1 className={styles.h1}>Login to your account</h1>
           <LoginForm />
