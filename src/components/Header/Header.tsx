@@ -25,9 +25,9 @@ function Header() {
           ☰
         </button>
         <nav className={`${styles.headerNav} ${isOpen ? styles.open : ''}`} />
-          <button type="button" onClick={() => setIsOpen(false)} className={styles.closeButton}>
-            ✖
-          </button>
+        <button type="button" onClick={() => setIsOpen(false)} className={styles.closeButton}>
+          ✖
+        </button>
         <button type="button" onClick={() => setIsOpen(!isOpen)} className={styles.burger}>
           ☰
         </button>

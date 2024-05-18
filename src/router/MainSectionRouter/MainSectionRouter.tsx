@@ -5,17 +5,14 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
-
-function Main() {
-  return <h1>Main Page Text Placeholder</h1>;
-}
+import MainPage from '../../pages/MainPage/MainPage';
 
 function MainSectionRouter() {
   return (
     <Router>
       <Header />
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegistrationPage />} />
         <Route path="*" element={<NotFoundPage />} />
