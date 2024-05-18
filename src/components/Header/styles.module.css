@@ -15,8 +15,15 @@
 }
 
 .nameShop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 26px;
   font-weight: bold;
+}
+
+.exclusiveLogo {
+  height: 60px;
 }
 
 .headerNav {
@@ -64,7 +71,7 @@
   color: #ffffff;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 980px) {
   .headerWrapper {
     margin: 0 20px;
   }
