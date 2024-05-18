@@ -15,8 +15,15 @@
 }
 
 .nameShop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 26px;
   font-weight: bold;
+}
+
+.exclusiveLogo {
+  height: 60px;
 }
 
 .headerNav {
@@ -32,6 +39,7 @@
 }
 
 .headerSearch {
+  width: 200px;
   width: 200px;
 }
 

@@ -1,0 +1,36 @@
+.loginForm {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  font-size: 16px;
+}
+
+.loginForm input,
+.loginForm select {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+.loginForm input:focus,
+.loginForm select:focus {
+  outline: none;
+}
+
+.loginForm .error {
+  position: absolute;
+  left: 0;
+  height: 20px;
+  color: red;
+  width: 100%;
+}
+
+.error {
+  font-size: 10px;
+  color: red;
+}
+
+select:not(:focus) {
+  color: #808080;
+}

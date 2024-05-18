@@ -3,18 +3,8 @@ import { Controller, useForm } from 'react-hook-form';
 import Button from '../Button/Button';
 import styles from './styles.module.css';
 import * as regexps from '../../constants/regexps';
-
-interface FormData {
-  email: string;
-  password: string;
-  name: string;
-  surname: string;
-  dob: string;
-  street: string;
-  city: string;
-  postcode: string;
-  country: string;
-}
+import { signUp } from '../../api/auth';
+import { FormData } from '../../store/types/auth';
 
 function SignUpForm(): React.ReactElement {
   const {
@@ -27,18 +17,37 @@ function SignUpForm(): React.ReactElement {
     defaultValues: {
       email: '',
       password: '',
-      name: '',
-      surname: '',
-      dob: '',
-      street: '',
-      city: '',
-      postcode: '',
-      country: ''
+      firstName: '',
+      lastName: '',
+      dateOfBirth: '',
+      addresses: [
+        {
+          streetName: '',
+          streetNumber: '',
+          city: '',
+          postalCode: '',
+          country: ''
+        }
+      ]
     }
   });
 
   const [dobActivated, setDobActivated] = useState(false);
   const handleDobFocus = () => setDobActivated(true);
+
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const onSubmit = async (data: FormData) => {
+    const result = await signUp(data);
+    if (typeof result === 'string') {
+      setErrorMessage(result);
+      setIsRegistered(false);
+    } else {
+      setIsRegistered(result);
+      setErrorMessage('');
+    }
+  };
 
   const validateEmail = (emailString: string) => {
     if (emailString.length && !regexps.emailRegexp.test(emailString.toLowerCase())) {
@@ -74,20 +83,20 @@ function SignUpForm(): React.ReactElement {
 
   const validateName = (nameString: string) => {
     if (nameString.length && !regexps.nameRegexp.test(nameString)) {
-      return 'Name can only contain English letters';
+      return 'First name can only contain English letters';
     }
     if (nameString.length < 1) {
-      return 'Name is required';
+      return 'First name is required';
     }
     return undefined;
   };
 
-  const validateSurname = (surnameString: string) => {
+  const validateLastName = (surnameString: string) => {
     if (surnameString.length < 1) {
-      return 'Surname is required';
+      return 'Last name is required';
     }
     if (!regexps.nameRegexp.test(surnameString)) {
-      return 'Surname can only contain English letters';
+      return 'Last name can only contain English letters';
     }
     return undefined;
   };
@@ -111,7 +120,7 @@ function SignUpForm(): React.ReactElement {
 
   const validateStreet = (streetString: string) => {
     if (streetString.length < 1) {
-      return 'Street is required';
+      return 'Street name is required';
     }
     return undefined;
   };
@@ -128,10 +137,10 @@ function SignUpForm(): React.ReactElement {
 
   const validatePostcode = (postcodeString: string) => {
     if (postcodeString.length < 1) {
-      return 'Postcode is required';
+      return 'Postal code is required';
     }
     if (!regexps.postcodeRegexp.test(postcodeString)) {
-      return 'Postcode must consist of 5 digits';
+      return 'Postal code must consist of 5 digits';
     }
     return undefined;
   };
@@ -142,8 +151,6 @@ function SignUpForm(): React.ReactElement {
     }
     return true;
   };
-
-  const onSubmit = (data: FormData) => data;
 
   return (
     <form className={styles.signUpForm} onSubmit={handleSubmit(onSubmit)}>
@@ -160,13 +167,13 @@ function SignUpForm(): React.ReactElement {
       </div>
 
       <div className={styles.inputContainer}>
-        <input placeholder="Name" {...register('name', { validate: validateName })} />
-        {errors.name && <div className={styles.error}>{errors.name.message}</div>}
+        <input placeholder="First Name" {...register('firstName', { validate: validateName })} />
+        {errors.firstName && <div className={styles.error}>{errors.firstName.message}</div>}
       </div>
 
       <div className={styles.inputContainer}>
-        <input placeholder="Surname" {...register('surname', { validate: validateSurname })} />
-        {errors.surname && <div className={styles.error}>{errors.surname.message}</div>}
+        <input placeholder="Last Name" {...register('lastName', { validate: validateLastName })} />
+        {errors.lastName && <div className={styles.error}>{errors.lastName.message}</div>}
       </div>
 
       <div className={styles.inputContainer}>
@@ -174,31 +181,48 @@ function SignUpForm(): React.ReactElement {
           type={dobActivated ? 'date' : 'text'}
           placeholder={!dobActivated ? 'Date of Birth' : undefined}
           onFocus={handleDobFocus}
-          {...register('dob', { validate: validateDob })}
+          {...register('dateOfBirth', { validate: validateDob })}
         />
-        {errors.dob && <div className={styles.error}>{errors.dob.message}</div>}
+        {errors.dateOfBirth && <div className={styles.error}>{errors.dateOfBirth.message}</div>}
       </div>
 
       <span>Your Address:</span>
+      <div className={styles.inputsWrapper}>
+        <div className={styles.inputContainer}>
+          <input placeholder="Street Name" {...register(`addresses.${0}.streetName`, { validate: validateStreet })} />
+          {errors.addresses?.[0]?.streetName && (
+            <div className={styles.error}>{errors.addresses[0].streetName.message}</div>
+          )}
+        </div>
 
-      <div className={styles.inputContainer}>
-        <input placeholder="Street" {...register('street', { validate: validateStreet })} />
-        {errors.street && <div className={styles.error}>{errors.street.message}</div>}
+        <div className={styles.inputContainer}>
+          <input
+            placeholder="Street Number"
+            {...register(`addresses.${0}.streetNumber`, { validate: validateStreet })}
+          />
+          {errors.addresses?.[0]?.streetNumber && (
+            <div className={styles.error}>{errors.addresses[0].streetNumber.message}</div>
+          )}
+        </div>
       </div>
 
-      <div className={styles.inputContainer}>
-        <input placeholder="City" {...register('city', { validate: validateCity })} />
-        {errors.city && <div className={styles.error}>{errors.city.message}</div>}
-      </div>
+      <div className={styles.inputsWrapper}>
+        <div className={styles.inputContainer}>
+          <input placeholder="City" {...register(`addresses.${0}.city`, { validate: validateCity })} />
+          {errors.addresses?.[0]?.city && <div className={styles.error}>{errors.addresses[0].city.message}</div>}
+        </div>
 
-      <div className={styles.inputContainer}>
-        <input placeholder="Post code" {...register('postcode', { validate: validatePostcode })} />
-        {errors.postcode && <div className={styles.error}>{errors.postcode.message}</div>}
+        <div className={styles.inputContainer}>
+          <input placeholder="Post code" {...register(`addresses.${0}.postalCode`, { validate: validatePostcode })} />
+          {errors.addresses?.[0]?.postalCode && (
+            <div className={styles.error}>{errors.addresses[0].postalCode.message}</div>
+          )}
+        </div>
       </div>
 
       <div className={styles.inputContainer}>
         <Controller
-          name="country"
+          name={`addresses.${0}.country`}
           control={control}
           defaultValue=""
           rules={{ validate: validateCountry }}
@@ -207,15 +231,19 @@ function SignUpForm(): React.ReactElement {
               <option value="" disabled hidden>
                 Select Country
               </option>
-              <option value="Germany">Germany</option>
-              <option value="USA">USA</option>
+              <option value="DE">Germany</option>
+              <option value="US">United States</option>
             </select>
           )}
         />
-        {errors.country && <div className={styles.error}>{errors.country.message}</div>}
+        {errors.addresses?.[0]?.country && <div className={styles.error}>{errors.addresses[0].country.message}</div>}
       </div>
 
-      <Button type="submit">Create Account</Button>
+      <div className={styles.messageContainer}>
+        {isRegistered && <div className={styles.success}>Account successfully created!</div>}
+        {errorMessage && <div className={styles.serverError}>{errorMessage}</div>}
+        <Button type="submit">Create Account</Button>
+      </div>
     </form>
   );
 }
