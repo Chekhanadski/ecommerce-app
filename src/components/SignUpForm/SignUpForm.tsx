@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Button from '../Button/Button';
 import styles from './styles.module.css';
@@ -6,7 +6,8 @@ import * as regexps from '../../constants/regexps';
 import { signUp } from '../../api/auth';
 import { FormData } from '../../store/types/auth';
 
-const DEFAULT_ADDRESS_INDEX = 0;
+const DEFAULT_SHIPPING_ADDRESS_INDEX = 0;
+const DEFAULT_BILLING_ADDRESS_INDEX = 1;
 
 function SignUpForm(): React.ReactElement {
   const {
@@ -14,6 +15,8 @@ function SignUpForm(): React.ReactElement {
     handleSubmit,
     formState: { errors },
     control,
+    getValues,
+    setValue
   } = useForm<FormData>({
     mode: 'all',
     defaultValues: {
@@ -29,12 +32,20 @@ function SignUpForm(): React.ReactElement {
           city: '',
           postalCode: '',
           country: ''
+        },
+        {
+          streetName: '',
+          streetNumber: '',
+          city: '',
+          postalCode: '',
+          country: ''
         }
       ],
       defaultShippingAddress: null,
-      defaultBillingAddress: null,
+      defaultBillingAddress: null
     }
   });
+  const values = getValues();
 
   const [dobActivated, setDobActivated] = useState(false);
   const handleDobFocus = () => setDobActivated(true);
@@ -54,8 +65,15 @@ function SignUpForm(): React.ReactElement {
     if (isDefaultAddress) {
       fullData = {
         ...data,
-        defaultShippingAddress: DEFAULT_ADDRESS_INDEX,
-        defaultBillingAddress: DEFAULT_ADDRESS_INDEX
+        addresses: [data.addresses[0]],
+        defaultShippingAddress: DEFAULT_SHIPPING_ADDRESS_INDEX,
+        defaultBillingAddress: DEFAULT_SHIPPING_ADDRESS_INDEX
+      };
+    } else {
+      fullData = {
+        ...data,
+        defaultShippingAddress: DEFAULT_SHIPPING_ADDRESS_INDEX,
+        defaultBillingAddress: DEFAULT_BILLING_ADDRESS_INDEX
       };
     }
 
@@ -172,9 +190,25 @@ function SignUpForm(): React.ReactElement {
     return true;
   };
 
+  useEffect(() => {
+    if (isDefaultAddress) {
+      setValue(`addresses.${1}.streetName`, values.addresses[0].streetName);
+      setValue(`addresses.${1}.streetNumber`, values.addresses[0].streetNumber);
+      setValue(`addresses.${1}.city`, values.addresses[0].city);
+      setValue(`addresses.${1}.postalCode`, values.addresses[0].postalCode);
+      setValue(`addresses.${1}.country`, values.addresses[0].country);
+    } else {
+      setValue(`addresses.${1}.streetName`, '');
+      setValue(`addresses.${1}.streetNumber`, '');
+      setValue(`addresses.${1}.city`, '');
+      setValue(`addresses.${1}.postalCode`, '');
+      setValue(`addresses.${1}.country`, '');
+    }
+  }, [isDefaultAddress, setValue, values.addresses]);
+
   return (
     <form className={styles.signUpForm} onSubmit={handleSubmit(onSubmit)}>
-      <span>Enter your details below</span>
+      <h1 className={styles.h1}>Enter your details below</h1>
 
       <div className={styles.inputContainer}>
         <input type="email" placeholder="Email" {...register('email', { validate: validateEmail })} />
@@ -206,7 +240,7 @@ function SignUpForm(): React.ReactElement {
         {errors.dateOfBirth && <div className={styles.error}>{errors.dateOfBirth.message}</div>}
       </div>
 
-      <span>Your Address:</span>
+      <h1 className={styles.h1}>Your Shipping Address:</h1>
       <div className={styles.inputsWrapper}>
         <div className={styles.inputContainer}>
           <input placeholder="Street Name" {...register(`addresses.${0}.streetName`, { validate: validateStreet })} />
@@ -271,6 +305,59 @@ function SignUpForm(): React.ReactElement {
         </span>
         <span>Set as default address.</span>
       </label>
+
+      <h1 className={styles.h1}>Your Billing Address:</h1>
+      <div className={styles.inputsWrapper}>
+        <div className={styles.inputContainer}>
+          <input placeholder="Street Name" {...register(`addresses.${1}.streetName`, { validate: validateStreet })} />
+          {errors.addresses?.[1]?.streetName && (
+            <div className={styles.error}>{errors.addresses[1].streetName.message}</div>
+          )}
+        </div>
+
+        <div className={styles.inputContainer}>
+          <input
+            placeholder="Street Number"
+            {...register(`addresses.${1}.streetNumber`, { validate: validateStreet })}
+          />
+          {errors.addresses?.[1]?.streetNumber && (
+            <div className={styles.error}>{errors.addresses[1].streetNumber.message}</div>
+          )}
+        </div>
+      </div>
+
+      <div className={styles.inputsWrapper}>
+        <div className={styles.inputContainer}>
+          <input placeholder="City" {...register(`addresses.${1}.city`, { validate: validateCity })} />
+          {errors.addresses?.[1]?.city && <div className={styles.error}>{errors.addresses[1].city.message}</div>}
+        </div>
+
+        <div className={styles.inputContainer}>
+          <input placeholder="Post code" {...register(`addresses.${1}.postalCode`, { validate: validatePostcode })} />
+          {errors.addresses?.[1]?.postalCode && (
+            <div className={styles.error}>{errors.addresses[1].postalCode.message}</div>
+          )}
+        </div>
+      </div>
+
+      <div className={styles.inputContainer}>
+        <Controller
+          name={`addresses.${1}.country`}
+          control={control}
+          defaultValue=""
+          rules={{ validate: validateCountry }}
+          render={({ field }) => (
+            <select {...field}>
+              <option value="" disabled hidden>
+                Select Country
+              </option>
+              <option value="DE">Germany</option>
+              <option value="US">United States</option>
+            </select>
+          )}
+        />
+        {errors.addresses?.[1]?.country && <div className={styles.error}>{errors.addresses[1].country.message}</div>}
+      </div>
 
       <div className={styles.messageContainer}>
         {isRegistered && <div className={styles.success}>Account successfully created!</div>}
