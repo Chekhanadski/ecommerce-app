@@ -14,16 +14,6 @@ function Header() {
     }
   }, [isOpen]);
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'visible';
-    }
-  }, [isOpen]);
-
   return (
     <header className={styles.header}>
       <div className={styles.headerWrapper}>
@@ -34,7 +24,7 @@ function Header() {
         <button type="button" onClick={() => setIsOpen(!isOpen)} className={styles.burger}>
           ☰
         </button>
-        <nav className={`${styles.headerNav} ${isOpen ? styles.open : ''}`}>
+        <nav className={`${styles.headerNav} ${isOpen ? styles.open : ''}`} />
           <button type="button" onClick={() => setIsOpen(false)} className={styles.closeButton}>
             ✖
           </button>
