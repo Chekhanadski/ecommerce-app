@@ -13,7 +13,7 @@ function SignUpForm(): React.ReactElement {
     register,
     handleSubmit,
     formState: { errors },
-    control,
+    control
   } = useForm<FormData>({
     mode: 'all',
     defaultValues: {
@@ -32,7 +32,7 @@ function SignUpForm(): React.ReactElement {
         }
       ],
       defaultShippingAddress: null,
-      defaultBillingAddress: null,
+      defaultBillingAddress: null
     }
   });
 
