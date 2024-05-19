@@ -40,7 +40,6 @@
 
 .headerSearch {
   width: 200px;
-  width: 200px;
 }
 
 .navLink {
@@ -72,7 +71,7 @@
   color: #ffffff;
 }
 
-@media screen and (max-width: 980px) {
+@media screen and (max-width: 900px) {
   .headerWrapper {
     margin: 0 20px;
   }

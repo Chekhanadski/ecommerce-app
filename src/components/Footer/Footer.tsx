@@ -8,7 +8,7 @@ function Footer() {
       <div>
         <p className={styles.footerText}>eCommerce project 2024.</p>
       </div>
-      <img className={styles.exclusiveLogo} src="/img/logo-exclusive-white.png" alt="Exclusive Logo" />
+      <img className={styles.exclusiveLogo} src="/img/logo-exclusive-white.png" alt="RSSchool Logo" />
     </footer>
   );
 }
