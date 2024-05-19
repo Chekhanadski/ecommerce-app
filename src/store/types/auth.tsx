@@ -14,6 +14,8 @@ export interface FormData {
   dateOfBirth: string;
   defaultShippingAddressKey?: string;
   addresses: Address[];
+  shippingAddresses: number[];
+  billingAddresses: number[];
   defaultShippingAddress?: number | null;
   defaultBillingAddress?: number | null;
 }
