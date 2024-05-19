@@ -1,0 +1,47 @@
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 160px;
+  height: 24px;
+  border-radius: 4px;
+  text-align: center;
+  font-style: normal;
+}
+
+button:hover {
+  background-color: hsl(0, 58%, 58%);
+}
+
+.notFoundPageLink {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.mainBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 140px;
+}
+
+.h1 {
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 110px;
+  line-height: 115px;
+  letter-spacing: 0.03em;
+  text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.h2 {
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.03em;
+  text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+}
