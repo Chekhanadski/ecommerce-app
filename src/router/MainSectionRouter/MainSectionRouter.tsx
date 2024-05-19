@@ -5,7 +5,6 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
 import LoginPage from '../../pages/LoginPage/LoginPage';
-import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import MainPage from '../../pages/MainPage/MainPage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 
