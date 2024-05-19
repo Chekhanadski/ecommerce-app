@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import RegistrationPage from '../../pages/RegistrationPage/RegistrationPage';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
+
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import MainPage from '../../pages/MainPage/MainPage';
+import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 
 function MainSectionRouter() {
   return (
