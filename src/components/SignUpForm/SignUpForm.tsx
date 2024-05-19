@@ -41,6 +41,8 @@ function SignUpForm(): React.ReactElement {
           country: ''
         }
       ],
+      shippingAddresses: [DEFAULT_SHIPPING_ADDRESS_INDEX],
+      billingAddresses: [],
       defaultShippingAddress: null,
       defaultBillingAddress: null
     }
@@ -54,9 +56,14 @@ function SignUpForm(): React.ReactElement {
   const [errorMessage, setErrorMessage] = useState('');
 
   const [isDefaultAddress, setIsDefaultAddress] = useState(false);
+  const [isAsBillingAddress, setIsAsBillingAddress] = useState(false);
 
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDefaultAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsDefaultAddress(event.target.checked);
+  };
+
+  const handleAsBillingAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsAsBillingAddress(event.target.checked);
   };
 
   const onSubmit = async (data: FormData) => {
@@ -65,15 +72,16 @@ function SignUpForm(): React.ReactElement {
     if (isDefaultAddress) {
       fullData = {
         ...data,
-        addresses: [data.addresses[0]],
+        addresses: isAsBillingAddress ? [data.addresses[0]] : data.addresses,
+        billingAddresses: [isAsBillingAddress ? DEFAULT_SHIPPING_ADDRESS_INDEX : DEFAULT_BILLING_ADDRESS_INDEX],
         defaultShippingAddress: DEFAULT_SHIPPING_ADDRESS_INDEX,
-        defaultBillingAddress: DEFAULT_SHIPPING_ADDRESS_INDEX
+        defaultBillingAddress: isAsBillingAddress ? DEFAULT_SHIPPING_ADDRESS_INDEX : DEFAULT_BILLING_ADDRESS_INDEX
       };
     } else {
       fullData = {
         ...data,
-        defaultShippingAddress: DEFAULT_SHIPPING_ADDRESS_INDEX,
-        defaultBillingAddress: DEFAULT_BILLING_ADDRESS_INDEX
+        addresses: isAsBillingAddress ? [data.addresses[0]] : data.addresses,
+        billingAddresses: [isAsBillingAddress ? DEFAULT_SHIPPING_ADDRESS_INDEX : DEFAULT_BILLING_ADDRESS_INDEX],
       };
     }
 
@@ -191,7 +199,7 @@ function SignUpForm(): React.ReactElement {
   };
 
   useEffect(() => {
-    if (isDefaultAddress) {
+    if (isAsBillingAddress) {
       setValue(`addresses.${1}.streetName`, values.addresses[0].streetName);
       setValue(`addresses.${1}.streetNumber`, values.addresses[0].streetNumber);
       setValue(`addresses.${1}.city`, values.addresses[0].city);
@@ -204,7 +212,7 @@ function SignUpForm(): React.ReactElement {
       setValue(`addresses.${1}.postalCode`, '');
       setValue(`addresses.${1}.country`, '');
     }
-  }, [isDefaultAddress, setValue, values.addresses]);
+  }, [isAsBillingAddress, setValue, values.addresses]);
 
   return (
     <form className={styles.signUpForm} onSubmit={handleSubmit(onSubmit)}>
@@ -293,18 +301,33 @@ function SignUpForm(): React.ReactElement {
         {errors.addresses?.[0]?.country && <div className={styles.error}>{errors.addresses[0].country.message}</div>}
       </div>
 
-      <label className={styles.checkboxLabel} htmlFor="defaultAddress">
-        <span>
-          <input
-            type="checkbox"
-            id="defaultAddress"
-            name="defaultAddress"
-            checked={isDefaultAddress}
-            onChange={handleCheckboxChange}
-          />
-        </span>
-        <span>Set as default address.</span>
-      </label>
+      <div className={styles.inputsWrapper}>
+        <label className={styles.checkboxLabel} htmlFor="defaultAddress">
+          <span>
+            <input
+              type="checkbox"
+              id="defaultAddress"
+              name="defaultAddress"
+              checked={isDefaultAddress}
+              onChange={handleDefaultAddressChange}
+            />
+          </span>
+          <span>Set as default address.</span>
+        </label>
+
+        <label className={styles.checkboxLabel} htmlFor="useAsBillingAddress">
+          <span>
+            <input
+              type="checkbox"
+              id="useAsBillingAddress"
+              name="useAsBillingAddress"
+              checked={isAsBillingAddress}
+              onChange={handleAsBillingAddressChange}
+            />
+          </span>
+          <span>Also use as billing address.</span>
+        </label>
+      </div>
 
       <h1 className={styles.h1}>Your Billing Address:</h1>
       <div className={styles.inputsWrapper}>
