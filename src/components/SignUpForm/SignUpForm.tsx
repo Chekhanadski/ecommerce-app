@@ -383,6 +383,12 @@ function SignUpForm(): React.ReactElement {
         {errorMessage && <div className={styles.serverError}>{errorMessage}</div>}
         <Button type="submit">Create Account</Button>
       </div>
+      <div className={styles.logInContainer}>
+        <span className="styles.logInText">Already have account?</span>
+        <a className={styles.logInLink} href="/login">
+          Log in
+        </a>
+      </div>
     </form>
   );
 }
