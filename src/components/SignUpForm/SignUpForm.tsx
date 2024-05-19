@@ -81,7 +81,7 @@ function SignUpForm(): React.ReactElement {
       fullData = {
         ...data,
         addresses: isAsBillingAddress ? [data.addresses[0]] : data.addresses,
-        billingAddresses: [isAsBillingAddress ? DEFAULT_SHIPPING_ADDRESS_INDEX : DEFAULT_BILLING_ADDRESS_INDEX],
+        billingAddresses: [isAsBillingAddress ? DEFAULT_SHIPPING_ADDRESS_INDEX : DEFAULT_BILLING_ADDRESS_INDEX]
       };
     }
 
@@ -199,19 +199,15 @@ function SignUpForm(): React.ReactElement {
   };
 
   useEffect(() => {
-    if (isAsBillingAddress) {
-      setValue(`addresses.${1}.streetName`, values.addresses[0].streetName);
-      setValue(`addresses.${1}.streetNumber`, values.addresses[0].streetNumber);
-      setValue(`addresses.${1}.city`, values.addresses[0].city);
-      setValue(`addresses.${1}.postalCode`, values.addresses[0].postalCode);
-      setValue(`addresses.${1}.country`, values.addresses[0].country);
-    } else {
-      setValue(`addresses.${1}.streetName`, '');
-      setValue(`addresses.${1}.streetNumber`, '');
-      setValue(`addresses.${1}.city`, '');
-      setValue(`addresses.${1}.postalCode`, '');
-      setValue(`addresses.${1}.country`, '');
-    }
+    const dataToSet = {
+      streetName: isAsBillingAddress ? values.addresses[0].streetName : '',
+      streetNumber: isAsBillingAddress ? values.addresses[0].streetNumber : '',
+      city: isAsBillingAddress ? values.addresses[0].city : '',
+      postalCode: isAsBillingAddress ? values.addresses[0].postalCode : '',
+      country: isAsBillingAddress ? values.addresses[0].country : ''
+    };
+
+    setValue(`addresses.${1}`, dataToSet);
   }, [isAsBillingAddress, setValue, values.addresses]);
 
   return (
