@@ -9,8 +9,12 @@ interface FormData {
   password: string;
 }
 
-export default function LoginForm(): React.ReactElement {
-  const { register, handleSubmit } = useForm<FormData>({
+export default function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormData>({
     mode: 'all',
     defaultValues: {
       email: '',
@@ -53,15 +57,17 @@ export default function LoginForm(): React.ReactElement {
   const onSubmit = (data: FormData) => data;
 
   return (
-    <form className={styles.signUpForm} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.loginForm} onSubmit={handleSubmit(onSubmit)}>
       <span>Enter your details below</span>
 
       <div className={styles.inputContainer}>
         <input type="email" placeholder="Email" {...register('email', { validate: validateEmail })} />
+        {errors.email && <div className={styles.error}>{errors.email.message}</div>}
       </div>
 
       <div className={styles.inputContainer}>
         <input type="password" placeholder="Password" {...register('password', { validate: validatePassword })} />
+        {errors.password && <div className={styles.error}>{errors.password.message}</div>}
       </div>
 
       <Button type="submit">Login</Button>
