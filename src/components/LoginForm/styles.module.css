@@ -35,6 +35,30 @@ select:not(:focus) {
   color: #808080;
 }
 
+.logInContainer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.logInLink {
+  position: relative;
+  text-decoration: none;
+  font-weight: 600;
+  color: #000000;
+}
+
+.logInLink::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #000000;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+}
+
 .messageContainer {
   position: relative;
 }
