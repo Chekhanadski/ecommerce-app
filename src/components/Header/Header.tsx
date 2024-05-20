@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Link } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
+import state from '../../store/appState';
 import styles from './styles.module.css';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const snapshot = useSnapshot(state);
 
   useEffect(() => {
     if (isOpen) {
@@ -14,13 +16,17 @@ function Header() {
     }
   }, [isOpen]);
 
+  const handleLogout = () => {
+    state.logout();
+    setIsOpen(false);
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.headerWrapper}>
         <Link onClick={() => setIsOpen(false)} className={styles.nameShopLink} to="/">
           <div className={styles.nameShop}>
             <img className={styles.exclusiveLogo} src="/img/logo-exclusive-black.png" alt="Exclusive Logo" />
-
             <span>Exclusive</span>
           </div>
         </Link>
@@ -32,21 +38,24 @@ function Header() {
             ✖
           </button>
           <ul className={styles.headerNavList}>
-            <li>
-              <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/">
-                Home
+            {!snapshot.isAuthorized ? (
+              <>
+                <li>
+                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/login">
+                    Sign In
+                  </Link>
+                </li>
+                <li>
+                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/register">
+                    Sign Up
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <Link onClick={handleLogout} className={styles.navLink} to="/">
+                Log out
               </Link>
-            </li>
-            <li>
-              <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/login">
-                Sign In
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/register">
-                Sign Up
-              </Link>
-            </li>
+            )}
           </ul>
         </nav>
         <div className={styles.headerSearch} />
