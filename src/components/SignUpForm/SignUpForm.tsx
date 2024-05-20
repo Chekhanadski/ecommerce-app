@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import state from '../../store/types/appState';
 
 import * as regexps from '../../constants/regexps';
 import { signUp } from '../../api/auth';
@@ -55,7 +56,6 @@ function SignUpForm(): React.ReactElement {
   const [dobActivated, setDobActivated] = useState(false);
   const handleDobFocus = () => setDobActivated(true);
 
-  const [isRegistered, setIsRegistered] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const [isDefaultAddress, setIsDefaultAddress] = useState(false);
@@ -91,9 +91,9 @@ function SignUpForm(): React.ReactElement {
     const result = await signUp(fullData);
     if (typeof result === 'string') {
       setErrorMessage(result);
-      setIsRegistered(false);
+      state.isAuthorized = false;
     } else {
-      setIsRegistered(result);
+      state.isAuthorized = true;
       setErrorMessage('');
     }
   };
@@ -382,7 +382,7 @@ function SignUpForm(): React.ReactElement {
       </div>
 
       <div className={styles.messageContainer}>
-        {isRegistered && <div className={styles.success}>Account successfully created!</div>}
+        {state.isAuthorized && <div className={styles.success}>Account successfully created!</div>}
         {errorMessage && <div className={styles.serverError}>{errorMessage}</div>}
         <Button type="submit">Create Account</Button>
       </div>
