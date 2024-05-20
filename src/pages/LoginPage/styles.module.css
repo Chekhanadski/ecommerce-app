@@ -6,9 +6,9 @@
 .formLoginBlock {
   display: flex;
   justify-content: right;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
-  margin: 0 135px 0 0;
+  margin: 20px 135px 0 0;
 }
 
 .h1 {
@@ -16,4 +16,15 @@
   font-size: 36px;
   font-weight: 500;
   letter-spacing: 1px;
+}
+
+@media screen and (max-width: 1370px) {
+  .mainImg {
+    display: none;
+  }
+
+  .formLoginBlock {
+    justify-content: center;
+    margin: 10px;
+  }
 }

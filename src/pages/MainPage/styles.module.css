@@ -1,6 +1,7 @@
 .mainSection {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 40px;
 }
 
 .categories {
@@ -9,7 +10,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 15px;
 }
 
 .categoryLink {
@@ -41,4 +42,15 @@
 .placeholderBanner img {
   flex: 1;
   max-width: 40%;
+}
+
+@media screen and (max-width: 900px) {
+  .placeholderBanner {
+    display: none;
+  }
+
+  .formLoginBlock {
+    justify-content: center;
+    margin: 10px;
+  }
 }

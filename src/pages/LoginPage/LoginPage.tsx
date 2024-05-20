@@ -6,11 +6,11 @@ function RegistrationPage() {
   return (
     <main className={styles.mainBlock}>
       <div>
-        <img src="/img/main-img.jpg" alt="Main" />
+        <img className={styles.mainImg} src="/img/main-img.jpg" alt="Main" />
       </div>
       <div className={styles.formLoginBlock}>
         <div>
-          <h1 className={styles.h1}>Login to your account</h1>
+          <h1 className={styles.h1}>Log in to Exclusive</h1>
           <LoginForm />
         </div>
       </div>
