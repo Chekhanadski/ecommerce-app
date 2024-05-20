@@ -1,7 +1,7 @@
 import { proxy } from 'valtio';
 
 const state = proxy({
-  isAuthorized: true,
+  isAuthorized: false,
   logout() {
     this.isAuthorized = false;
   }
