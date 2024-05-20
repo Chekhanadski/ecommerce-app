@@ -18,12 +18,13 @@
   letter-spacing: 1px;
 }
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1370px) {
   .mainImg {
     display: none;
   }
+
   .formSignUpBlock {
     justify-content: center;
-    margin: 0;
+    margin: 10px;
   }
 }

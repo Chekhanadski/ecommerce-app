@@ -1,17 +1,12 @@
-button {
+/* button {
   display: flex;
   justify-content: center;
-  align-items: center;
-  max-width: 160px;
+  align-items: center; 
   height: 24px;
   border-radius: 4px;
   text-align: center;
   font-style: normal;
-}
-
-button:hover {
-  background-color: hsl(0, 58%, 58%);
-}
+} */
 
 .notFoundPageLink {
   display: flex;
