@@ -3,18 +3,15 @@ import { useForm } from 'react-hook-form';
 import Button from '../Button/Button';
 import styles from './styles.module.css';
 import * as regexps from '../../constants/regexps';
-
-interface FormData {
-  email: string;
-  password: string;
-}
+import { loginUser } from '../../api/auth';
+import { LoginData } from '../../store/types/auth';
 
 export default function LoginForm() {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<FormData>({
+  } = useForm<LoginData>({
     mode: 'all',
     defaultValues: {
       email: '',
@@ -54,7 +51,9 @@ export default function LoginForm() {
     return undefined;
   };
 
-  const onSubmit = (data: FormData) => data;
+  const onSubmit = async (data: LoginData) => {
+    await loginUser(data);
+  };
 
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit(onSubmit)}>
