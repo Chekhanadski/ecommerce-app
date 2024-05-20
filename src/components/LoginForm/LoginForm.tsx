@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import Button from '../Button/Button';
 import styles from './styles.module.css';
 import * as regexps from '../../constants/regexps';
@@ -22,11 +23,17 @@ export default function LoginForm() {
   const [loginError, setLoginError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
 
+  const navigate = useNavigate();
+  const redirectToMain = () => {
+    navigate('/');
+  };
+
   const onSubmit = async (data: LoginData) => {
     try {
       await loginUser(data);
       setLoginError('');
       setLoginSuccess(true);
+      redirectToMain();
     } catch (error) {
       if (error instanceof Error) {
         setLoginError(error.message);
