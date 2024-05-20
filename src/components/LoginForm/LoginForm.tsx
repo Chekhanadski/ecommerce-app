@@ -105,6 +105,12 @@ export default function LoginForm() {
         <Button type="submit">Log In</Button>
       </div>
 
+      <div className={styles.messageContainer}>
+        {loginError && <div className={styles.serverError}>{loginError}</div>}
+        {loginSuccess && <div className={styles.success}>Login successful!</div>}
+        <Button type="submit">Log In</Button>
+      </div>
+
       <div className={styles.logInContainer}>
         <span className="styles.logInText">Haven&apos;t registered yet?</span>
         <Link className={styles.logInLink} to="/register">
