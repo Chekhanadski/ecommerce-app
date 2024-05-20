@@ -57,6 +57,7 @@ select:not(:focus) {
   position: absolute;
   bottom: -5px;
   left: 0;
+}
 
 .messageContainer {
   position: relative;
