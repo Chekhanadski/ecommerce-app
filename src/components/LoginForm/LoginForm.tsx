@@ -71,7 +71,7 @@ export default function LoginForm() {
 
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit(onSubmit)}>
-      <span>Enter your details below</span>
+      <h1 className={styles.h1}>Enter your details below</h1>
 
       <div className={styles.inputContainer}>
         <input type="email" placeholder="Email" {...register('email', { validate: validateEmail })} />
