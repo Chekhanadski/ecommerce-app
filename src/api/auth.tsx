@@ -1,4 +1,4 @@
-import { FormData } from '../store/types/auth';
+import { FormData, LoginData } from '../store/types/auth';
 
 export async function getAccessToken() {
   try {
@@ -22,6 +22,28 @@ export async function getAccessToken() {
       throw new Error('An unknown error occurred while getting the access token');
     }
   }
+}
+
+export async function loginUser(data: LoginData) {
+  const response = await fetch(
+    'https://auth.europe-west1.gcp.commercetools.com/oauth/e-commerce-project/customers/token',
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${btoa('dpVH1yIfwBBTMqhnk6jS8bsZ:Hco86YSJUnoZiE8bhDWlAoU4X48pUEe-')}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `grant_type=password&username=${data.email}&password=${data.password}&scope=manage_customers:e-commerce-project`
+    }
+  );
+
+  const responseData = await response.json();
+
+  if (!response.ok) {
+    throw new Error('Incorrect email or password');
+  }
+
+  return responseData;
 }
 
 export async function signUp(data: FormData) {

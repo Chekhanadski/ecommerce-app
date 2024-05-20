@@ -1,27 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Button from '../Button/Button';
 import styles from './styles.module.css';
 import * as regexps from '../../constants/regexps';
-
-interface FormData {
-  email: string;
-  password: string;
-}
+import { loginUser } from '../../api/auth';
+import { LoginData } from '../../store/types/auth';
 
 export default function LoginForm() {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<FormData>({
+  } = useForm<LoginData>({
     mode: 'all',
     defaultValues: {
       email: '',
       password: ''
     }
   });
+
+  const [loginError, setLoginError] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState(false);
+
+  const navigate = useNavigate();
+  const redirectToMain = () => {
+    navigate('/');
+  };
+
+  const onSubmit = async (data: LoginData) => {
+    try {
+      await loginUser(data);
+      setLoginError('');
+      setLoginSuccess(true);
+      redirectToMain();
+    } catch (error) {
+      if (error instanceof Error) {
+        setLoginError(error.message);
+        setLoginSuccess(false);
+      } else {
+        setLoginError('An error occurred');
+      }
+    }
+  };
 
   const validateEmail = (emailString: string) => {
     if (emailString.length && !regexps.emailRegexp.test(emailString.toLowerCase())) {
@@ -55,11 +76,9 @@ export default function LoginForm() {
     return undefined;
   };
 
-  const onSubmit = (data: FormData) => data;
-
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit(onSubmit)}>
-      <span>Enter your details below</span>
+      <h1 className={styles.h1}>Enter your details below</h1>
 
       <div className={styles.inputContainer}>
         <input type="email" placeholder="Email" {...register('email', { validate: validateEmail })} />
@@ -71,7 +90,12 @@ export default function LoginForm() {
         {errors.password && <div className={styles.error}>{errors.password.message}</div>}
       </div>
 
-      <Button type="submit">Log In</Button>
+      <div className={styles.messageContainer}>
+        {loginError && <div className={styles.serverError}>{loginError}</div>}
+        {loginSuccess && <div className={styles.success}>Login successful!</div>}
+        <Button type="submit">Log In</Button>
+      </div>
+
       <div className={styles.logInContainer}>
         <span className="styles.logInText">Haven&apos;t registered yet?</span>
         <Link className={styles.logInLink} to="/register">

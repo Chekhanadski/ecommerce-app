@@ -58,3 +58,45 @@ select:not(:focus) {
   bottom: -5px;
   left: 0;
 }
+
+.messageContainer {
+  position: relative;
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.serverError {
+  position: absolute;
+  top: -25px;
+  display: flex;
+  justify-content: center;
+  color: #ff0000;
+  font-size: 13px;
+  text-align: center;
+  width: 100%;
+  animation: grow 0.5s ease-out;
+}
+
+.success {
+  position: absolute;
+  top: -25px;
+  display: flex;
+  justify-content: center;
+  color: #00a600;
+  font-size: 15px;
+  text-align: center;
+  width: 100%;
+  animation: grow 0.5s ease-out;
+}
+
+.h1 {
+  font-size: 20px;
+  font-weight: 500;
+}

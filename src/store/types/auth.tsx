@@ -19,3 +19,8 @@ export interface FormData {
   defaultShippingAddress?: number | null;
   defaultBillingAddress?: number | null;
 }
+
+export interface LoginData {
+  email: string;
+  password: string;
+}
