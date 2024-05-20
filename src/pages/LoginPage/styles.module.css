@@ -6,7 +6,7 @@
 .formLoginBlock {
   display: flex;
   justify-content: right;
-  align-items:flex-start;
+  align-items: flex-start;
   width: 100%;
   margin: 20px 135px 0 0;
 }
