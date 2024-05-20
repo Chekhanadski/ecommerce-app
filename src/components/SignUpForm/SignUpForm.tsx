@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import Button from '../Button/Button';
-import styles from './styles.module.css';
+import { Link } from 'react-router-dom';
+
 import * as regexps from '../../constants/regexps';
 import { signUp } from '../../api/auth';
 import { FormData } from '../../store/types/auth';
+
+import Button from '../Button/Button';
+import styles from './styles.module.css';
 
 const DEFAULT_SHIPPING_ADDRESS_INDEX = 0;
 const DEFAULT_BILLING_ADDRESS_INDEX = 1;
@@ -385,9 +388,9 @@ function SignUpForm(): React.ReactElement {
       </div>
       <div className={styles.logInContainer}>
         <span className="styles.logInText">Already have account?</span>
-        <a className={styles.logInLink} href="/login">
+        <Link className={styles.logInLink} to="/login">
           Log in
-        </a>
+        </Link>
       </div>
     </form>
   );
