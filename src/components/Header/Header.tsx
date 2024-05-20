@@ -41,6 +41,11 @@ function Header() {
             {!snapshot.isAuthorized ? (
               <>
                 <li>
+                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/">
+                    Home
+                  </Link>
+                </li>
+                <li>
                   <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/login">
                     Sign In
                   </Link>
@@ -52,9 +57,16 @@ function Header() {
                 </li>
               </>
             ) : (
-              <Link onClick={handleLogout} className={styles.navLink} to="/">
-                Log out
-              </Link>
+              <>
+                <li>
+                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/">
+                    Home
+                  </Link>
+                </li>
+                <Link onClick={handleLogout} className={styles.navLink} to="/">
+                  Log out
+                </Link>
+              </>
             )}
           </ul>
         </nav>
