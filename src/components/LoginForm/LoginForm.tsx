@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
+import { useSnapshot } from 'valtio';
+import state from '../../store/types/appState';
 import Button from '../Button/Button';
 import styles from './styles.module.css';
 import * as regexps from '../../constants/regexps';
@@ -24,16 +26,23 @@ export default function LoginForm() {
   const [loginSuccess, setLoginSuccess] = useState(false);
 
   const navigate = useNavigate();
-  const redirectToMain = () => {
-    navigate('/');
-  };
+
+  // check if user is already registered
+  const snap = useSnapshot(state);
+
+  useEffect(() => {
+    if (snap.isAuthorized) {
+      navigate('/');
+    }
+  }, [snap.isAuthorized, navigate]);
 
   const onSubmit = async (data: LoginData) => {
     try {
       await loginUser(data);
       setLoginError('');
       setLoginSuccess(true);
-      redirectToMain();
+      state.isAuthorized = true;
+      navigate('/');
     } catch (error) {
       if (error instanceof Error) {
         setLoginError(error.message);
