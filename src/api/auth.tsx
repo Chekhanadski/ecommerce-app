@@ -38,6 +38,11 @@ export async function loginUser(data: LoginData) {
   );
 
   const responseData = await response.json();
+
+  if (!response.ok) {
+    throw new Error('Incorrect email or password');
+  }
+
   return responseData;
 }
 

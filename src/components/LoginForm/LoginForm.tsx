@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '../Button/Button';
 import styles from './styles.module.css';
@@ -18,6 +18,24 @@ export default function LoginForm() {
       password: ''
     }
   });
+
+  const [loginError, setLoginError] = useState('');
+  const [loginSuccess, setLoginSuccess] = useState(false);
+
+  const onSubmit = async (data: LoginData) => {
+    try {
+      await loginUser(data);
+      setLoginError('');
+      setLoginSuccess(true);
+    } catch (error) {
+      if (error instanceof Error) {
+        setLoginError(error.message);
+        setLoginSuccess(false);
+      } else {
+        setLoginError('An error occurred');
+      }
+    }
+  };
 
   const validateEmail = (emailString: string) => {
     if (emailString.length && !regexps.emailRegexp.test(emailString.toLowerCase())) {
@@ -51,10 +69,6 @@ export default function LoginForm() {
     return undefined;
   };
 
-  const onSubmit = async (data: LoginData) => {
-    await loginUser(data);
-  };
-
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit(onSubmit)}>
       <span>Enter your details below</span>
@@ -69,7 +83,11 @@ export default function LoginForm() {
         {errors.password && <div className={styles.error}>{errors.password.message}</div>}
       </div>
 
-      <Button type="submit">Login</Button>
+      <div className={styles.messageContainer}>
+        {loginError && <div className={styles.serverError}>{loginError}</div>}
+        {loginSuccess && <div className={styles.success}>Login successful!</div>}
+        <Button type="submit">Login</Button>
+      </div>
     </form>
   );
 }
