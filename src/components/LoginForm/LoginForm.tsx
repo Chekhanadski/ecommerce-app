@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Button from '../Button/Button';
 import styles from './styles.module.css';
 import * as regexps from '../../constants/regexps';
@@ -91,7 +90,12 @@ export default function LoginForm() {
         {errors.password && <div className={styles.error}>{errors.password.message}</div>}
       </div>
 
-      <Button type="submit">Log In</Button>
+      <div className={styles.messageContainer}>
+        {loginError && <div className={styles.serverError}>{loginError}</div>}
+        {loginSuccess && <div className={styles.success}>Login successful!</div>}
+        <Button type="submit">Log In</Button>
+      </div>
+
       <div className={styles.logInContainer}>
         <span className="styles.logInText">Haven&apos;t registered yet?</span>
         <Link className={styles.logInLink} to="/register">
