@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
-import state from '../../store/types/appState';
+import state from '../../store/appState';
 import Button from '../Button/Button';
 import styles from './styles.module.css';
 import * as regexps from '../../constants/regexps';
@@ -42,6 +42,7 @@ export default function LoginForm() {
       setLoginError('');
       setLoginSuccess(true);
       state.isAuthorized = true;
+      console.log(state)
       navigate('/');
     } catch (error) {
       if (error instanceof Error) {
@@ -97,12 +98,6 @@ export default function LoginForm() {
       <div className={styles.inputContainer}>
         <input type="password" placeholder="Password" {...register('password', { validate: validatePassword })} />
         {errors.password && <div className={styles.error}>{errors.password.message}</div>}
-      </div>
-
-      <div className={styles.messageContainer}>
-        {loginError && <div className={styles.serverError}>{loginError}</div>}
-        {loginSuccess && <div className={styles.success}>Login successful!</div>}
-        <Button type="submit">Log In</Button>
       </div>
 
       <div className={styles.messageContainer}>
