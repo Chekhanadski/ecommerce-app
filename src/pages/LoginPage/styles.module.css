@@ -8,7 +8,11 @@
   justify-content: right;
   align-items: flex-start;
   width: 100%;
-  margin: 20px 135px 0 0;
+  margin: 10px 135px 0 0;
+}
+
+.formLogin {
+  width: 410px;
 }
 
 .h1 {
@@ -26,5 +30,11 @@
   .formLoginBlock {
     justify-content: center;
     margin: 10px;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .formLogin {
+    width: 100%;
   }
 }

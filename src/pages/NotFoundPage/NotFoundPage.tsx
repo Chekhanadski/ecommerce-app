@@ -8,8 +8,10 @@ function NotFoundPage() {
     <main className={styles.mainBlock}>
       <h1 className={styles.h1}>404 Not Found</h1>
       <h2 className={styles.h2}>The page you visited was not found. You may go to the home page.</h2>
-      <Link to="/" className={styles.notFoundPageLink}>
-        <Button type="button">Back to Home</Button>
+      <Link className={styles.notFoundPageLink} to="/">
+        <Button type="button" style={{ width: ' 160px' }}>
+          Back to Home
+        </Button>
       </Link>
     </main>
   );
