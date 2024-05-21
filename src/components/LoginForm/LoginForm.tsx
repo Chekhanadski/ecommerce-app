@@ -26,6 +26,9 @@ export default function LoginForm() {
   const [loginSuccess, setLoginSuccess] = useState(false);
 
   const navigate = useNavigate();
+  const redirectToMain = () => {
+    navigate('/');
+  };
 
   // check if user is already registered
   const snap = useSnapshot(state);
@@ -43,6 +46,7 @@ export default function LoginForm() {
       setLoginSuccess(true);
       state.isAuthorized = true;
       navigate('/');
+      redirectToMain();
     } catch (error) {
       if (error instanceof Error) {
         setLoginError(error.message);
