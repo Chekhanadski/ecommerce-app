@@ -42,7 +42,6 @@ export default function LoginForm() {
       setLoginError('');
       setLoginSuccess(true);
       state.isAuthorized = true;
-      console.log(state)
       navigate('/');
     } catch (error) {
       if (error instanceof Error) {
