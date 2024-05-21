@@ -39,6 +39,9 @@ export async function loginUser(data: LoginData) {
 
   const responseData = await response.json();
 
+  // save access token to local storage
+  localStorage.setItem('accessToken', responseData.access_token);
+
   if (!response.ok) {
     throw new Error('Incorrect email or password');
   }
