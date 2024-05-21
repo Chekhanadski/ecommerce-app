@@ -63,9 +63,21 @@ function Header() {
                     Home
                   </Link>
                 </li>
-                <Link onClick={handleLogout} className={styles.navLink} to="/">
-                  Log out
-                </Link>
+                <li>
+                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/login">
+                    Sign In
+                  </Link>
+                </li>
+                <li>
+                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/register">
+                    Sign Up
+                  </Link>
+                </li>
+                <li>
+                  <Link onClick={handleLogout} className={styles.navLink} to="/">
+                    Log out
+                  </Link>
+                </li>
               </>
             )}
           </ul>
