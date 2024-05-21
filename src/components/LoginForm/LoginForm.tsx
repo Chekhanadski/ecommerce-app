@@ -89,8 +89,6 @@ export default function LoginForm() {
     return undefined;
   };
 
-  const onSubmit = (data: FormData) => data;
-
   return (
     <form className={styles.loginForm} onSubmit={handleSubmit(onSubmit)}>
       <h1 className={styles.h1}>Enter your details below</h1>
