@@ -62,6 +62,8 @@ function SignUpForm(): React.ReactElement {
   const [isDefaultAddress, setIsDefaultAddress] = useState(false);
   const [isAsBillingAddress, setIsAsBillingAddress] = useState(false);
 
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+
   const handleDefaultAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsDefaultAddress(event.target.checked);
   };
@@ -90,15 +92,21 @@ function SignUpForm(): React.ReactElement {
     }
 
     const result = await signUp(fullData);
-    if (typeof result === 'string') {
-      setErrorMessage(result);
-      state.isAuthorized = false;
-    } else {
-      state.isAuthorized = true;
-      setErrorMessage('');
+  if (typeof result === 'string') {
+    setErrorMessage(result);
+    state.isAuthorized = false;
+  } else {
+    state.isAuthorized = true;
+    setErrorMessage('');
+    setRegistrationSuccess(true);
+    setTimeout(() => {
       navigate('/');
-    }
-  };
+    }, 1000);
+    setTimeout(() => {
+      setRegistrationSuccess(false);
+    }, 2000);
+  }
+};
 
   const validateEmail = (emailString: string) => {
     if (emailString.length && !regexps.emailRegexp.test(emailString.toLowerCase())) {
@@ -384,7 +392,8 @@ function SignUpForm(): React.ReactElement {
       </div>
 
       <div className={styles.messageContainer}>
-        {state.isAuthorized && <div className={styles.success}>Account successfully created!</div>}
+      {registrationSuccess && <div className={styles.success}>Account successfully created!</div>}
+
         {errorMessage && <div className={styles.serverError}>{errorMessage}</div>}
         <Button type="submit">Create Account</Button>
       </div>
