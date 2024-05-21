@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import state from '../../store/appState';
 
 import * as regexps from '../../constants/regexps';
@@ -52,6 +52,7 @@ function SignUpForm(): React.ReactElement {
     }
   });
   const values = getValues();
+  const navigate = useNavigate();
 
   const [dobActivated, setDobActivated] = useState(false);
   const handleDobFocus = () => setDobActivated(true);
@@ -60,6 +61,8 @@ function SignUpForm(): React.ReactElement {
 
   const [isDefaultAddress, setIsDefaultAddress] = useState(false);
   const [isAsBillingAddress, setIsAsBillingAddress] = useState(false);
+
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
   const handleDefaultAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsDefaultAddress(event.target.checked);
@@ -95,6 +98,13 @@ function SignUpForm(): React.ReactElement {
     } else {
       state.isAuthorized = true;
       setErrorMessage('');
+      setRegistrationSuccess(true);
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
+      setTimeout(() => {
+        setRegistrationSuccess(false);
+      }, 2000);
     }
   };
 
@@ -382,7 +392,8 @@ function SignUpForm(): React.ReactElement {
       </div>
 
       <div className={styles.messageContainer}>
-        {state.isAuthorized && <div className={styles.success}>Account successfully created!</div>}
+        {registrationSuccess && <div className={styles.success}>Account successfully created!</div>}
+
         {errorMessage && <div className={styles.serverError}>{errorMessage}</div>}
         <Button type="submit">Create Account</Button>
       </div>
