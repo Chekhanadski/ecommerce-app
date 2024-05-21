@@ -24,6 +24,26 @@ export async function getAccessToken() {
   }
 }
 
+export async function authenticateUser(data: LoginData, accessToken: string) {
+  const url = 'https://api.europe-west1.gcp.commercetools.com/e-commerce-project/login/';
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+
+  const responseData = await response.json();
+
+  if (!response.ok) {
+    throw new Error('Login failed');
+  }
+
+  return responseData;
+}
+
 export async function loginUser(data: LoginData) {
   const response = await fetch(
     'https://auth.europe-west1.gcp.commercetools.com/oauth/e-commerce-project/customers/token',
@@ -39,11 +59,16 @@ export async function loginUser(data: LoginData) {
 
   const responseData = await response.json();
 
+  // save access token to local storage
+  localStorage.setItem('accessToken', responseData.access_token);
+
   if (!response.ok) {
     throw new Error('Incorrect email or password');
   }
 
-  return responseData;
+  const loginData = await authenticateUser(data, responseData.access_token);
+
+  return loginData;
 }
 
 export async function signUp(data: FormData) {
@@ -82,7 +107,12 @@ export async function signUp(data: FormData) {
     const responseData = await response.json();
 
     if (responseData) {
-      return true;
+      const loginData = {
+        email: data.email,
+        password: data.password
+      };
+      const userLoginData = await authenticateUser(loginData, accessToken);
+      return userLoginData;
     }
     return false;
   } catch (error) {
