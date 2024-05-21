@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import state from '../../store/appState';
 
 import * as regexps from '../../constants/regexps';
@@ -52,6 +52,7 @@ function SignUpForm(): React.ReactElement {
     }
   });
   const values = getValues();
+  const navigate = useNavigate();
 
   const [dobActivated, setDobActivated] = useState(false);
   const handleDobFocus = () => setDobActivated(true);
@@ -95,6 +96,7 @@ function SignUpForm(): React.ReactElement {
     } else {
       state.isAuthorized = true;
       setErrorMessage('');
+      navigate('/');
     }
   };
 
