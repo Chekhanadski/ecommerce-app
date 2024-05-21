@@ -92,21 +92,21 @@ function SignUpForm(): React.ReactElement {
     }
 
     const result = await signUp(fullData);
-  if (typeof result === 'string') {
-    setErrorMessage(result);
-    state.isAuthorized = false;
-  } else {
-    state.isAuthorized = true;
-    setErrorMessage('');
-    setRegistrationSuccess(true);
-    setTimeout(() => {
-      navigate('/');
-    }, 1000);
-    setTimeout(() => {
-      setRegistrationSuccess(false);
-    }, 2000);
-  }
-};
+    if (typeof result === 'string') {
+      setErrorMessage(result);
+      state.isAuthorized = false;
+    } else {
+      state.isAuthorized = true;
+      setErrorMessage('');
+      setRegistrationSuccess(true);
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
+      setTimeout(() => {
+        setRegistrationSuccess(false);
+      }, 2000);
+    }
+  };
 
   const validateEmail = (emailString: string) => {
     if (emailString.length && !regexps.emailRegexp.test(emailString.toLowerCase())) {
@@ -392,7 +392,7 @@ function SignUpForm(): React.ReactElement {
       </div>
 
       <div className={styles.messageContainer}>
-      {registrationSuccess && <div className={styles.success}>Account successfully created!</div>}
+        {registrationSuccess && <div className={styles.success}>Account successfully created!</div>}
 
         {errorMessage && <div className={styles.serverError}>{errorMessage}</div>}
         <Button type="submit">Create Account</Button>
