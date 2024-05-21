@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import state from '../../store/types/appState';
+import state from '../../store/appState';
 
 import * as regexps from '../../constants/regexps';
 import { signUp } from '../../api/auth';
