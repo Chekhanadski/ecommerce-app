@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './styles.module.css';
 
 const categories = [
-  'Woman’s Fashion',
-  'Men’s Fashion',
+  "Woman's Fashion",
+  "Men's Fashion",
   'Electronics',
   'Home & Lifestyle',
   'Medicine',
   'Sports & Outdoor',
-  'Baby’s & Toys',
+  "Baby's & Toys",
   'Groceries & Pets',
   'Health & Beauty'
 ];
@@ -18,9 +18,9 @@ function MainPage() {
     <div className={styles.mainSection}>
       <div className={styles.categories}>
         {categories.map((category) => (
-          <div key={category} className={styles.categoryLink}>
+          <a key={category} href="placeholder" className={styles.categoryLink}>
             {category}
-          </div>
+          </a>
         ))}
       </div>
       <div className={styles.placeholderBanner}>

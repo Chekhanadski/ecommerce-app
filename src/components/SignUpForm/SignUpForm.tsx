@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import state from '../../store/appState';
@@ -63,6 +64,12 @@ function SignUpForm(): React.ReactElement {
   const [isAsBillingAddress, setIsAsBillingAddress] = useState(false);
 
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
   const handleDefaultAddressChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsDefaultAddress(event.target.checked);
@@ -232,8 +239,22 @@ function SignUpForm(): React.ReactElement {
         {errors.email && <div className={styles.error}>{errors.email.message}</div>}
       </div>
 
-      <div className={styles.inputContainer}>
+      {/* <div className={styles.inputContainer}>
         <input type="password" placeholder="Password" {...register('password', { validate: validatePassword })} />
+        {errors.password && <div className={styles.error}>{errors.password.message}</div>}
+      </div> */}
+
+      <div className={styles.inputContainer}>
+        <div className={styles.inputPasswordContainer}>
+          <input
+            type={passwordVisible ? 'text' : 'password'}
+            placeholder="Password"
+            {...register('password', { validate: validatePassword })}
+          />
+          <button type="button" onClick={togglePasswordVisibility} className={styles.eyeIcon}>
+            {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        </div>
         {errors.password && <div className={styles.error}>{errors.password.message}</div>}
       </div>
 

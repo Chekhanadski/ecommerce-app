@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
@@ -24,6 +25,11 @@ export default function LoginForm() {
 
   const [loginError, setLoginError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
 
   const navigate = useNavigate();
   const redirectToMain = () => {
@@ -99,7 +105,16 @@ export default function LoginForm() {
       </div>
 
       <div className={styles.inputContainer}>
-        <input type="password" placeholder="Password" {...register('password', { validate: validatePassword })} />
+        <div className={styles.inputPasswordContainer}>
+          <input
+            type={passwordVisible ? 'text' : 'password'}
+            placeholder="Password"
+            {...register('password', { validate: validatePassword })}
+          />
+          <button type="button" onClick={togglePasswordVisibility} className={styles.eyeIcon}>
+            {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        </div>
         {errors.password && <div className={styles.error}>{errors.password.message}</div>}
       </div>
 

@@ -100,3 +100,13 @@ select:not(:focus) {
   font-size: 20px;
   font-weight: 500;
 }
+
+.inputPasswordContainer {
+  display: flex;
+}
+
+.eyeIcon {
+  background-color: #ffffff;
+  border: none;
+  border-bottom: 1px solid rgb(190, 190, 190);
+}
