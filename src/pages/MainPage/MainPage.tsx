@@ -18,9 +18,9 @@ function MainPage() {
     <div className={styles.mainSection}>
       <div className={styles.categories}>
         {categories.map((category) => (
-          <a key={category} href="placeholder" className={styles.categoryLink}>
+          <div key={category} className={styles.categoryLink}>
             {category}
-          </a>
+          </div>
         ))}
       </div>
       <div className={styles.placeholderBanner}>
