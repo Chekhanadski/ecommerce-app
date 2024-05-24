@@ -1,0 +1,21 @@
+.button {
+  padding: 16px;
+  color: #ffffff;
+  background-color: #db4444;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.button:active {
+  transform: scale(0.99);
+}
+
+.button:disabled {
+  background-color: #a8a8a8;
+  cursor: not-allowed;
+}
+
+.button:active:disabled {
+  transform: none;
+}

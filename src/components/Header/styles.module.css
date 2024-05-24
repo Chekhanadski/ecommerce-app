@@ -1,0 +1,130 @@
+.header {
+  display: flex;
+  height: 80px;
+  width: 100%;
+  margin-bottom: 60px;
+  border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 0 135px;
+}
+
+.nameShop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.exclusiveLogo {
+  height: 60px;
+}
+
+.headerNav {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.headerNavList {
+  display: flex;
+  gap: 48px;
+  margin: 0;
+  list-style-type: none;
+}
+
+.headerSearch {
+  width: 200px;
+}
+
+.navLink {
+  color: #000000;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  text-decoration-line: underline;
+}
+
+.burger {
+  display: none;
+  margin-right: 10px;
+  font-size: 40px;
+  border: none;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 22px;
+  background: none;
+  border: none;
+  font-size: 40px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.nameShopLink {
+  text-decoration: none;
+  color: black;
+}
+
+@media screen and (max-width: 970px) {
+  .headerWrapper {
+    margin: 0 20px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .headerWrapper {
+    margin: 0 10px;
+    z-index: 1;
+  }
+
+  .burger {
+    display: block;
+  }
+
+  .headerNav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 120px;
+    font-size: 30px;
+    font-weight: 600;
+    display: none;
+  }
+
+  .headerNav.open {
+    display: flex;
+  }
+
+  .headerNavList {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+
+  .navLink {
+    color: #ffffff;
+  }
+
+  .headerSearch {
+    display: none;
+  }
+}
