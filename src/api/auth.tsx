@@ -8,7 +8,7 @@ export async function getAccessToken() {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization: `Basic ${btoa('dpVH1yIfwBBTMqhnk6jS8bsZ:Hco86YSJUnoZiE8bhDWlAoU4X48pUEe-')}`
       },
-      body: `grant_type=client_credentials&scope=manage_customers:e-commerce-project`
+      body: `grant_type=client_credentials&scopes=[manage_associate_roles:e-commerce-project, view_api_clients:e-commerce-project, manage_customer_groups:e-commerce-project, manage_connectors:e-commerce-project, manage_sessions:e-commerce-project, manage_subscriptions:e-commerce-project, manage_types:e-commerce-project, manage_categories:e-commerce-project, manage_extensions:e-commerce-project, manage_api_clients:e-commerce-project, manage_shopping_lists:e-commerce-project, manage_standalone_prices:e-commerce-project, manage_project_settings:e-commerce-project, manage_discount_codes:e-commerce-project, manage_connectors_deployments:e-commerce-project, manage_tax_categories:e-commerce-project, manage_states:e-commerce-project, manage_import_containers:e-commerce-project, manage_business_units:e-commerce-project, manage_audit_log:e-commerce-project, manage_stores:e-commerce-project, manage_cart_discounts:e-commerce-project, manage_quote_requests:e-commerce-project, manage_attribute_groups:e-commerce-project, manage_order_edits:e-commerce-project, manage_staged_quotes:e-commerce-project, manage_project:e-commerce-project, manage_quotes:e-commerce-project, manage_checkout_payment_intents:e-commerce-project, manage_customers:e-commerce-project, view_audit_log:e-commerce-project, manage_shipping_methods:e-commerce-project]`
     });
 
     const authData = await authResponse.json();
