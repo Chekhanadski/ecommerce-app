@@ -1,0 +1,31 @@
+.productCard {
+  width: 270px;
+  margin-bottom: 100px;
+}
+
+.productCard img {
+  width: 270px;
+  height: 270px;
+}
+
+.productCartBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background-color: #000000;
+  color: #ffffff;
+  height: 41px;
+}
+
+.descriptionBlock {
+  height: 90px;
+  font-size: 14px;
+}
+
+.priceBlock {
+  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ff0000;
+}
