@@ -1,6 +1,6 @@
 import { getAccessToken } from './auth';
 
-export async function getProductData() {
+export default async function getProductData() {
   const url = `https://api.europe-west1.gcp.commercetools.com/e-commerce-project/products`;
   const accessToken = await getAccessToken();
 

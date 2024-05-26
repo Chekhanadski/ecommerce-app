@@ -1,8 +1,7 @@
-import { IoCartOutline } from "react-icons/io5";
+import { IoCartOutline } from 'react-icons/io5';
 import React, { useMemo } from 'react';
 import { ProductData } from '../../store/types/products';
 import styles from './styles.module.css';
-
 
 function ProductCard({ product }: { product: ProductData }) {
   const { productName, productDescription, productImage } = useMemo(() => {
@@ -25,9 +24,12 @@ function ProductCard({ product }: { product: ProductData }) {
     <div className={styles.productCard}>
       <img className={styles.productImg} src={productImage} alt={productName} />
       <div className={styles.descriptionBlock}>
-      <p>{productDescription}</p>
-      </div>     
-      <div className={styles.productCartBlock}><IoCartOutline size={25}/><span>Add To Cart</span></div>
+        <p>{productDescription}</p>
+      </div>
+      <div className={styles.productCartBlock}>
+        <IoCartOutline size={25} />
+        <span>Add To Cart</span>
+      </div>
       <h3>{productName}</h3>
       <div className={styles.priceBlock}>Price:</div>
     </div>

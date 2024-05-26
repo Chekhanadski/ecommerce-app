@@ -1,31 +1,26 @@
 import React from 'react';
 import styles from './styles.module.css';
 
-const categories = [
-  "Woman's Fashion",
-  "Men's Fashion",
-  'Electronics',
-  'Home & Lifestyle',
-  'Medicine',
-  'Sports & Outdoor',
-  "Baby's & Toys",
-  'Groceries & Pets',
-  'Health & Beauty'
-];
+const categories = ['Mobile phones', 'Laptops'];
 
 function MainPage() {
   return (
-    <div className={styles.mainSection}>
-      <div className={styles.categories}>
-        {categories.map((category) => (
-          <div key={category} className={styles.categoryLink}>
-            {category}
+    <div>
+      <div className={styles.mainSection}>
+        <div className={styles.wrapperCategories}>
+          <div className={styles.categories}>
+            {categories.map((category) => (
+              <div key={category} className={styles.categoryLink}>
+                {category}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className={styles.placeholderBanner}>
-        <h2>Hello, this is Main Page placeholder</h2>
-        <img src="img/main-page-banner-iphones.png" alt="main-page-placeholder" />
+        </div>
+
+        <div className={styles.placeholderBanner}>
+          <h2>Hello, this is Main Page placeholder</h2>
+          <img src="img/main-page-banner-iphones.png" alt="main-page-placeholder" />
+        </div>
       </div>
     </div>
   );
