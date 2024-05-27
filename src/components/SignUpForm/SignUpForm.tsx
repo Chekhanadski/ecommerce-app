@@ -239,11 +239,6 @@ function SignUpForm(): React.ReactElement {
         {errors.email && <div className={styles.error}>{errors.email.message}</div>}
       </div>
 
-      {/* <div className={styles.inputContainer}>
-        <input type="password" placeholder="Password" {...register('password', { validate: validatePassword })} />
-        {errors.password && <div className={styles.error}>{errors.password.message}</div>}
-      </div> */}
-
       <div className={styles.inputContainer}>
         <div className={styles.inputPasswordContainer}>
           <input
