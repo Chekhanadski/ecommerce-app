@@ -8,6 +8,8 @@ import LoginPage from '../../pages/LoginPage/LoginPage';
 import MainPage from '../../pages/MainPage/MainPage';
 import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
 import CatalogPage from '../../pages/CatalogPage/CatalogPage';
+import AccountPage from '../../pages/AccountPage/AccountPage';
+import AddressPage from '../../pages/AddressPage/AddressPage';
 
 function MainSectionRouter() {
   return (
@@ -18,6 +20,8 @@ function MainSectionRouter() {
         <Route path="/catalog" element={<CatalogPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegistrationPage />} />
+        <Route path="/account" element={<AccountPage />} />
+        <Route path="/account/address" element={<AddressPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
