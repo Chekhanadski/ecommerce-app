@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaApple } from 'react-icons/fa';
 import styles from './styles.module.css';
 
 const categories = ['Mobile phones', 'Laptops'];
@@ -8,18 +9,21 @@ function MainPage() {
     <div>
       <div className={styles.mainSection}>
         <div className={styles.wrapperCategories}>
-          <div className={styles.categories}>
+          <ul className={styles.categories}>
             {categories.map((category) => (
-              <div key={category} className={styles.categoryLink}>
+              <li key={category} className={styles.categoryLink}>
                 {category}
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         <div className={styles.placeholderBanner}>
-          <h2>Hello, this is Main Page placeholder</h2>
-          <img src="img/main-page-banner-iphones.png" alt="main-page-placeholder" />
+          <div className={styles.textBanner}>
+            <FaApple color="white" size={70} />
+            <h2>iPhone 14 Series</h2>
+          </div>
+          <img className={styles.imgIphone} src="img/iphone.jpg" alt="main-page-placeholder" />
         </div>
       </div>
     </div>
