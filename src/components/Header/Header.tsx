@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSnapshot } from 'valtio';
+import { IoCartOutline } from 'react-icons/io5';
+import { FiUser } from 'react-icons/fi';
 import state from '../../store/appState';
 import styles from './styles.module.css';
 
@@ -30,9 +32,9 @@ function Header() {
             <span>Exclusive</span>
           </div>
         </Link>
-        <button type="button" onClick={() => setIsOpen(!isOpen)} className={styles.burger}>
+        {/* <button type="button" onClick={() => setIsOpen(!isOpen)} className={styles.burger}>
           ☰
-        </button>
+        </button> */}
         <nav className={`${styles.headerNav} ${isOpen ? styles.open : ''}`}>
           <button type="button" onClick={() => setIsOpen(false)} className={styles.closeButton}>
             ✖
@@ -87,7 +89,18 @@ function Header() {
             )}
           </ul>
         </nav>
-        <div className={styles.headerSearch} />
+        <div className={styles.headerIcons}>
+          <Link onClick={handleLogout} className={styles.iconLink} to="/">
+            <IoCartOutline size={25} />
+          </Link>
+
+          <Link onClick={handleLogout} className={styles.iconLink} to="/account">
+            <FiUser size={25} />
+          </Link>
+        </div>
+        <button type="button" onClick={() => setIsOpen(!isOpen)} className={styles.burger}>
+          ☰
+        </button>
       </div>
     </header>
   );
