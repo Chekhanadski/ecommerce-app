@@ -87,7 +87,7 @@ function Header() {
           </ul>
         </nav>
         <div className={styles.headerIcons}>
-          <Link onClick={handleLogout} className={styles.iconLink} to="/">
+          <Link onClick={handleLogout} className={styles.iconLink} to="/cart">
             <IoCartOutline size={25} />
           </Link>
 

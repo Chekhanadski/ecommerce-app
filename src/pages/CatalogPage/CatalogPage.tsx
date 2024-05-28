@@ -1,21 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import getProductData from '../../api/products';
+import { StoreContext } from '../../App';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { ProductData } from '../../store/types/products';
 import styles from './styles.module.css';
 
 function CatalogPage() {
   const [products, setProducts] = useState<ProductData[]>([]);
+  const { setStore } = useContext(StoreContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
       const data = await getProductData();
       setProducts(data.results);
+      setStore({ products: data.results });
     };
 
     fetchProducts();
-  }, []);
+  }, [setStore]);
 
   return (
     <main className={styles.mainBlock}>
