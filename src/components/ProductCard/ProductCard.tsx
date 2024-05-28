@@ -1,24 +1,20 @@
 import { IoCartOutline } from 'react-icons/io5';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { ProductData } from '../../store/types/products';
 import styles from './styles.module.css';
 
 function ProductCard({ product }: { product: ProductData }) {
-  const { productName, productDescription, productImage } = useMemo(() => {
-    const name = product.masterData.current.name['en-US'];
-    const description = product.masterData.current.description['en-US'];
-    const image = product.masterData.current.masterVariant.images[0].url;
+  const name = product.masterData.current.name['en-US'];
+  const description = product.masterData.current.description['en-US'];
+  const image = product.masterData.current.masterVariant.images[0].url;
 
-    function truncate(str: string, num: number) {
-      return str.length > num ? `${str.slice(0, num)}...` : str;
-    }
+  function truncate(str: string, num: number) {
+    return str.length > num ? `${str.slice(0, num)}...` : str;
+  }
 
-    return {
-      productName: name,
-      productDescription: truncate(description, 150),
-      productImage: image
-    };
-  }, [product]);
+  const productName = name;
+  const productDescription = truncate(description, 150);
+  const productImage = image;
 
   return (
     <div className={styles.productCard}>
