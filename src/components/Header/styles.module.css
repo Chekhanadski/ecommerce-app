@@ -53,8 +53,12 @@
   text-decoration-line: underline;
 }
 
+.navLink:hover {
+  color: #db4444;
+}
+
 .navLink:active {
-  color: #ff0000;
+  color: #000000;
 }
 
 .burger {
@@ -85,6 +89,10 @@
 
 .iconLink {
   color: #000000;
+}
+
+.iconLink:hover {
+  color: #db4444;
 }
 
 @media screen and (max-width: 970px) {
