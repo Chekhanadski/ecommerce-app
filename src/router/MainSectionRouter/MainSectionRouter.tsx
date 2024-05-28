@@ -11,20 +11,26 @@ import {
   CatalogPage,
   RegistrationPage,
   NotFoundPage
-} from '../../pages';
+} from '../../pages/index';
+
+const routes = [
+  { path: '/', element: <MainPage /> },
+  { path: '/catalog', element: <CatalogPage /> },
+  { path: '/login', element: <LoginPage /> },
+  { path: '/register', element: <RegistrationPage /> },
+  { path: '/account', element: <AccountPage /> },
+  { path: '/account/address', element: <AddressPage /> },
+  { path: '*', element: <NotFoundPage /> }
+];
 
 function MainSectionRouter() {
   return (
     <Router>
       <Header />
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/catalog" element={<CatalogPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegistrationPage />} />
-        <Route path="/account" element={<AccountPage />} />
-        <Route path="/account/address" element={<AddressPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        {routes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
       </Routes>
       <Footer />
     </Router>
