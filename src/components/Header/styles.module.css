@@ -83,6 +83,10 @@
   color: black;
 }
 
+.iconLink {
+  color: #000000;
+}
+
 @media screen and (max-width: 970px) {
   .headerWrapper {
     margin: 0 20px;
