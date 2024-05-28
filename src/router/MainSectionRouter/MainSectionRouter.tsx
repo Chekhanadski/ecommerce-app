@@ -18,6 +18,7 @@ function MainSectionRouter() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/catalog" element={<CatalogPage />} />
+        <Route path="/catalog/:productId" element={<div>Product Card</div>} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegistrationPage />} />
         <Route path="/account" element={<AccountPage />} />
