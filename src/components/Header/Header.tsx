@@ -46,6 +46,11 @@ function Header() {
                   </Link>
                 </li>
                 <li>
+                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/catalog">
+                    Catalog
+                  </Link>
+                </li>
+                <li>
                   <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/login">
                     Sign In
                   </Link>

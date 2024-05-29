@@ -1,0 +1,9 @@
+.mainBlock {
+  margin: 40px 135px 140px 135px;
+}
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
