@@ -4,6 +4,48 @@
 
 .products {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 30px;
 }
+
+.controlBlock {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 60px;
+}
+
+.inputSearch {
+  width: 170px;
+  border: none;
+}
+
+.inputSearch:focus {
+  outline: none;
+}
+
+.labelSearch {
+  display: flex;
+}
+
+.inputSearchButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.inputSearchButton:hover {
+  transform: scale(1.1);
+}
+
+
+.inputSearchButton:active {
+  color: red;
+  transform: scale(1);
+}
+

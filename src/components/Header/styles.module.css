@@ -37,8 +37,11 @@
   list-style-type: none;
 }
 
-.headerSearch {
-  width: 200px;
+.headerIcons {
+  display: flex;
+  justify-content: right;
+  gap: 25px;
+  width: 100px;
 }
 
 .navLink {
@@ -48,6 +51,10 @@
 
 .navLink:hover {
   text-decoration-line: underline;
+}
+
+.navLink:active {
+  color: #ff0000;
 }
 
 .burger {
@@ -68,6 +75,7 @@
   font-size: 40px;
   cursor: pointer;
   color: #ffffff;
+  display: none;
 }
 
 .nameShopLink {
@@ -123,7 +131,11 @@
     color: #ffffff;
   }
 
-  .headerSearch {
-    display: none;
+  .headerIcons {
+    justify-content: right;
+  }
+
+  .closeButton {
+    display: block;
   }
 }

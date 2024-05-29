@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { CiSearch } from 'react-icons/ci';
 import getProductData from '../../api/products';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { ProductData } from '../../store/types/products';
@@ -18,6 +19,14 @@ function CatalogPage() {
 
   return (
     <main className={styles.mainBlock}>
+      <div className={styles.controlBlock}>
+        <label htmlFor="search" className={styles.labelSearch}>
+          <input id="search" className={styles.inputSearch} type="search" placeholder="What are you looking for?" />
+          <button aria-label="search" className={styles.inputSearchButton} type="button">
+            <CiSearch size={20} />
+          </button>
+        </label>
+      </div>
       <div className={styles.products}>
         {products.length ? (
           products.map((product) => <ProductCard key={product.id} product={product} />)
