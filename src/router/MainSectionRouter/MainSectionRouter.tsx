@@ -10,7 +10,7 @@ function MainSectionRouter() {
       <Header />
       <Routes>
         {ROUTES.map((route) => (
-          <Route key={route.path} path={route.path} element={<route.element/>} />
+          <Route key={route.path} path={route.path} element={<route.element />} />
         ))}
       </Routes>
       <Footer />
