@@ -21,8 +21,23 @@ export interface NameLang {
 
 export interface MasterVariant {
   images: ImageData[];
+  prices: PriceData[];
 }
 
 export interface ImageData {
   url: string;
+}
+
+export interface PriceData {
+  value: PriceValue;
+  discounted?: {
+    value: PriceValue;
+  };
+}
+
+export interface PriceValue {
+  type: string;
+  currencyCode: string;
+  centAmount: number;
+  fractionDigits: number;
 }

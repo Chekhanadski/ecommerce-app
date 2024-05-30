@@ -84,7 +84,6 @@ export default function AccountPage() {
                 <div className={styles.nameField}>Password Changes</div>
 
                 <div className={`${styles.value} ${styles.inputPasswordContainer} `}>
-                  {' '}
                   <input type={currentPasswordVisible ? 'text' : 'password'} placeholder="Current Password" />
                   <button type="button" onClick={toggleCurrentPasswordVisibility} className={styles.eyeIcon}>
                     {currentPasswordVisible ? <FaEyeSlash /> : <FaEye />}
@@ -92,7 +91,6 @@ export default function AccountPage() {
                 </div>
 
                 <div className={`${styles.value} ${styles.inputPasswordContainer} `}>
-                  {' '}
                   <input type={newPasswordVisible ? 'text' : 'password'} placeholder="New Password" />
                   <button type="button" onClick={toggleNewPasswordVisibility} className={styles.eyeIcon}>
                     {newPasswordVisible ? <FaEyeSlash /> : <FaEye />}
@@ -100,7 +98,6 @@ export default function AccountPage() {
                 </div>
 
                 <div className={`${styles.value} ${styles.inputPasswordContainer} `}>
-                  {' '}
                   <input type={confirmPasswordVisible ? 'text' : 'password'} placeholder="Confirm New Password" />
                   <button type="button" onClick={toggleConfirmPasswordVisibility} className={styles.eyeIcon}>
                     {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
@@ -112,7 +109,7 @@ export default function AccountPage() {
               <Link className={styles.cancelLink} to="/account">
                 Cancel
               </Link>
-              <Button type="button" style={{ width: '160px', fontSize: '14px' }}>
+              <Button type="button" className="accountPageButton">
                 Save Changes
               </Button>
             </div>

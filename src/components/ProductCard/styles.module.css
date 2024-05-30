@@ -3,6 +3,11 @@
   margin-bottom: 100px;
 }
 
+.linkCard {
+  text-decoration: none;
+  color: #000000;
+}
+
 .productCard img {
   width: 270px;
   height: 270px;
@@ -13,6 +18,7 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+  width: 100%;
   background-color: #000000;
   color: #ffffff;
   height: 41px;
@@ -24,8 +30,21 @@
 }
 
 .priceBlock {
+  display: flex;
+  gap: 10px;
+}
+
+.price {
   margin-bottom: 30px;
   font-size: 16px;
   font-weight: 600;
+}
+
+.discountedPrice {
   color: #ff0000;
+  font-weight: 600;
+}
+
+.priceStriked {
+  text-decoration: line-through;
 }

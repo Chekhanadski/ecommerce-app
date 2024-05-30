@@ -43,9 +43,7 @@
   transform: scale(1.1);
 }
 
-
 .inputSearchButton:active {
   color: red;
   transform: scale(1);
 }
-
