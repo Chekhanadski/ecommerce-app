@@ -18,6 +18,33 @@
   font-size: 20px;
 }
 
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 62vh;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #b1b5b8;
+  border-bottom-color: #4e5a64;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media screen and (max-width: 1440px) {
   .productImg {
     width: 600px;

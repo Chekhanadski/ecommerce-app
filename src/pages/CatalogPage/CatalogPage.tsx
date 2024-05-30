@@ -34,7 +34,9 @@ function CatalogPage() {
         {products.length ? (
           products.map((product) => <ProductCard key={product.id} product={product} />)
         ) : (
-          <div>There are no products for now.</div>
+          <div className={styles.spinnerContainer}>
+            <span className={styles.spinner} />
+          </div>
         )}
       </div>
     </main>
