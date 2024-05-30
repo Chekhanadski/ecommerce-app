@@ -1,28 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import getProductData from '../../api/products';
+import { getProductData } from '../../api/products';
 import { ProductData } from '../../store/types/products';
 import styles from './styles.module.css';
 
 export default function ProductPage() {
   const { productId } = useParams();
   const [product, setProduct] = useState<ProductData | null>(null);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getProductData()
-      .then((data: { results: ProductData[] }) => {
-        const productFromServer = data.results.find((item) => item.id === productId);
-        setProduct(productFromServer || null);
-      })
-      .catch((error) => {
-        setError(`An error occurred: ${error.message}`);
-      });
-  }, [productId]);
+    const fetchProduct = async () => {
+      if (productId) {
+        const data = await getProductData(productId);
+        setProduct(data);
+      }
+    };
 
-  if (error) {
-    return <main className={styles.temporaryClass}>Error: {error}</main>;
-  }
+    fetchProduct();
+  }, [productId]);
 
   if (!product) {
     return <main className={styles.temporaryClass}>Product not found</main>;
