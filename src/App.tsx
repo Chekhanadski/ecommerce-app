@@ -1,4 +1,4 @@
-import React, { createContext, useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import MainSectionRouter from './router/MainSectionRouter/MainSectionRouter';
 import { Store, StoreContext } from './store/store';
 
