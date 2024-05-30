@@ -412,7 +412,9 @@ function SignUpForm(): React.ReactElement {
         {registrationSuccess && <div className={styles.success}>Account successfully created!</div>}
 
         {errorMessage && <div className={styles.serverError}>{errorMessage}</div>}
-        <Button type="submit">Create Account</Button>
+        <Button type="submit" className="loginPageButton">
+          Create Account
+        </Button>
       </div>
       <div className={styles.logInContainer}>
         <span className="styles.logInText">Already have account?</span>
