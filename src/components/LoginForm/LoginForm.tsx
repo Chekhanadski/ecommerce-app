@@ -9,7 +9,7 @@ import styles from './styles.module.css';
 import * as regexps from '../../constants/regexps';
 import { loginUser } from '../../api/auth';
 import { LoginData } from '../../store/types/auth';
-import { StoreContext } from '../../App';
+import { StoreContext } from '../../store/store';
 
 export default function LoginForm() {
   const {

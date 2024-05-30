@@ -4,7 +4,7 @@ import { IoCartOutline } from 'react-icons/io5';
 import { FiUser } from 'react-icons/fi';
 import state from '../../store/appState';
 import styles from './styles.module.css';
-import { StoreContext } from '../../App';
+import { StoreContext } from '../../store/store';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);

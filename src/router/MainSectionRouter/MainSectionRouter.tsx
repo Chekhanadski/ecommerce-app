@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-d
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import ROUTES from '../../pages/routes';
-import { StoreContext } from '../../App';
+import { StoreContext } from '../../store/store';
 
 function MainSectionRouter() {
   const { store } = useContext(StoreContext);

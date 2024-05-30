@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { getProducts } from '../../api/products';
-import { StoreContext } from '../../App';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import { StoreContext } from '../../store/store';
 import { ProductData } from '../../store/types/products';
 import styles from './styles.module.css';
 

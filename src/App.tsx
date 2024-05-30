@@ -1,20 +1,8 @@
 import React, { createContext, useState, useMemo, useEffect } from 'react';
 import MainSectionRouter from './router/MainSectionRouter/MainSectionRouter';
-import { ProductData } from './store/types/products';
+import { Store, StoreContext } from './store/store';
 
 import './App.css';
-
-interface Store {
-  products: ProductData[];
-  isAuthorized: boolean;
-}
-
-const initialStoreContextProps: { store: Store; setStore: React.Dispatch<React.SetStateAction<Store>> } = {
-  store: { products: [], isAuthorized: false },
-  setStore: () => {}
-};
-
-export const StoreContext = createContext(initialStoreContextProps);
 
 function App(): React.ReactElement {
   const [store, setStore] = useState<Store>({ products: [], isAuthorized: false });
