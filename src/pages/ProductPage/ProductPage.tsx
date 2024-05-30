@@ -29,9 +29,7 @@ export default function ProductPage() {
   }
 
   return (
-    <main>
-      <h1>{product.masterData.current.name['en-US']}</h1>
-      <p>{product.masterData.current.description['en-US']}</p>
+    <main className={styles.mainBlock}>
       {product.masterData.current.masterVariant.images.length > 0 && (
         <img
           className={styles.productImg}
@@ -39,6 +37,12 @@ export default function ProductPage() {
           alt={product.masterData.current.name['en-US']}
         />
       )}
+      <div className={styles.informationBlock}>
+        <div className={styles.contentBlock}>
+          <h1 className={styles.h1}>{product.masterData.current.name['en-US']}</h1>
+          <p>{product.masterData.current.description['en-US']}</p>
+        </div>
+      </div>
     </main>
   );
 }

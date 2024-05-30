@@ -1,4 +1,19 @@
+.mainBlock {
+  display: flex;
+  gap: 50px;
+  margin: 0 135px 140px 135px;
+}
+
+.contentBlock {
+  padding: 100px 0 30px;
+  border-bottom: 1px solid rgb(190, 190, 190);
+}
+
 .productImg {
-  width: 270px;
-  height: 270px;
+  width: 700px;
+  height: 700px;
+}
+
+.h1 {
+  font-size: 20px;
 }
