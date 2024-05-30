@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { CiSearch } from 'react-icons/ci';
-import getProductData from '../../api/products';
+import { getProducts } from '../../api/products';
 import { StoreContext } from '../../App';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { ProductData } from '../../store/types/products';
@@ -12,7 +12,7 @@ function CatalogPage() {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const data = await getProductData();
+      const data = await getProducts();
       setProducts(data.results);
       setStore((prevStore) => ({ ...prevStore, products: data.results }));
     };
