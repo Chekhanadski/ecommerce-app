@@ -12,6 +12,7 @@ function MainSectionRouter() {
         {ROUTES.map((route) => (
           <Route key={route.path} path={route.path} element={<route.element />} />
         ))}
+        <Route path="/catalog/:productId" element={<div>Product Card</div>} />
       </Routes>
       <Footer />
     </Router>

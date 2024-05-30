@@ -34,25 +34,25 @@ function ProductCard({ product }: { product: ProductData }) {
   }, [product]);
 
   return (
-    <div className={styles.productCard}>
-      <Link className={styles.linkCard} to={`/catalog/${productId}`}>
+    <Link className={styles.linkCard} to={`/catalog/${productId}`}>
+      <div className={styles.productCard}>
         <img className={styles.productImg} src={productImage} alt={productName} />
         <div className={styles.descriptionBlock}>
           <p>{productDescription}</p>
         </div>
-      </Link>
-      <button type="button" className={styles.productCartBlock}>
-        <IoCartOutline size={25} />
-        <span>Add To Cart</span>
-      </button>
-      <Link className={styles.linkCard} to={`/catalog/${productId}`}>
+        <Link className={styles.linkCard} to="/cart">
+          <button type="button" className={styles.productCartButton}>
+            <IoCartOutline size={25} />
+            <span>Add To Cart</span>
+          </button>
+        </Link>
         <h3>{productName}</h3>
         <div className={styles.priceBlock}>
           {discountedPrice && <div className={styles.discountedPrice}>{discountedPrice}€</div>}
           <div className={discountedPrice ? styles.priceStriked : styles.price}>{`${fullPrice}€`}</div>
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 }
 
