@@ -1,10 +1,13 @@
-import MainPage from './MainPage/MainPage';
-import CatalogPage from './CatalogPage/CatalogPage';
-import LoginPage from './LoginPage/LoginPage';
-import RegistrationPage from './RegistrationPage/RegistrationPage';
-import AccountPage from './AccountPage/AccountPage';
-import AddressPage from './AddressPage/AddressPage';
-import NotFoundPage from './NotFoundPage/NotFoundPage';
+import {
+  MainPage,
+  CatalogPage,
+  LoginPage,
+  RegistrationPage,
+  AccountPage,
+  AddressPage,
+  ProductPage,
+  NotFoundPage
+} from '.';
 
 const ROUTES = [
   { path: '/', element: MainPage },
@@ -13,6 +16,7 @@ const ROUTES = [
   { path: '/register', element: RegistrationPage },
   { path: '/account', element: AccountPage },
   { path: '/account/address', element: AddressPage },
+  { path: '/catalog/:productId', element: ProductPage },
   { path: '*', element: NotFoundPage }
 ];
 

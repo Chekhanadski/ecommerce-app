@@ -74,12 +74,12 @@ function Header() {
           </ul>
         </nav>
         <div className={styles.headerIcons}>
-          <Link onClick={handleLogout} className={styles.iconLink} to="/cart">
+          <Link onClick={() => setIsOpen(false)} className={styles.iconLink} to="/cart">
             <IoCartOutline size={25} />
           </Link>
 
           {isAuthorized && (
-            <Link onClick={handleLogout} className={styles.iconLink} to="/account">
+            <Link onClick={() => setIsOpen(false)} className={styles.iconLink} to="/account">
               <FiUser size={25} />
             </Link>
           )}
