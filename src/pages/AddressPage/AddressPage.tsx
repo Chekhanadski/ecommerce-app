@@ -180,7 +180,7 @@ export default function AddressPage() {
               <Link className={styles.cancelLink} to="/account">
                 Cancel
               </Link>
-              <Button type="button" style={{ width: '160px', fontSize: '14px' }}>
+              <Button type="button" className="accountPageButton">
                 Save Changes
               </Button>
             </div>
