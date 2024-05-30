@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSnapshot } from 'valtio';
 import { IoCartOutline } from 'react-icons/io5';
 import { FiUser } from 'react-icons/fi';
 import state from '../../store/appState';
 import styles from './styles.module.css';
+import { StoreContext } from '../../App';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const snapshot = useSnapshot(state);
+  const { setStore, store } = useContext(StoreContext);
+
+  const { isAuthorized } = store;
 
   useEffect(() => {
     if (isOpen) {
@@ -21,6 +23,7 @@ function Header() {
   const handleLogout = () => {
     state.logout();
     setIsOpen(false);
+    setStore((prevStore) => ({ ...prevStore, isAuthorized: false }));
   };
 
   return (
@@ -37,18 +40,18 @@ function Header() {
             ✖
           </button>
           <ul className={styles.headerNavList}>
-            {!snapshot.isAuthorized ? (
+            <li>
+              <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/catalog">
+                Catalog
+              </Link>
+            </li>
+            {!isAuthorized && (
               <>
-                <li>
-                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/catalog">
-                    Catalog
-                  </Link>
-                </li>
                 <li>
                   <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/login">
                     Sign In
@@ -60,29 +63,13 @@ function Header() {
                   </Link>
                 </li>
               </>
-            ) : (
-              <>
-                <li>
-                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/login">
-                    Sign In
-                  </Link>
-                </li>
-                <li>
-                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/register">
-                    Sign Up
-                  </Link>
-                </li>
-                <li>
-                  <Link onClick={handleLogout} className={styles.navLink} to="/">
-                    Log out
-                  </Link>
-                </li>
-              </>
+            )}
+            {isAuthorized && (
+              <li>
+                <Link onClick={handleLogout} className={styles.navLink} to="/">
+                  Log out
+                </Link>
+              </li>
             )}
           </ul>
         </nav>
@@ -91,9 +78,11 @@ function Header() {
             <IoCartOutline size={25} />
           </Link>
 
-          <Link onClick={handleLogout} className={styles.iconLink} to="/account">
-            <FiUser size={25} />
-          </Link>
+          {isAuthorized && (
+            <Link onClick={handleLogout} className={styles.iconLink} to="/account">
+              <FiUser size={25} />
+            </Link>
+          )}
         </div>
         <button type="button" onClick={() => setIsOpen(!isOpen)} className={styles.burger}>
           ☰

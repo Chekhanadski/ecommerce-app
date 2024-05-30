@@ -14,7 +14,7 @@ function CatalogPage() {
     const fetchProducts = async () => {
       const data = await getProductData();
       setProducts(data.results);
-      setStore({ products: data.results });
+      setStore((prevStore) => ({ ...prevStore, products: data.results }));
     };
 
     fetchProducts();
