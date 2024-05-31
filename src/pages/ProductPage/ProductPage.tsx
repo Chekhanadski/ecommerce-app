@@ -49,12 +49,12 @@ export default function ProductPage() {
 
   return (
     <main className={styles.mainBlock}>
-      {productImage && <img className={styles.productImg} src={productImage} alt={productName} />}
+      {productImage ? <img className={styles.productImg} src={productImage} alt={productName} /> : null}
       <div className={styles.informationBlock}>
         <div className={styles.contentBlock}>
           <h1 className={styles.h1}>{productName}</h1>
           <div className={styles.priceBlock}>
-            {discountedPrice && <div className={styles.discountedPrice}>{discountedPrice}€</div>}
+            {discountedPrice ? <div className={styles.discountedPrice}>{discountedPrice}€</div> : null}
             <div className={discountedPrice ? styles.priceStriked : styles.price}>{`${fullPrice}€`}</div>
           </div>
           <p>{productDescription}</p>
