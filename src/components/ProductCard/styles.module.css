@@ -1,7 +1,9 @@
 .productCard {
   width: 270px;
   margin-bottom: 100px;
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
 }
 
 .productCard:hover {
@@ -40,6 +42,7 @@
 .descriptionBlock {
   height: 90px;
   font-size: 14px;
+  padding: 0 3px;
 }
 
 .priceBlock {
@@ -61,4 +64,8 @@
 
 .priceStriked {
   text-decoration: line-through;
+}
+
+.namePriceBlock {
+  padding: 0 3px;
 }
