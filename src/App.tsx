@@ -1,24 +1,18 @@
-import React, { createContext, useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import MainSectionRouter from './router/MainSectionRouter/MainSectionRouter';
-import { ProductData } from './store/types/products';
+import { Store, StoreContext } from './store/store';
 
 import './App.css';
 
-interface Store {
-  products: ProductData[];
-}
-
-const initialStoreContextProps: { store: Store; setStore: React.Dispatch<React.SetStateAction<Store>> } = {
-  store: { products: [] },
-  setStore: () => {}
-};
-
-export const StoreContext = createContext(initialStoreContextProps);
-
 function App(): React.ReactElement {
-  const [store, setStore] = useState<Store>({ products: [] });
+  const [store, setStore] = useState<Store>({ products: [], isAuthorized: false });
 
   const value = useMemo(() => ({ store, setStore }), [store, setStore]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    setStore((prevStore) => ({ ...prevStore, isAuthorized: !!token?.length }));
+  }, []);
 
   return (
     <div>

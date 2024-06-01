@@ -19,3 +19,11 @@
 .button:active:disabled {
   transform: none;
 }
+
+.loginPageButton {
+  width: 100%;
+}
+
+.accountPageButton {
+  width: 160px;
+}

@@ -18,6 +18,26 @@
   font-size: 20px;
 }
 
+.priceBlock {
+  display: flex;
+  gap: 10px;
+}
+
+.price {
+  margin-bottom: 30px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.discountedPrice {
+  color: #ff0000;
+  font-weight: 600;
+}
+
+.priceStriked {
+  text-decoration: line-through;
+}
+
 .spinnerContainer {
   display: flex;
   justify-content: center;

@@ -70,23 +70,6 @@
     justify-content: space-between;
     margin: 0 30px 140px;
   }
-
-  /* .mainSection {
-    display: flex;
-    flex-direction: column;
-  } */
-
-  /* .wrapperCategories {
-    border-right: none;
-  } */
-
-  /* .categories {
-    display: flex;
-    flex: 1;
-    flex-direction: row;
-    gap: 30px;
-    margin: 40px 16px 0;
-  } */
 }
 
 @media screen and (max-width: 1070px) {

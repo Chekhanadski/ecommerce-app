@@ -1,32 +1,30 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import RegistrationPage from '../../pages/RegistrationPage/RegistrationPage';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-
-import LoginPage from '../../pages/LoginPage/LoginPage';
-import MainPage from '../../pages/MainPage/MainPage';
-import NotFoundPage from '../../pages/NotFoundPage/NotFoundPage';
-import CatalogPage from '../../pages/CatalogPage/CatalogPage';
-import AccountPage from '../../pages/AccountPage/AccountPage';
-import AddressPage from '../../pages/AddressPage/AddressPage';
-import CartPage from '../../pages/CartPage/CartPage';
-import ProductPage from '../../pages/ProductPage/ProductPage';
+import ROUTES from '../../pages/routes';
+import { StoreContext } from '../../store/store';
 
 function MainSectionRouter() {
+  const { store } = useContext(StoreContext);
+  const { isAuthorized } = store;
+
   return (
     <Router>
       <Header />
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/catalog" element={<CatalogPage />} />
-        <Route path="/catalog/:productId" element={<ProductPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegistrationPage />} />
-        <Route path="/account" element={<AccountPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/account/address" element={<AddressPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        {ROUTES.map((route) => {
+          if (route.path === '/account') {
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={isAuthorized ? <route.element /> : <Navigate to="/login" />}
+              />
+            );
+          }
+          return <Route key={route.path} path={route.path} element={<route.element />} />;
+        })}
       </Routes>
       <Footer />
     </Router>
