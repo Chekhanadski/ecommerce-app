@@ -44,7 +44,11 @@ export default function ProductPage() {
   }, [product]);
 
   if (!product) {
-    return <main className={styles.temporaryClass}>Product not found</main>;
+    return (
+      <main className={styles.spinnerContainer}>
+        <span className={styles.spinner} />
+      </main>
+    );
   }
 
   return (
