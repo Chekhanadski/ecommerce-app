@@ -99,6 +99,7 @@ function SignUpForm(): React.ReactElement {
     }
 
     const result = await signUp(fullData);
+
     if (typeof result === 'string') {
       setErrorMessage(result);
       state.isAuthorized = false;

@@ -1,18 +1,30 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import ROUTES from '../../pages/routes';
+import { StoreContext } from '../../store/store';
 
 function MainSectionRouter() {
+  const { store } = useContext(StoreContext);
+  const { isAuthorized } = store;
+
   return (
     <Router>
       <Header />
       <Routes>
-        {ROUTES.map((route) => (
-          <Route key={route.path} path={route.path} element={<route.element />} />
-        ))}
-        <Route path="/catalog/:productId" element={<div>Product Card</div>} />
+        {ROUTES.map((route) => {
+          if (route.path === '/account') {
+            return (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={isAuthorized ? <route.element /> : <Navigate to="/login" />}
+              />
+            );
+          }
+          return <Route key={route.path} path={route.path} element={<route.element />} />;
+        })}
       </Routes>
       <Footer />
     </Router>
