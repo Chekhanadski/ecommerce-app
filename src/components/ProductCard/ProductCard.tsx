@@ -46,10 +46,12 @@ function ProductCard({ product }: { product: ProductData }) {
             <span>Add To Cart</span>
           </button>
         </Link>
-        <h3>{productName}</h3>
-        <div className={styles.priceBlock}>
-          {discountedPrice && <div className={styles.discountedPrice}>{discountedPrice}€</div>}
-          <div className={discountedPrice ? styles.priceStriked : styles.price}>{`${fullPrice}€`}</div>
+        <div className={styles.namePriceBlock}>
+          <h3>{productName}</h3>
+          <div className={styles.priceBlock}>
+            {discountedPrice && <div className={styles.discountedPrice}>{discountedPrice}€</div>}
+            <div className={discountedPrice ? styles.priceStriked : styles.price}>{`${fullPrice}€`}</div>
+          </div>
         </div>
       </div>
     </Link>
