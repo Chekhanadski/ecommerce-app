@@ -6,7 +6,8 @@ import {
   AccountPage,
   AddressPage,
   ProductPage,
-  NotFoundPage
+  NotFoundPage,
+  CartPage
 } from '.';
 
 const ROUTES = [
@@ -17,6 +18,7 @@ const ROUTES = [
   { path: '/account', element: AccountPage },
   { path: '/account/address', element: AddressPage },
   { path: '/catalog/:productId', element: ProductPage },
+  { path: '/cart', element: CartPage },
   { path: '*', element: NotFoundPage }
 ];
 
