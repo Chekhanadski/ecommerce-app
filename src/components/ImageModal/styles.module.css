@@ -27,9 +27,10 @@
 
 .modalImage {
   max-width: 600px;
-  height: auto;
+  max-height: 600px;
   display: block;
   margin: auto;
+  object-fit: contain;
 }
 
 .closeButton {
