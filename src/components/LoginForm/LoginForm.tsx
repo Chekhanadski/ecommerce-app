@@ -126,7 +126,7 @@ export default function LoginForm() {
         {loginError && <div className={styles.serverError}>{loginError}</div>}
         {loginSuccess && <div className={styles.success}>Login successful!</div>}
         <Button type="submit" className="loginPageButton">
-          Create Account
+          Sign in
         </Button>
       </div>
 
