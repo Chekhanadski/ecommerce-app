@@ -59,6 +59,9 @@ export async function loginUser(data: LoginData) {
 
   const responseData = await response.json();
 
+  // save customer ID to local storage
+  localStorage.setItem('customerId', responseData.scope.split(' ')[1].split(':')[1]);
+
   // save access token to local storage
   localStorage.setItem('accessToken', responseData.access_token);
 
