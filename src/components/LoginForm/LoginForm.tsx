@@ -123,10 +123,10 @@ export default function LoginForm() {
       </div>
 
       <div className={styles.messageContainer}>
-        {loginError && <div className={styles.serverError}>{loginError}</div>}
-        {loginSuccess && <div className={styles.success}>Login successful!</div>}
+        {loginError ? <div className={styles.serverError}>{loginError}</div> : null}{' '}
+        {loginSuccess ? <div className={styles.success}>Login successful!</div> : null}
         <Button type="submit" className="loginPageButton">
-          Create Account
+          Sign in
         </Button>
       </div>
 

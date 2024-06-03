@@ -5,6 +5,7 @@ const state = proxy({
   logout() {
     this.isAuthorized = false;
     localStorage.setItem('accessToken', '');
+    localStorage.removeItem('customerId');
   }
 });
 

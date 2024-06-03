@@ -1,11 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import styles from './styles.module.css';
+import getCustomerData from '../../api/customer';
 
 export default function AccountPage() {
-  const [date, setDate] = useState('1991-01-01');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  // State variables for form inputs
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [date, setDate] = useState('');
+
+  // Fetch customer data on component mount
+  useEffect(() => {
+    getCustomerData().then((data) => {
+      setFirstName(data?.firstName ?? '');
+      setLastName(data?.lastName ?? '');
+      setEmail(data?.email ?? '');
+      setDate(data?.dateOfBirth ?? '');
+    });
+  }, []);
 
   const [currentPasswordVisible, setCurrentPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
@@ -27,7 +46,9 @@ export default function AccountPage() {
     <div className={styles.wrapperAccount}>
       <div>
         <span>Welcome! </span>
-        <span className={styles.name}>Chekhanadski Andrei</span>
+        <span className={styles.name}>
+          {firstName} {lastName}
+        </span>
       </div>
       <main className={styles.wrapperMain}>
         <div className={styles.manageAccount}>
@@ -47,13 +68,13 @@ export default function AccountPage() {
               <div className={styles.firstColumnEditProfile}>
                 <div className={styles.nameField}>First Name</div>
                 <div className={styles.value}>
-                  <input placeholder="Andrei" />
+                  <input value={firstName} onChange={(e) => setFirstName(e.target.value)} disabled={isDisabled} />
                 </div>
               </div>
               <div className={styles.secondColumnEditProfile}>
                 <div className={styles.nameField}>Last Name</div>
                 <div className={styles.value}>
-                  <input placeholder="Chekhanadski" />
+                  <input value={lastName} onChange={(e) => setLastName(e.target.value)} disabled={isDisabled} />
                 </div>
               </div>
             </div>
@@ -62,7 +83,7 @@ export default function AccountPage() {
               <div className={styles.firstColumnEditProfile}>
                 <div className={styles.nameField}>Email</div>
                 <div className={styles.value}>
-                  <input type="email" placeholder="andrei@gmail.com" />
+                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={isDisabled} />
                 </div>
               </div>
               <div className={styles.secondColumnEditProfile}>
@@ -72,8 +93,8 @@ export default function AccountPage() {
                     type="date"
                     value={date}
                     onChange={(e) => setDate(e.target.value)}
-                    placeholder="01.01.1991"
                     className={styles.dateInput}
+                    disabled={isDisabled}
                   />
                 </div>
               </div>
@@ -112,8 +133,8 @@ export default function AccountPage() {
               <Link className={styles.cancelLink} to="/account">
                 Cancel
               </Link>
-              <Button type="button" className="accountPageButton">
-                Save Changes
+              <Button type="button" className="accountPageButton" onClick={() => setIsDisabled((current) => !current)}>
+                {isDisabled ? 'Change Your Data' : 'Save Changes'}
               </Button>
             </div>
           </div>
