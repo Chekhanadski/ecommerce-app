@@ -6,7 +6,6 @@ const categories = ['Mobile phones', 'Laptops'];
 
 function MainPage() {
   return (
-    <div>
       <div className={styles.mainSection}>
         <div className={styles.wrapperCategories}>
           <ul className={styles.categories}>
@@ -26,7 +25,6 @@ function MainPage() {
           <img className={styles.imgIphone} src="img/iphone.jpg" alt="main-page-placeholder" />
         </div>
       </div>
-    </div>
   );
 }
 

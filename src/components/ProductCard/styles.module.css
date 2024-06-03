@@ -19,6 +19,7 @@
 .productCard img {
   width: 270px;
   height: 270px;
+  object-fit: contain;
 }
 
 .productCartButton {
