@@ -23,11 +23,11 @@ function CatalogPage() {
   }, [setStore]);
 
   const openModal = (imageUrl: string) => {
-    setSelectedImage(imageUrl); 
+    setSelectedImage(imageUrl);
   };
 
   const closeModal = () => {
-    setSelectedImage(null); 
+    setSelectedImage(null);
   };
 
   return (
@@ -42,14 +42,14 @@ function CatalogPage() {
       </div>
       <div className={styles.products}>
         {products.length ? (
-          products.map((product) => <ProductCard key={product.id} product={product} onImageClick={openModal}/>)
+          products.map((product) => <ProductCard key={product.id} product={product} onImageClick={openModal} />)
         ) : (
           <div className={styles.spinnerContainer}>
             <span className={styles.spinner} />
           </div>
         )}
       </div>
-      {selectedImage && <ImageModal imageUrl={selectedImage} onClose={closeModal} show={true} />}
+      {selectedImage && <ImageModal imageUrl={selectedImage} onClose={closeModal} />}
     </main>
   );
 }
