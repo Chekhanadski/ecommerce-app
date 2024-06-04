@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ProductData } from '../../store/types/products';
 import styles from './styles.module.css';
 
-function ProductCard({ product }: { product: ProductData }) {
+function ProductCard({ product, onImageClick }: { product: ProductData; onImageClick: (imageUrl: string) => void }) {
   const { productId, productName, productDescription, productImage, fullPrice, discountedPrice } = useMemo(() => {
     if (!product.masterData || !product.masterData.current.masterVariant.prices[0]) {
       return {};
@@ -34,18 +34,25 @@ function ProductCard({ product }: { product: ProductData }) {
   }, [product]);
 
   return (
-    <Link className={styles.linkCard} to={`/catalog/${productId}`}>
-      <div className={styles.productCard}>
-        <img className={styles.productImg} src={productImage} alt={productName} />
+    <div className={styles.productCard}>
+      <img
+        className={styles.productImg}
+        src={productImage}
+        alt={productName}
+        onClick={() => (productImage ? onImageClick(productImage) : undefined)}
+      />
+      <Link className={styles.linkCard} to={`/catalog/${productId}`}>
         <div className={styles.descriptionBlock}>
           <p>{productDescription}</p>
         </div>
-        <Link className={styles.linkCard} to="/cart">
-          <button type="button" className={styles.productCartButton}>
-            <IoCartOutline size={25} />
-            <span>Add To Cart</span>
-          </button>
-        </Link>
+      </Link>
+      <Link className={styles.linkCard} to="/cart">
+        <button type="button" className={styles.productCartButton}>
+          <IoCartOutline size={25} />
+          <span>Add To Cart</span>
+        </button>
+      </Link>
+      <Link className={styles.linkCard} to={`/catalog/${productId}`}>
         <div className={styles.namePriceBlock}>
           <h3>{productName}</h3>
           <div className={styles.priceBlock}>
@@ -53,8 +60,8 @@ function ProductCard({ product }: { product: ProductData }) {
             <div className={discountedPrice ? styles.priceStriked : styles.price}>{`${fullPrice}€`}</div>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 }
 

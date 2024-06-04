@@ -30,7 +30,6 @@ export default function ProductPage() {
     const image = product.masterData.current.masterVariant.images[0].url;
     const price = product.masterData.current.masterVariant.prices[0];
     const fullPrice = price.value.centAmount / 100;
-
     const discountedPrice = price.discounted ? price.discounted.value.centAmount / 100 : undefined;
 
     return {

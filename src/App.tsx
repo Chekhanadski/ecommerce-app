@@ -15,13 +15,10 @@ function App(): React.ReactElement {
   }, []);
 
   return (
-    <div>
-      <div className="sale-offer"> </div>
-      <div className="wrapper">
-        <StoreContext.Provider value={value}>
-          <MainSectionRouter />
-        </StoreContext.Provider>
-      </div>
+    <div className="wrapper">
+      <StoreContext.Provider value={value}>
+        <MainSectionRouter />
+      </StoreContext.Provider>
     </div>
   );
 }

@@ -4,10 +4,12 @@ import { getProducts } from '../../api/products';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import { StoreContext } from '../../store/store';
 import { ProductData } from '../../store/types/products';
+import ImageModal from '../../components/ImageModal/ImageModal';
 import styles from './styles.module.css';
 
 function CatalogPage() {
   const [products, setProducts] = useState<ProductData[]>([]);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const { setStore } = useContext(StoreContext);
 
   useEffect(() => {
@@ -19,6 +21,14 @@ function CatalogPage() {
 
     fetchProducts();
   }, [setStore]);
+
+  const openModal = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+  };
 
   return (
     <main className={styles.mainBlock}>
@@ -32,13 +42,14 @@ function CatalogPage() {
       </div>
       <div className={styles.products}>
         {products.length ? (
-          products.map((product) => <ProductCard key={product.id} product={product} />)
+          products.map((product) => <ProductCard key={product.id} product={product} onImageClick={openModal} />)
         ) : (
           <div className={styles.spinnerContainer}>
             <span className={styles.spinner} />
           </div>
         )}
       </div>
+      {selectedImage && <ImageModal imageUrl={selectedImage} onClose={closeModal} />}
     </main>
   );
 }
