@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles.module.css';
 
 interface ImageModalProps {
-  imageUrl: string;
+  imageUrl: string | undefined;
   onClose: () => void;
 }
 

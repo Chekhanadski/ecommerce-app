@@ -10,8 +10,9 @@
 }
 
 .productImg {
-  width: 700px;
-  height: 700px;
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
 }
 
 .h1 {
