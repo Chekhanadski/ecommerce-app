@@ -13,6 +13,7 @@
   width: 35%;
   max-height: 350px;
   object-fit: contain;
+  cursor: zoom-in;
 }
 
 .h1 {

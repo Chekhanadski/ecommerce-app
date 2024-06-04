@@ -110,7 +110,8 @@ export default function AddressPage() {
                       name="country"
                       value={addresses[0]?.country || ''}
                       onChange={(e) => handleInputChange(e, 0)}
-                      disabled={isDisabled}>
+                      disabled={isDisabled}
+                    >
                       <option value="" disabled hidden>
                         Select Country
                       </option>
@@ -183,7 +184,8 @@ export default function AddressPage() {
                       name="country"
                       value={addresses[1]?.country || ''}
                       onChange={(e) => handleInputChange(e, 1)}
-                      disabled={isDisabled}>
+                      disabled={isDisabled}
+                    >
                       <option value="" disabled hidden>
                         Select Country
                       </option>

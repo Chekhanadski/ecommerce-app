@@ -62,7 +62,9 @@ export default function ProductPage() {
 
   return (
     <main className={styles.mainBlock}>
-      {productImage ? <img className={styles.productImg} src={productImage} alt={productName} onClick={handleImageClick}/> : null}
+      {productImage ? (
+        <img className={styles.productImg} src={productImage} alt={productName} onClick={handleImageClick} />
+      ) : null}
       <div className={styles.informationBlock}>
         <div className={styles.contentBlock}>
           <h1 className={styles.h1}>{productName}</h1>
@@ -73,12 +75,7 @@ export default function ProductPage() {
           <p>{productDescription}</p>
         </div>
       </div>
-      {isModalOpen && (
-        <ImageModal
-          imageUrl={productImage}
-          onClose={closeModal}
-        />
-      )}
+      {isModalOpen ? <ImageModal imageUrl={productImage} onClose={closeModal} /> : null}
     </main>
   );
 }
