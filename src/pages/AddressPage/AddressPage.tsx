@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import styles from './styles.module.css';
@@ -17,6 +19,8 @@ export default function AddressPage() {
       setAddresses(data?.addresses || []);
     });
   }, []);
+
+  const notifyChange = () => toast('Data Changed!');
 
   // Handle change for input fields
   const handleInputChange = (
@@ -49,7 +53,7 @@ export default function AddressPage() {
         </div>
         <div className={styles.editProfile}>
           <h1 className={styles.editProfileHeader}>Edit Your Addresses</h1>
-          <div className={styles.editProfileData}>
+          <div className={`${styles.editProfileAddress} ${!isDisabled && styles.editProfileAddressModal}`}>
             <div className={styles.addressesBlock}>
               <span className={styles.headerAddress}>Your Shipping Address:</span>
               <div className={styles.rowEditProfile}>
@@ -197,16 +201,25 @@ export default function AddressPage() {
             </div>
 
             <div className={styles.buttons}>
-              <Link className={styles.cancelLink} to="/account">
+              <Link className={styles.cancelLink} to="/account/address" onClick={() => setIsDisabled(true)}>
                 Cancel
               </Link>
-              <Button type="button" className="accountPageButton" onClick={() => setIsDisabled((prev) => !prev)}>
+              <Button
+                type="button"
+                className="accountPageButton"
+                onClick={() => {
+                  setIsDisabled((current) => !current);
+                  if (!isDisabled) {
+                    notifyChange();
+                  }
+                }}>
                 {isDisabled ? 'Change' : 'Save Changes'}
               </Button>
             </div>
           </div>
         </div>
       </main>
+      <ToastContainer />
     </div>
   );
 }
