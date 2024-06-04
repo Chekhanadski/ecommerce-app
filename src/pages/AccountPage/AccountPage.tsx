@@ -63,7 +63,7 @@ export default function AccountPage() {
         <div className={styles.editProfile}>
           <h1 className={styles.editProfileHeader}>Edit Your Profile</h1>
 
-          <div className={styles.editProfileData}>
+          <div className={`${styles.editProfileData} ${!isDisabled && styles.editProfileModal}`}>
             <div className={styles.rowEditProfile}>
               <div className={styles.firstColumnEditProfile}>
                 <div className={styles.nameField}>First Name</div>
@@ -130,7 +130,7 @@ export default function AccountPage() {
               </div>
             </div>
             <div className={styles.buttons}>
-              <Link className={styles.cancelLink} to="/account">
+              <Link className={styles.cancelLink} to="/account" onClick={() => setIsDisabled(true)}>
                 Cancel
               </Link>
               <Button type="button" className="accountPageButton" onClick={() => setIsDisabled((current) => !current)}>
