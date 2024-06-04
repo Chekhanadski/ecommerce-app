@@ -47,4 +47,20 @@
   .modalBox {
     width: 90%;
   }
+  .modalImage{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+@media (max-width: 390px) {
+  .modalBox {
+    width: 50%;
+  }
+  .modalImage{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }
