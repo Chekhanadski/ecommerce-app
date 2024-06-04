@@ -18,15 +18,19 @@ export default function AccountPage() {
   const [email, setEmail] = useState('');
   const [date, setDate] = useState('');
 
+  const customerId = localStorage.getItem('customerId');
+
   // Fetch customer data on component mount
   useEffect(() => {
-    getCustomerData().then((data) => {
-      setFirstName(data?.firstName ?? '');
-      setLastName(data?.lastName ?? '');
-      setEmail(data?.email ?? '');
-      setDate(data?.dateOfBirth ?? '');
-    });
-  }, []);
+    if (customerId) {
+      getCustomerData().then((data) => {
+        setFirstName(data?.firstName ?? '');
+        setLastName(data?.lastName ?? '');
+        setEmail(data?.email ?? '');
+        setDate(data?.dateOfBirth ?? '');
+      });
+    }
+  }, [customerId]);
 
   const [currentPasswordVisible, setCurrentPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);

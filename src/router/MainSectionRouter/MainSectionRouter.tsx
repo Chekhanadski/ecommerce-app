@@ -19,7 +19,7 @@ function MainSectionRouter() {
               <Route
                 key={route.path}
                 path={route.path}
-                element={isAuthorized ? <route.element /> : <Navigate to="/login" />}
+                element={isAuthorized === undefined || isAuthorized ? <route.element /> : <Navigate to="/login" />}
               />
             );
           }
