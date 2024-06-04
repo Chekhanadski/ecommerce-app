@@ -145,7 +145,8 @@ export default function AccountPage() {
                   if (!isDisabled) {
                     notifyChange();
                   }
-                }}>
+                }}
+              >
                 {isDisabled ? 'Change Your Data' : 'Save Changes'}
               </Button>
             </div>
