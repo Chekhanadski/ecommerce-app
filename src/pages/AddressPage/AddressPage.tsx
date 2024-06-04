@@ -49,7 +49,7 @@ export default function AddressPage() {
         </div>
         <div className={styles.editProfile}>
           <h1 className={styles.editProfileHeader}>Edit Your Addresses</h1>
-          <div className={styles.editProfileData}>
+          <div className={`${styles.editProfileAddress} ${!isDisabled && styles.editProfileAddressModal}`}>
             <div className={styles.addressesBlock}>
               <span className={styles.headerAddress}>Your Shipping Address:</span>
               <div className={styles.rowEditProfile}>
@@ -197,7 +197,7 @@ export default function AddressPage() {
             </div>
 
             <div className={styles.buttons}>
-              <Link className={styles.cancelLink} to="/account">
+              <Link className={styles.cancelLink} to="/account/address" onClick={() => setIsDisabled(true)}>
                 Cancel
               </Link>
               <Button type="button" className="accountPageButton" onClick={() => setIsDisabled((prev) => !prev)}>
