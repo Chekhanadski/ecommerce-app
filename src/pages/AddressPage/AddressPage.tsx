@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { ToastContainer, toast } from 'react-toastify';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import styles from './styles.module.css';
@@ -17,6 +21,8 @@ export default function AddressPage() {
       setAddresses(data?.addresses || []);
     });
   }, []);
+
+  const notifyChange = () => toast('Data Changed!');
 
   // Handle change for input fields
   const handleInputChange = (
@@ -200,13 +206,22 @@ export default function AddressPage() {
               <Link className={styles.cancelLink} to="/account/address" onClick={() => setIsDisabled(true)}>
                 Cancel
               </Link>
-              <Button type="button" className="accountPageButton" onClick={() => setIsDisabled((prev) => !prev)}>
+              <Button
+                type="button"
+                className="accountPageButton"
+                onClick={() => {
+                  setIsDisabled((current) => !current);
+                  if (!isDisabled) {
+                    notifyChange();
+                  }
+                }}>
                 {isDisabled ? 'Change' : 'Save Changes'}
               </Button>
             </div>
           </div>
         </div>
       </main>
+      <ToastContainer />
     </div>
   );
 }

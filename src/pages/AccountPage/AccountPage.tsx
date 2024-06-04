@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { ToastContainer, toast } from 'react-toastify';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import 'react-toastify/dist/ReactToastify.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button/Button';
@@ -29,6 +33,8 @@ export default function AccountPage() {
   const [currentPasswordVisible, setCurrentPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
+  const notifyChange = () => toast('Data Changed!');
 
   const toggleCurrentPasswordVisibility = () => {
     setCurrentPasswordVisible(!currentPasswordVisible);
@@ -133,13 +139,22 @@ export default function AccountPage() {
               <Link className={styles.cancelLink} to="/account" onClick={() => setIsDisabled(true)}>
                 Cancel
               </Link>
-              <Button type="button" className="accountPageButton" onClick={() => setIsDisabled((current) => !current)}>
+              <Button
+                type="button"
+                className="accountPageButton"
+                onClick={() => {
+                  setIsDisabled((current) => !current);
+                  if (!isDisabled) {
+                    notifyChange();
+                  }
+                }}>
                 {isDisabled ? 'Change Your Data' : 'Save Changes'}
               </Button>
             </div>
           </div>
         </div>
       </main>
+      <ToastContainer />
     </div>
   );
 }
