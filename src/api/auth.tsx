@@ -110,7 +110,7 @@ export async function signUp(data: FormData) {
     const responseData = await response.json();
 
     // save customer ID to local storage
-    localStorage.setItem('customerId', responseData.scope.split(' ')[1].split(':')[1]);
+    localStorage.setItem('customerId', responseData.customer.id);
 
     if (responseData) {
       const loginData = {
