@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { FormData } from '../../store/types/auth';
 
 import Button from '../Button/Button';
 import styles from './styles.module.css';
+import { StoreContext } from '../../store/store';
 
 const DEFAULT_SHIPPING_ADDRESS_INDEX = 0;
 const DEFAULT_BILLING_ADDRESS_INDEX = 1;
@@ -54,6 +55,7 @@ function SignUpForm(): React.ReactElement {
   });
   const values = getValues();
   const navigate = useNavigate();
+  const { setStore } = useContext(StoreContext);
 
   const [dobActivated, setDobActivated] = useState(false);
   const handleDobFocus = () => setDobActivated(true);
@@ -105,6 +107,7 @@ function SignUpForm(): React.ReactElement {
       state.isAuthorized = false;
     } else {
       state.isAuthorized = true;
+      setStore((prevStore) => ({ ...prevStore, isAuthorized: true }));
       setErrorMessage('');
       setRegistrationSuccess(true);
       setTimeout(() => {

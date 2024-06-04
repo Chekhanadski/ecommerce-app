@@ -5,7 +5,7 @@ import { Store, StoreContext } from './store/store';
 import './App.css';
 
 function App(): React.ReactElement {
-  const [store, setStore] = useState<Store>({ products: [], isAuthorized: false });
+  const [store, setStore] = useState<Store>({ products: [], isAuthorized: undefined });
 
   const value = useMemo(() => ({ store, setStore }), [store, setStore]);
 

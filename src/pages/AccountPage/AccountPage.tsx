@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button/Button';
@@ -16,19 +18,25 @@ export default function AccountPage() {
   const [email, setEmail] = useState('');
   const [date, setDate] = useState('');
 
+  const customerId = localStorage.getItem('customerId');
+
   // Fetch customer data on component mount
   useEffect(() => {
-    getCustomerData().then((data) => {
-      setFirstName(data?.firstName ?? '');
-      setLastName(data?.lastName ?? '');
-      setEmail(data?.email ?? '');
-      setDate(data?.dateOfBirth ?? '');
-    });
-  }, []);
+    if (customerId) {
+      getCustomerData().then((data) => {
+        setFirstName(data?.firstName ?? '');
+        setLastName(data?.lastName ?? '');
+        setEmail(data?.email ?? '');
+        setDate(data?.dateOfBirth ?? '');
+      });
+    }
+  }, [customerId]);
 
   const [currentPasswordVisible, setCurrentPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+
+  const notifyChange = () => toast('Data Changed!');
 
   const toggleCurrentPasswordVisibility = () => {
     setCurrentPasswordVisible(!currentPasswordVisible);
@@ -63,7 +71,7 @@ export default function AccountPage() {
         <div className={styles.editProfile}>
           <h1 className={styles.editProfileHeader}>Edit Your Profile</h1>
 
-          <div className={styles.editProfileData}>
+          <div className={`${styles.editProfileData} ${!isDisabled && styles.editProfileModal}`}>
             <div className={styles.rowEditProfile}>
               <div className={styles.firstColumnEditProfile}>
                 <div className={styles.nameField}>First Name</div>
@@ -130,16 +138,26 @@ export default function AccountPage() {
               </div>
             </div>
             <div className={styles.buttons}>
-              <Link className={styles.cancelLink} to="/account">
+              <Link className={styles.cancelLink} to="/account" onClick={() => setIsDisabled(true)}>
                 Cancel
               </Link>
-              <Button type="button" className="accountPageButton" onClick={() => setIsDisabled((current) => !current)}>
+              <Button
+                type="button"
+                className="accountPageButton"
+                onClick={() => {
+                  setIsDisabled((current) => !current);
+                  if (!isDisabled) {
+                    notifyChange();
+                  }
+                }}
+              >
                 {isDisabled ? 'Change Your Data' : 'Save Changes'}
               </Button>
             </div>
           </div>
         </div>
       </main>
+      <ToastContainer />
     </div>
   );
 }

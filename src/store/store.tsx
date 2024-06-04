@@ -3,11 +3,11 @@ import { ProductData } from './types/products';
 
 export interface Store {
   products: ProductData[];
-  isAuthorized: boolean;
+  isAuthorized?: boolean;
 }
 
 const initialStoreContextProps: { store: Store; setStore: React.Dispatch<React.SetStateAction<Store>> } = {
-  store: { products: [], isAuthorized: false },
+  store: { products: [], isAuthorized: undefined },
   setStore: () => {}
 };
 
