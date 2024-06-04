@@ -2,11 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router';
 import { getProductData } from '../../api/products';
 import { ProductData } from '../../store/types/products';
+import ImageModal from '../../components/ImageModal/ImageModal';
 import styles from './styles.module.css';
 
 export default function ProductPage() {
   const { productId } = useParams();
   const [product, setProduct] = useState<ProductData | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -18,6 +20,14 @@ export default function ProductPage() {
 
     fetchProduct();
   }, [productId]);
+
+  const handleImageClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   const { productName, productDescription, productImage, fullPrice, discountedPrice } = useMemo(() => {
     if (!product || (product && !product.masterData) || !product.masterData.current.masterVariant.prices[0]) {
@@ -52,7 +62,9 @@ export default function ProductPage() {
 
   return (
     <main className={styles.mainBlock}>
-      {productImage ? <img className={styles.productImg} src={productImage} alt={productName} /> : null}
+      {productImage ? (
+        <img className={styles.productImg} src={productImage} alt={productName} onClick={handleImageClick} />
+      ) : null}
       <div className={styles.informationBlock}>
         <div className={styles.contentBlock}>
           <h1 className={styles.h1}>{productName}</h1>
@@ -63,6 +75,7 @@ export default function ProductPage() {
           <p>{productDescription}</p>
         </div>
       </div>
+      {isModalOpen ? <ImageModal imageUrl={productImage} onClose={closeModal} /> : null}
     </main>
   );
 }

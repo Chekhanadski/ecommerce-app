@@ -20,6 +20,7 @@
   width: 270px;
   height: 270px;
   object-fit: contain;
+  cursor: zoom-in;
 }
 
 .productCartButton {
