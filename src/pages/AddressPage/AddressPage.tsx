@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import styles from './styles.module.css';
 import { CustomerData, CustomerAddress } from '../../store/types/customer';
-import getCustomerData from '../../api/customer';
+import { getCustomerData } from '../../api/customer';
 
 export default function AddressPage() {
   const [customerData, setCustomerData] = useState<CustomerData | null>(null);
@@ -114,8 +114,7 @@ export default function AddressPage() {
                       name="country"
                       value={addresses[0]?.country || ''}
                       onChange={(e) => handleInputChange(e, 0)}
-                      disabled={isDisabled}
-                    >
+                      disabled={isDisabled}>
                       <option value="" disabled hidden>
                         Select Country
                       </option>
@@ -188,8 +187,7 @@ export default function AddressPage() {
                       name="country"
                       value={addresses[1]?.country || ''}
                       onChange={(e) => handleInputChange(e, 1)}
-                      disabled={isDisabled}
-                    >
+                      disabled={isDisabled}>
                       <option value="" disabled hidden>
                         Select Country
                       </option>
@@ -214,8 +212,7 @@ export default function AddressPage() {
                   if (!isDisabled) {
                     notifyChange();
                   }
-                }}
-              >
+                }}>
                 {isDisabled ? 'Change' : 'Save Changes'}
               </Button>
             </div>
