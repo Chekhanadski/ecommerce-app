@@ -5,7 +5,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import styles from './styles.module.css';
-import getCustomerData from '../../api/customer';
+import { getCustomerData, updateCustomerData } from '../../api/customer';
+import * as regexps from '../../constants/regexps';
 
 export default function AccountPage() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -18,25 +19,106 @@ export default function AccountPage() {
   const [email, setEmail] = useState('');
   const [date, setDate] = useState('');
 
-  const customerId = localStorage.getItem('customerId');
+  const [version, setVersion] = useState(0);
 
   // Fetch customer data on component mount
   useEffect(() => {
-    if (customerId) {
-      getCustomerData().then((data) => {
-        setFirstName(data?.firstName ?? '');
-        setLastName(data?.lastName ?? '');
-        setEmail(data?.email ?? '');
-        setDate(data?.dateOfBirth ?? '');
-      });
-    }
-  }, [customerId]);
+    getCustomerData().then((data) => {
+      setFirstName(data?.firstName ?? '');
+      setLastName(data?.lastName ?? '');
+      setEmail(data?.email ?? '');
+      setDate(data?.dateOfBirth ?? '');
+      setVersion(data?.version ?? 0);
+      console.log(data);
+    });
+  }, []);
 
   const [currentPasswordVisible, setCurrentPasswordVisible] = useState(false);
   const [newPasswordVisible, setNewPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const notifyChange = () => toast('Data Changed!');
+  const notifyError = () => toast('Some Error Happend!');
+
+  function updateData() {
+    const customerData = {
+      version,
+      actions: [
+        {
+          action: 'setFirstName',
+          firstName
+        },
+        {
+          action: 'setLastName',
+          lastName
+        },
+        {
+          action: 'changeEmail',
+          email
+        },
+        {
+          action: 'setDateOfBirth',
+          date
+        }
+      ]
+    };
+    console.log('customerData', JSON.stringify(customerData));
+
+    updateCustomerData(JSON.stringify(customerData))
+      .then(() => {
+        notifyChange();
+      })
+      .catch(() => {
+        notifyError();
+      });
+  }
+
+  const validateEmail = (emailString: string) => {
+    if (emailString.length && !regexps.emailRegexp.test(emailString.toLowerCase())) {
+      return 'Invalid email format';
+    }
+    if (emailString.length < 1) {
+      return 'Email is required';
+    }
+    return undefined;
+  };
+
+  const validateName = (nameString: string) => {
+    if (nameString.length && !regexps.nameRegexp.test(nameString)) {
+      return 'First name can only contain English letters';
+    }
+    if (nameString.length < 1) {
+      return 'First name is required';
+    }
+    return undefined;
+  };
+
+  const validateLastName = (surnameString: string) => {
+    if (surnameString.length < 1) {
+      return 'Last name is required';
+    }
+    if (!regexps.nameRegexp.test(surnameString)) {
+      return 'Last name can only contain English letters';
+    }
+    return undefined;
+  };
+
+  const validateDob = (dobString: string) => {
+    const dobDate = new Date(dobString);
+    const currentDate = new Date();
+    let age = currentDate.getFullYear() - dobDate.getFullYear();
+    const m = currentDate.getMonth() - dobDate.getMonth();
+    if (m < 0 || (m === 0 && currentDate.getDate() < dobDate.getDate())) {
+      age -= 1;
+    }
+    if (age < 13) {
+      return 'You must be at least 13 years old';
+    }
+    if (dobString.length < 1) {
+      return 'Date of Birth is required';
+    }
+    return true;
+  };
 
   const toggleCurrentPasswordVisibility = () => {
     setCurrentPasswordVisible(!currentPasswordVisible);
@@ -76,13 +158,21 @@ export default function AccountPage() {
               <div className={styles.firstColumnEditProfile}>
                 <div className={styles.nameField}>First Name</div>
                 <div className={styles.value}>
-                  <input value={firstName} onChange={(e) => setFirstName(e.target.value)} disabled={isDisabled} />
+                  <input
+                    value={firstName}
+                    onChange={(e) => {
+                      setFirstName(e.target.value);
+                    }}
+                    disabled={isDisabled}
+                  />
+                  <div className={styles.error}>{validateName(firstName) ? validateName(firstName) : null}</div>
                 </div>
               </div>
               <div className={styles.secondColumnEditProfile}>
                 <div className={styles.nameField}>Last Name</div>
                 <div className={styles.value}>
                   <input value={lastName} onChange={(e) => setLastName(e.target.value)} disabled={isDisabled} />
+                  <div className={styles.error}>{validateLastName(lastName) ? validateLastName(lastName) : null}</div>
                 </div>
               </div>
             </div>
@@ -92,6 +182,7 @@ export default function AccountPage() {
                 <div className={styles.nameField}>Email</div>
                 <div className={styles.value}>
                   <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} disabled={isDisabled} />
+                  <div className={styles.error}>{validateEmail(email) ? validateEmail(email) : null}</div>
                 </div>
               </div>
               <div className={styles.secondColumnEditProfile}>
@@ -104,6 +195,7 @@ export default function AccountPage() {
                     className={styles.dateInput}
                     disabled={isDisabled}
                   />
+                  <div className={styles.error}>{validateDob(date) ? validateDob(date) : null}</div>
                 </div>
               </div>
             </div>
@@ -147,10 +239,9 @@ export default function AccountPage() {
                 onClick={() => {
                   setIsDisabled((current) => !current);
                   if (!isDisabled) {
-                    notifyChange();
+                    updateData();
                   }
-                }}
-              >
+                }}>
                 {isDisabled ? 'Change Your Data' : 'Save Changes'}
               </Button>
             </div>
