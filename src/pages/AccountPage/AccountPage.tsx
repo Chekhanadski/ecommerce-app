@@ -29,7 +29,6 @@ export default function AccountPage() {
       setEmail(data?.email ?? '');
       setDate(data?.dateOfBirth ?? '');
       setVersion(data?.version ?? 0);
-      console.log(data);
     });
   }, []);
 
@@ -62,7 +61,6 @@ export default function AccountPage() {
         }
       ]
     };
-    console.log('customerData', JSON.stringify(customerData));
 
     updateCustomerData(JSON.stringify(customerData))
       .then(() => {
