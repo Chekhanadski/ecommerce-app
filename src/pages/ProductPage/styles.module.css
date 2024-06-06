@@ -1,5 +1,6 @@
 .mainBlock {
   display: flex;
+  flex-direction: column; /*temp*/
   gap: 50px;
   margin: 0 135px 140px 135px;
 }
