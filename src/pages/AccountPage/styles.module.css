@@ -53,6 +53,10 @@
   transition: transform 0.3s ease;
 }
 
+.error {
+  color: #ff0000;
+  font-size: 0.85rem;
+}
 .editProfileModal {
   padding: 1.5rem;
   background-color: whitesmoke;
