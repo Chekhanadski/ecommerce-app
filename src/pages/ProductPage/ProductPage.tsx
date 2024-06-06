@@ -10,6 +10,7 @@ export default function ProductPage() {
   const { productId } = useParams();
   const [product, setProduct] = useState<ProductData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalImage, setModalImage] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -22,15 +23,15 @@ export default function ProductPage() {
     fetchProduct();
   }, [productId]);
 
-  const handleImageClick = () => {
-    setIsModalOpen(true);
-  };
+  const handleImageClick = (imageUrl: string) => {
+    setModalImage(imageUrl);
+    setIsModalOpen(true);  };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
-  const { productName, productDescription, productImage, productImages, fullPrice, discountedPrice } = useMemo(() => {
+  const { productName, productDescription, productImages, fullPrice, discountedPrice } = useMemo(() => {
     if (!product || (product && !product.masterData) || !product.masterData.current.masterVariant.prices[0]) {
       return {};
     }
@@ -65,10 +66,8 @@ export default function ProductPage() {
 
   return (
     <main className={styles.mainBlock}>
-      {productImages ? <ImageSlider images={productImages}/> : null}
-      {productImage ? (
-        <img className={styles.productImg} src={productImage} alt={productName} onClick={handleImageClick} />
-      ) : null}
+      {productImages ? <ImageSlider images={productImages} onImageClick={handleImageClick}/> : null}
+      
       <div className={styles.informationBlock}>
         <div className={styles.contentBlock}>
           <h1 className={styles.h1}>{productName}</h1>
@@ -79,7 +78,7 @@ export default function ProductPage() {
           <p>{productDescription}</p>
         </div>
       </div>
-      {isModalOpen ? <ImageModal imageUrl={productImage} onClose={closeModal} /> : null}
+      {isModalOpen ? <ImageModal imageUrl={modalImage} onClose={closeModal} /> : null}
     </main>
   );
 }
