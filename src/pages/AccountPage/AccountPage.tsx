@@ -17,7 +17,7 @@ export default function AccountPage() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [date, setDate] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
 
   const [version, setVersion] = useState(0);
 
@@ -27,7 +27,7 @@ export default function AccountPage() {
       setFirstName(data?.firstName ?? '');
       setLastName(data?.lastName ?? '');
       setEmail(data?.email ?? '');
-      setDate(data?.dateOfBirth ?? '');
+      setDateOfBirth(data?.dateOfBirth ?? '');
       setVersion(data?.version ?? 0);
     });
   }, []);
@@ -57,7 +57,7 @@ export default function AccountPage() {
         },
         {
           action: 'setDateOfBirth',
-          date
+          dateOfBirth
         }
       ]
     };
@@ -188,12 +188,12 @@ export default function AccountPage() {
                 <div className={styles.value}>
                   <input
                     type="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
+                    value={dateOfBirth}
+                    onChange={(e) => setDateOfBirth(e.target.value)}
                     className={styles.dateInput}
                     disabled={isDisabled}
                   />
-                  <div className={styles.error}>{validateDob(date) ? validateDob(date) : null}</div>
+                  <div className={styles.error}>{validateDob(dateOfBirth) ? validateDob(dateOfBirth) : null}</div>
                 </div>
               </div>
             </div>
