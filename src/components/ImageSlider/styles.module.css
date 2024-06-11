@@ -1,0 +1,28 @@
+:root {
+  --swiper-theme-color: #121212;
+}
+
+:global(.swiper) {
+  margin: 0;
+}
+
+:global(.swiper-slide) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image {
+  max-width: 600px;
+  width: 100%;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+
+.swiper-button-prev:after {
+  color: #000;
+  isolation: isolate;
+}
+.swiper-button-prev::after {
+  isolation: isolate;
+}

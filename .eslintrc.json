@@ -17,6 +17,9 @@
   "rules": {
     "import/no-cycle": 0,
     "react/jsx-one-expression-per-line": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/no-noninteractive-element-interactions": 0,
     "unused-imports/no-unused-imports": "error",
     "react/jsx-filename-extension": [
       "warn",
@@ -24,7 +27,9 @@
         "extensions": [".tsx"]
       }
     ],
+    "import/no-extraneous-dependencies": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "@typescript-eslint/no-shadow": "off"
   }
 }

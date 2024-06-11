@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
@@ -9,6 +9,7 @@ import styles from './styles.module.css';
 import * as regexps from '../../constants/regexps';
 import { loginUser } from '../../api/auth';
 import { LoginData } from '../../store/types/auth';
+import { StoreContext } from '../../store/store';
 
 export default function LoginForm() {
   const {
@@ -26,6 +27,8 @@ export default function LoginForm() {
   const [loginError, setLoginError] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const { setStore } = useContext(StoreContext);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
@@ -51,6 +54,7 @@ export default function LoginForm() {
       setLoginError('');
       setLoginSuccess(true);
       state.isAuthorized = true;
+      setStore((prevStore) => ({ ...prevStore, isAuthorized: true }));
       navigate('/');
       redirectToMain();
     } catch (error) {
@@ -119,9 +123,11 @@ export default function LoginForm() {
       </div>
 
       <div className={styles.messageContainer}>
-        {loginError && <div className={styles.serverError}>{loginError}</div>}
-        {loginSuccess && <div className={styles.success}>Login successful!</div>}
-        <Button type="submit">Log In</Button>
+        {loginError ? <div className={styles.serverError}>{loginError}</div> : null}{' '}
+        {loginSuccess ? <div className={styles.success}>Login successful!</div> : null}
+        <Button type="submit" className="loginPageButton">
+          Sign in
+        </Button>
       </div>
 
       <div className={styles.logInContainer}>

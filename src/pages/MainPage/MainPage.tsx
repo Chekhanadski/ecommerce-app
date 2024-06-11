@@ -1,31 +1,28 @@
 import React from 'react';
+import { FaApple } from 'react-icons/fa';
 import styles from './styles.module.css';
 
-const categories = [
-  "Woman's Fashion",
-  "Men's Fashion",
-  'Electronics',
-  'Home & Lifestyle',
-  'Medicine',
-  'Sports & Outdoor',
-  "Baby's & Toys",
-  'Groceries & Pets',
-  'Health & Beauty'
-];
+const categories = ['Mobile phones', 'Laptops'];
 
 function MainPage() {
   return (
     <div className={styles.mainSection}>
-      <div className={styles.categories}>
-        {categories.map((category) => (
-          <div key={category} className={styles.categoryLink}>
-            {category}
-          </div>
-        ))}
+      <div className={styles.wrapperCategories}>
+        <ul className={styles.categories}>
+          {categories.map((category) => (
+            <li key={category} className={styles.categoryLink}>
+              {category}
+            </li>
+          ))}
+        </ul>
       </div>
+
       <div className={styles.placeholderBanner}>
-        <h2>Hello, this is Main Page placeholder</h2>
-        <img src="img/main-page-banner-iphones.png" alt="main-page-placeholder" />
+        <div className={styles.textBanner}>
+          <FaApple color="white" size={70} />
+          <h2>iPhone 14 Series</h2>
+        </div>
+        <img className={styles.imgIphone} src="img/iphone.jpg" alt="main-page-placeholder" />
       </div>
     </div>
   );

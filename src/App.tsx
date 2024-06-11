@@ -1,14 +1,24 @@
-import React from 'react';
-import './App.css';
+import React, { useState, useMemo, useEffect } from 'react';
 import MainSectionRouter from './router/MainSectionRouter/MainSectionRouter';
+import { Store, StoreContext } from './store/store';
+
+import './App.css';
 
 function App(): React.ReactElement {
+  const [store, setStore] = useState<Store>({ products: [], isAuthorized: undefined });
+
+  const value = useMemo(() => ({ store, setStore }), [store, setStore]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    setStore((prevStore) => ({ ...prevStore, isAuthorized: !!token?.length }));
+  }, []);
+
   return (
-    <div>
-      <div className="sale-offer"> </div>
-      <div className="wrapper">
+    <div className="wrapper">
+      <StoreContext.Provider value={value}>
         <MainSectionRouter />
-      </div>
+      </StoreContext.Provider>
     </div>
   );
 }

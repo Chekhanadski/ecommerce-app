@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { FormData } from '../../store/types/auth';
 
 import Button from '../Button/Button';
 import styles from './styles.module.css';
+import { StoreContext } from '../../store/store';
 
 const DEFAULT_SHIPPING_ADDRESS_INDEX = 0;
 const DEFAULT_BILLING_ADDRESS_INDEX = 1;
@@ -54,6 +55,7 @@ function SignUpForm(): React.ReactElement {
   });
   const values = getValues();
   const navigate = useNavigate();
+  const { setStore } = useContext(StoreContext);
 
   const [dobActivated, setDobActivated] = useState(false);
   const handleDobFocus = () => setDobActivated(true);
@@ -99,11 +101,13 @@ function SignUpForm(): React.ReactElement {
     }
 
     const result = await signUp(fullData);
+
     if (typeof result === 'string') {
       setErrorMessage(result);
       state.isAuthorized = false;
     } else {
       state.isAuthorized = true;
+      setStore((prevStore) => ({ ...prevStore, isAuthorized: true }));
       setErrorMessage('');
       setRegistrationSuccess(true);
       setTimeout(() => {
@@ -238,11 +242,6 @@ function SignUpForm(): React.ReactElement {
         <input type="email" placeholder="Email" {...register('email', { validate: validateEmail })} />
         {errors.email && <div className={styles.error}>{errors.email.message}</div>}
       </div>
-
-      {/* <div className={styles.inputContainer}>
-        <input type="password" placeholder="Password" {...register('password', { validate: validatePassword })} />
-        {errors.password && <div className={styles.error}>{errors.password.message}</div>}
-      </div> */}
 
       <div className={styles.inputContainer}>
         <div className={styles.inputPasswordContainer}>
@@ -416,7 +415,9 @@ function SignUpForm(): React.ReactElement {
         {registrationSuccess && <div className={styles.success}>Account successfully created!</div>}
 
         {errorMessage && <div className={styles.serverError}>{errorMessage}</div>}
-        <Button type="submit">Create Account</Button>
+        <Button type="submit" className="loginPageButton">
+          Create Account
+        </Button>
       </div>
       <div className={styles.logInContainer}>
         <span className="styles.logInText">Already have account?</span>

@@ -1,6 +1,6 @@
 .mainBlock {
   display: flex;
-  margin-bottom: 140px;
+  margin: 60px 0 140px;
 }
 
 .formLoginBlock {
