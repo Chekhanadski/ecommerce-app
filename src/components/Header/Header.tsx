@@ -50,6 +50,11 @@ function Header() {
                 Catalog
               </Link>
             </li>
+            <li>
+              <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/about">
+                About Us
+              </Link>
+            </li>
             {!isAuthorized && (
               <>
                 <li>
