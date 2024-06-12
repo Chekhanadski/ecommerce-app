@@ -25,7 +25,8 @@ export default function ProductPage() {
 
   const handleImageClick = (imageUrl: string) => {
     setModalImage(imageUrl);
-    setIsModalOpen(true);  };
+    setIsModalOpen(true);
+  };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -66,8 +67,8 @@ export default function ProductPage() {
 
   return (
     <main className={styles.mainBlock}>
-      {productImages ? <ImageSlider images={productImages} onImageClick={handleImageClick}/> : null}
-      
+      {productImages ? <ImageSlider images={productImages} onImageClick={handleImageClick} /> : null}
+
       <div className={styles.informationBlock}>
         <div className={styles.contentBlock}>
           <h1 className={styles.h1}>{productName}</h1>
