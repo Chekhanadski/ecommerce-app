@@ -77,7 +77,7 @@ function TeamMemberComponent({ member }: { member: TeamMember }) {
           ))}
         </ul>
         <p>
-          <a href={member.github} target="_blank" rel="noopener noreferrer">
+          <a className={styles.gitHubLink} href={member.github} target="_blank" rel="noopener noreferrer">
             GitHub
           </a>
         </p>
