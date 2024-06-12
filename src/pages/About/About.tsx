@@ -90,6 +90,10 @@ function About() {
   return (
     <main className={styles.mainSection}>
       <h1 className={styles.h1}>Our Team</h1>
+      <a className={styles.rsschoolLogoLink} href="https://rs.school/" target="_blank" rel="noopener noreferrer">
+        <img className={styles.rsschoolLogo} src="/img/rsschool-logo.svg" alt="RSSchool Logo" />
+      </a>
+
       <p className={styles.intro}>
         Our team is a group of talented and dedicated aspiring front-end developers, each of whom contributed uniquely
         to the creation of the website &quot;Exclusive&quot; as part of the JS course at RSSchool. Under the guidance of
