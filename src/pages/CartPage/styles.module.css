@@ -19,6 +19,16 @@
   text-align: center;
 }
 
+.catalogLink {
+  text-decoration: none;
+  background-color: #db4444;
+  margin-bottom: 2rem;
+  display: block;
+  padding: 10px 20px;
+  color: whitesmoke;
+  text-align: center;
+}
+
 @media screen and (max-width: 500px) {
   .emptyCartImg {
     width: 300px;
