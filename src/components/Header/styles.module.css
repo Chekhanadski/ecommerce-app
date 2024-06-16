@@ -95,6 +95,16 @@
   color: #db4444;
 }
 
+.cartCount {
+  position: absolute;
+
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 0 5px;
+  font-size: 14px;
+}
+
 @media screen and (max-width: 970px) {
   .headerWrapper {
     margin: 0 20px;

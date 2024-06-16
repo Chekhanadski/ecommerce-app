@@ -100,7 +100,7 @@ function About() {
         our mentor, Semion Krapivin, we worked cohesively and effectively, achieving our set goals. Get to know each
         team member and learn more about their roles, contributions, and professional journeys.
       </p>
-      
+
       {teamMembers.map((member) => (
         <TeamMemberComponent key={member.name} member={member} />
       ))}
@@ -112,7 +112,7 @@ function About() {
           improvement and timely delivery of features. Regular team meetings, code reviews, and collaborative
           problem-solving sessions played a crucial role in overcoming challenges and fostering innovation.
         </p>
-        
+
         <p>
           Together, we created a product that is not only functional and reliable but also user-friendly and
           aesthetically appealing. Our journey has been marked by continuous learning and growth, and we are proud of
