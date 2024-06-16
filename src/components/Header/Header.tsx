@@ -20,9 +20,12 @@ function Header() {
   }, [isOpen]);
 
   const handleLogout = () => {
-    state.logout();
+    localStorage.removeItem('customerId');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('anonymousId');
+    localStorage.removeItem('anonymousAccessToken');
+    setStore((prevStore) => ({ ...prevStore, isAuthorized: false, cartItemCount: 0 }));
     setIsOpen(false);
-    setStore((prevStore) => ({ ...prevStore, isAuthorized: false }));
   };
 
   const links = [
