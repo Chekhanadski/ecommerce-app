@@ -9,7 +9,6 @@ import { StoreContext } from '../../store/store';
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { setStore, store } = useContext(StoreContext);
-
   const { isAuthorized } = store;
 
   useEffect(() => {
@@ -26,6 +25,15 @@ function Header() {
     setStore((prevStore) => ({ ...prevStore, isAuthorized: false }));
   };
 
+  const links = [
+    { to: "/", label: "Home" },
+    { to: "/catalog", label: "Catalog" },
+    { to: "/about", label: "About Us" },
+    { to: "/login", label: "Sign In", condition: !isAuthorized },
+    { to: "/register", label: "Sign Up", condition: !isAuthorized },
+    { to: "/", label: "Log out", condition: isAuthorized, onClick: handleLogout }
+  ];
+
   return (
     <header className={styles.header}>
       <div className={styles.headerWrapper}>
@@ -40,49 +48,31 @@ function Header() {
             ✖
           </button>
           <ul className={styles.headerNavList}>
-            <li>
-              <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/catalog">
-                Catalog
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/about">
-                About Us
-              </Link>
-            </li>
-            {!isAuthorized && (
-              <>
-                <li>
-                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/login">
-                    Sign In
-                  </Link>
-                </li>
-                <li>
-                  <Link onClick={() => setIsOpen(false)} className={styles.navLink} to="/register">
-                    Sign Up
-                  </Link>
-                </li>
-              </>
-            )}
-            {isAuthorized && (
-              <li>
-                <Link onClick={handleLogout} className={styles.navLink} to="/">
-                  Log out
-                </Link>
-              </li>
-            )}
+            {links.map((link) => {
+              if (link.condition === undefined || link.condition) {
+                return (
+                  <li key={`${link.to}-${link.label}`}>
+                    <Link
+                      onClick={() => {
+                        setIsOpen(false);
+                        if (link.onClick) link.onClick();
+                      }}
+                      className={styles.navLink}
+                      to={link.to}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              }
+              return null;
+            })}
           </ul>
         </nav>
         <div className={styles.headerIcons}>
           <Link onClick={() => setIsOpen(false)} className={styles.iconLink} to="/cart">
             <IoCartOutline size={25} />
           </Link>
-
           {isAuthorized && (
             <Link onClick={() => setIsOpen(false)} className={styles.iconLink} to="/account">
               <FiUser size={25} />

@@ -43,7 +43,6 @@ export default function CartPage() {
     return (
       <div className={styles.cartComponent}>
         <img className={styles.emptyCartImg} src={cartImg} alt="Empty Cart" />
-        <h2 className={styles.emptyCartMessage}>Your cart is empty</h2>
         <h2 className={styles.emptyCartTitle}>Your cart is empty</h2>
         <p className={styles.emptyCartMessage}>Continue shopping to add items to your cart.</p>
         <Link className={styles.catalogLink} to="/catalog">
