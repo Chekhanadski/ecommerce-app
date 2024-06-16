@@ -39,8 +39,7 @@ function ProductCard({ product, onImageClick }: { product: ProductData; onImageC
   const handleAddToCart = async () => {
     if (!productId) {
       // Handle the case where productId is undefined
-      console.error('Product ID is undefined');
-      return;
+      throw new Error(`Product ID is undefined`);
     }
 
     setLoading(true);

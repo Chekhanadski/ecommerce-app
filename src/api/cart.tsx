@@ -1,30 +1,64 @@
 const BASE_URL = 'https://api.europe-west1.gcp.commercetools.com/e-commerce-project';
 
-async function getCart() {
-  const token = localStorage.getItem('accessToken');
+interface Cart {
+  id: string;
+  customerId?: string;
+  version: number;
+  lineItems: any[];
+  totalPrice: {
+    centAmount: number;
+    currencyCode: string;
+  };
+}
+
+export async function getAnonymousCart(): Promise<Cart | null> {
+  const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
 
   const response = await fetch(`${BASE_URL}/me/carts`, {
+    method: 'GET',
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${anonymousAccessToken}`
     }
   });
 
   if (!response.ok) {
-    throw new Error('Failed to get cart');
+    throw new Error('Failed to get anonymous cart');
   }
 
   const data = await response.json();
-  return data.results[0];
+
+  return data.results.length > 0 ? data.results[0] : null;
 }
 
-export default async function createCart() {
-  const token = localStorage.getItem('accessToken');
+export async function getUserCart(): Promise<Cart | null> {
+  const accessToken = localStorage.getItem('accessToken');
+  const customerId = localStorage.getItem('customerId');
+
+  const response = await fetch(`${BASE_URL}/me/carts`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to get user cart');
+  }
+
+  const data = await response.json();
+
+  return data.results.find((cart: Cart) => cart.customerId === customerId) || null;
+}
+
+export async function createCart(): Promise<Cart> {
+  const accessToken = localStorage.getItem('accessToken');
+  const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
 
   const response = await fetch(`${BASE_URL}/me/carts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${accessToken || anonymousAccessToken}`
     },
     body: JSON.stringify({
       currency: 'EUR'
@@ -39,31 +73,37 @@ export default async function createCart() {
   return data;
 }
 
-export async function addToCart(productId: string) {
-  let cart;
+export async function addToCart(productId: string): Promise<Cart> {
+  const accessToken = localStorage.getItem('accessToken');
+  const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
+  let cart = await (localStorage.getItem('customerId') ? getUserCart() : getAnonymousCart());
+  let cartId;
+  let version;
 
-  try {
-    cart = await getCart();
-  } catch {
+  if (!cart) {
     cart = await createCart();
+    cartId = cart.id;
+  } else {
+    cartId = cart.id;
+    version = cart.version;
   }
 
-  const token = localStorage.getItem('accessToken');
-
-  const response = await fetch(`${BASE_URL}/me/carts/${cart.id}`, {
+  const response = await fetch(`${BASE_URL}/me/carts/${cartId}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${accessToken || anonymousAccessToken}`
     },
     body: JSON.stringify({
+      version: version || 1,
       actions: [
         {
           action: 'addLineItem',
           productId,
           quantity: 1
         }
-      ]
+      ],
+      currency: 'EUR'
     })
   });
 

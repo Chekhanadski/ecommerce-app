@@ -11,16 +11,14 @@ const state = proxy({
     const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
     if (!anonymousAccessToken) {
       const anonymousId = generateUUID();
-      console.log('Generated anonymousId:', anonymousId);
       localStorage.setItem('anonymousId', anonymousId);
 
       getAnonymousToken(anonymousId)
         .then((newAnonymousAccessToken) => {
-          console.log('Received new anonymous access token:', newAnonymousAccessToken);
           localStorage.setItem('anonymousAccessToken', newAnonymousAccessToken);
         })
         .catch((error) => {
-          console.error('Error getting anonymous token:', error);
+          throw new Error(`Error getting anonymous token: : ${error.message}`);
         });
     }
   }

@@ -6,7 +6,6 @@ export const generateUUID = () =>
     const v = c === 'x' ? r : (r % 4) + 8;
     return v.toString(16);
   });
-const anonymousId = generateUUID();
 
 export async function getAnonymousToken(anonymousId: string) {
   try {
@@ -16,9 +15,9 @@ export async function getAnonymousToken(anonymousId: string) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          Authorization: `Basic ${btoa('dpVH1yIfwBBTMqhnk6jS8bsZ:Hco86YSJUnoZiE8bhDWlAoU4X48pUEe-')}`
+          Authorization: `Basic ${btoa('n51dy-ZHRdmABYqQ_fYHn2Xs:UHjXti3DGgaidqcFvMKYZQbnm0dJRyBN')}`
         },
-        body: `grant_type=client_credentials&scope=manage_associate_roles:e-commerce-project view_api_clients:e-commerce-project manage_customer_groups:e-commerce-project manage_connectors:e-commerce-project manage_sessions:e-commerce-project manage_subscriptions:e-commerce-project manage_types:e-commerce-project manage_categories:e-commerce-project manage_extensions:e-commerce-project manage_api_clients:e-commerce-project manage_shopping_lists:e-commerce-project manage_standalone_prices:e-commerce-project manage_project_settings:e-commerce-project manage_discount_codes:e-commerce-project manage_connectors_deployments:e-commerce-project manage_tax_categories:e-commerce-project manage_states:e-commerce-project manage_import_containers:e-commerce-project manage_business_units:e-commerce-project manage_audit_log:e-commerce-project manage_stores:e-commerce-project manage_cart_discounts:e-commerce-project manage_quote_requests:e-commerce-project manage_attribute_groups:e-commerce-project manage_order_edits:e-commerce-project manage_staged_quotes:e-commerce-project manage_project:e-commerce-project manage_quotes:e-commerce-project manage_checkout_payment_intents:e-commerce-project manage_customers:e-commerce-project view_audit_log:e-commerce-project manage_shipping_methods:e-commerce-project&anonymous_id=${anonymousId}`
+        body: `grant_type=client_credentials&scope=manage_project:e-commerce-project&anonymous_id=${anonymousId}`
       }
     );
 
@@ -38,23 +37,15 @@ export async function getAnonymousToken(anonymousId: string) {
   }
 }
 
-getAnonymousToken(anonymousId)
-  .then((token) => {
-    console.log('Access token:', token);
-  })
-  .catch((error) => {
-    console.error('Error:', error.message);
-  });
-
 export async function getAccessToken() {
   try {
     const authResponse = await fetch('https://auth.europe-west1.gcp.commercetools.com/oauth/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Basic ${btoa('dpVH1yIfwBBTMqhnk6jS8bsZ:Hco86YSJUnoZiE8bhDWlAoU4X48pUEe-')}`
+        Authorization: `Basic ${btoa('n51dy-ZHRdmABYqQ_fYHn2Xs:UHjXti3DGgaidqcFvMKYZQbnm0dJRyBN')}`
       },
-      body: `grant_type=client_credentials&scopes=[manage_associate_roles:e-commerce-project, view_api_clients:e-commerce-project, manage_customer_groups:e-commerce-project, manage_connectors:e-commerce-project, manage_sessions:e-commerce-project, manage_subscriptions:e-commerce-project, manage_types:e-commerce-project, manage_categories:e-commerce-project, manage_extensions:e-commerce-project, manage_api_clients:e-commerce-project, manage_shopping_lists:e-commerce-project, manage_standalone_prices:e-commerce-project, manage_project_settings:e-commerce-project, manage_discount_codes:e-commerce-project, manage_connectors_deployments:e-commerce-project, manage_tax_categories:e-commerce-project, manage_states:e-commerce-project, manage_import_containers:e-commerce-project, manage_business_units:e-commerce-project, manage_audit_log:e-commerce-project, manage_stores:e-commerce-project, manage_cart_discounts:e-commerce-project, manage_quote_requests:e-commerce-project, manage_attribute_groups:e-commerce-project, manage_order_edits:e-commerce-project, manage_staged_quotes:e-commerce-project, manage_project:e-commerce-project, manage_quotes:e-commerce-project, manage_checkout_payment_intents:e-commerce-project, manage_customers:e-commerce-project, view_audit_log:e-commerce-project, manage_shipping_methods:e-commerce-project]`
+      body: `grant_type=client_credentials&scopes=manage_project:e-commerce-project`
     });
 
     const authData = await authResponse.json();
@@ -99,7 +90,7 @@ export async function loginUser(data: LoginData) {
         Authorization: `Basic ${btoa('dpVH1yIfwBBTMqhnk6jS8bsZ:Hco86YSJUnoZiE8bhDWlAoU4X48pUEe-')}`,
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: `grant_type=password&username=${data.email}&password=${data.password}&scope=manage_customers:e-commerce-project`
+      body: `grant_type=password&username=${data.email}&password=${data.password}&scope=manage_project:e-commerce-project`
     }
   );
 
@@ -109,15 +100,12 @@ export async function loginUser(data: LoginData) {
     throw new Error('Incorrect email or password');
   }
 
-  // save customer ID to local storage
   if (responseData.scope) {
     localStorage.setItem('customerId', responseData.scope.split(' ')[1].split(':')[1]);
   }
 
-  // save access token to local storage
   localStorage.setItem('accessToken', responseData.access_token);
 
-  // Remove anonymous data from local storage
   localStorage.removeItem('anonymousId');
   localStorage.removeItem('anonymousAccessToken');
 

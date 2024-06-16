@@ -17,15 +17,17 @@ function App(): React.ReactElement {
     } else {
       const anonymousId = localStorage.getItem('anonymousId') || generateUUID();
       localStorage.setItem('anonymousId', anonymousId);
-
+    if(!localStorage.getItem('anonymousAccessToken')) {
       getAnonymousToken(anonymousId)
         .then((anonymousAccessToken) => {
           localStorage.setItem('anonymousAccessToken', anonymousAccessToken);
           setStore((prevStore) => ({ ...prevStore, isAuthorized: false }));
         })
         .catch((error) => {
-          console.error('Error getting anonymous token:', error);
+          throw new Error(`Error getting anonymous token: : ${error.message}`);
         });
+    }
+      
     }
   }, []);
 
