@@ -101,7 +101,7 @@
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 825px) {
   .headerWrapper {
     margin: 0 10px;
     z-index: 1;

@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaApple } from 'react-icons/fa';
 import styles from './styles.module.css';
 
 const categories = ['Mobile phones', 'Laptops'];
 
 function MainPage() {
+  const [loading, setLoading] = useState(true);
+
+  const handleImageLoad = () => {
+    setLoading(false);
+  };
+
   return (
     <div className={styles.mainSection}>
       <div className={styles.wrapperCategories}>
@@ -22,7 +28,18 @@ function MainPage() {
           <FaApple color="white" size={70} />
           <h2>iPhone 14 Series</h2>
         </div>
-        <img className={styles.imgIphone} src="img/iphone.jpg" alt="main-page-placeholder" />
+        {loading && (
+          <div className={styles.spinnerContainer}>
+            <span className={styles.spinner} />
+          </div>
+        )}
+        <img
+          className={styles.imgIphone}
+          src="img/iphone.jpg"
+          alt="main-page-placeholder"
+          onLoad={handleImageLoad}
+          style={{ display: loading ? 'none' : 'block' }}
+        />
       </div>
     </div>
   );
