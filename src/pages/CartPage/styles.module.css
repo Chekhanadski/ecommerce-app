@@ -36,11 +36,15 @@
   text-align: center;
 }
 
+.wrapper {
+  height: 73vh;
+  margin: 0 135px;
+}
+
 .cartPage {
   display: grid;
   gap: 1rem;
   max-width: 100%;
-  margin: 0 135px;
   padding: 1rem;
 }
 
@@ -88,9 +92,10 @@
   margin-top: 1rem;
 }
 
-@media screen and (max-width: 687px) {
-  .cartPage {
+@media screen and (max-width: 950px) {
+  .wrapper {
     margin: 0;
+    font-size: 0.7rem;
   }
 }
 
@@ -103,7 +108,11 @@
     font-size: 1.5rem;
   }
 
-  .cartHeader, .cartItem {
+  .cartHeader {
+    display: none;
+  }
+
+  .cartItem {
     grid-template-columns: 1fr;
     text-align: center;
   }

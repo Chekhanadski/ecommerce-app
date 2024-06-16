@@ -20,10 +20,9 @@ export default function CartPage() {
         } else {
           data = await getAnonymousCart();
         }
-        console.log('Fetched cart data:', data);
         setCart(data);
       } catch (error) {
-        console.error('Failed to fetch cart:', error);
+        throw new Error(`Failed to fetch cart: ${error}`);
       } finally {
         setLoading(false);
       }
@@ -51,37 +50,41 @@ export default function CartPage() {
   }
 
   return (
-    <main className={styles.cartPage}>
-      <div className={styles.cartHeader}>
-        <div>Product</div>
-        <div>Price</div>
-        <div>Quantity</div>
-        <div>Subtotal</div>
-      </div>
-      {cart.lineItems.map((item) => {
-        const name = item.name && item.name['en-US'];
-        const { quantity, variant, totalPrice } = item;
-        const img = variant.images[0]?.url;
-        const price = variant.prices[0];
-        const fullPrice = price.value.centAmount / 100;
-        const discountedPrice = price.discounted ? price.discounted.value.centAmount / 100 : undefined;
+    <main className={styles.wrapper}>
+      <div className={styles.cartPage}>
+        <div className={styles.cartHeader}>
+          <div>Product</div>
+          <div>Price</div>
+          <div>Quantity</div>
+          <div>Subtotal</div>
+        </div>
+        {cart.lineItems.map((item) => {
+          const name = item.name && item.name['en-US'];
+          const { quantity, variant, totalPrice } = item;
+          const img = variant.images[0]?.url;
+          const price = variant.prices[0];
+          const fullPrice = price.value.centAmount / 100;
+          const discountedPrice = price.discounted ? price.discounted.value.centAmount / 100 : undefined;
 
-        return (
-          <div key={item.id} className={styles.cartItem}>
-            <div className={styles.product}>
-              <img className={styles.cartItemImg} src={img} alt={name} />
-              <span>{name}</span>              
+          return (
+            <div key={item.id} className={styles.cartItem}>
+              <div className={styles.product}>
+                <img className={styles.cartItemImg} src={img} alt={name} />
+                <span>{name}</span>
+              </div>
+              <div className={styles.price}>{`Price: ${discountedPrice || fullPrice}€`}</div>
+              <div className={styles.quantity}>
+                <input type="number" value={quantity} min="1" />
+              </div>
+              <div className={styles.subtotal}>{`${totalPrice.centAmount / 100}€`}</div>
             </div>
-            <div className={styles.price}>{`Price: ${discountedPrice || fullPrice}€`}</div>
-            <div className={styles.quantity}>
-              <input type="number" value={quantity} min="1" />
-            </div>
-            <div className={styles.subtotal}>{`${totalPrice.centAmount / 100}€`}</div>
-          </div>
-        );
-      })}
-      {cart && cart.totalPrice && <div className={styles.totalPrice}>{`Total Cart Price: ${cart.totalPrice.centAmount / 100}€`}</div>}
-      <Button type="button">Order</Button>
+          );
+        })}
+        {cart && cart.totalPrice && (
+          <div className={styles.totalPrice}>{`Total Cart Price: ${cart.totalPrice.centAmount / 100}€`}</div>
+        )}
+        <Button type="button">Order</Button>
+      </div>
     </main>
   );
 }
