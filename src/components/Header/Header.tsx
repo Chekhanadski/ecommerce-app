@@ -26,12 +26,12 @@ function Header() {
   };
 
   const links = [
-    { to: "/", label: "Home" },
-    { to: "/catalog", label: "Catalog" },
-    { to: "/about", label: "About Us" },
-    { to: "/login", label: "Sign In", condition: !isAuthorized },
-    { to: "/register", label: "Sign Up", condition: !isAuthorized },
-    { to: "/", label: "Log out", condition: isAuthorized, onClick: handleLogout }
+    { to: '/', label: 'Home' },
+    { to: '/catalog', label: 'Catalog' },
+    { to: '/about', label: 'About Us' },
+    { to: '/login', label: 'Sign In', condition: !isAuthorized },
+    { to: '/register', label: 'Sign Up', condition: !isAuthorized },
+    { to: '/', label: 'Log out', condition: isAuthorized, onClick: handleLogout }
   ];
 
   return (
