@@ -81,7 +81,7 @@ export async function authenticateUser(data: LoginData, accessToken: string) {
   return responseData;
 }
 
-export async function loginUser(data: LoginData) {
+async function getCustomerToken(email: string, password: string) {
   const response = await fetch(
     'https://auth.europe-west1.gcp.commercetools.com/oauth/e-commerce-project/customers/token',
     {
@@ -90,7 +90,7 @@ export async function loginUser(data: LoginData) {
         Authorization: `Basic ${btoa('dpVH1yIfwBBTMqhnk6jS8bsZ:Hco86YSJUnoZiE8bhDWlAoU4X48pUEe-')}`,
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: `grant_type=password&username=${data.email}&password=${data.password}&scope=manage_project:e-commerce-project`
+      body: `grant_type=password&username=${email}&password=${password}&scope=manage_project:e-commerce-project`
     }
   );
 
@@ -105,12 +105,15 @@ export async function loginUser(data: LoginData) {
   }
 
   localStorage.setItem('accessToken', responseData.access_token);
-
   localStorage.removeItem('anonymousId');
   localStorage.removeItem('anonymousAccessToken');
 
-  const loginData = await authenticateUser(data, responseData.access_token);
+  return responseData.access_token;
+}
 
+export async function loginUser(data: LoginData) {
+  const accessToken = await getCustomerToken(data.email, data.password);
+  const loginData = await authenticateUser(data, accessToken);
   return loginData;
 }
 
@@ -149,18 +152,22 @@ export async function signUp(data: FormData) {
 
     const responseData = await response.json();
 
-    // save customer ID to local storage
+    localStorage.removeItem('anonymousId');
+    localStorage.removeItem('anonymousAccessToken');
+
     localStorage.setItem('customerId', responseData.customer.id);
 
-    if (responseData) {
-      const loginData = {
-        email: data.email,
-        password: data.password
-      };
-      const userLoginData = await authenticateUser(loginData, accessToken);
-      return userLoginData;
-    }
-    return false;
+    const newAccessToken = await getCustomerToken(data.email, data.password);
+
+    localStorage.setItem('accessToken', newAccessToken);
+
+    const loginData: LoginData = {
+      email: data.email,
+      password: data.password
+    };
+
+    const userLoginData = await authenticateUser(loginData, newAccessToken);
+    return userLoginData;
   } catch (error) {
     if (error instanceof Error) {
       return `Error: ${error.message}`;
