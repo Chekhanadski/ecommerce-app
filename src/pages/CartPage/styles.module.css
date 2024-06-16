@@ -37,8 +37,8 @@
 }
 
 .wrapper {
-  height: 73vh;
-  margin: 0 135px;
+  min-height: 73vh;
+  margin: 50px 135px 140px;
 }
 
 .cartPage {
@@ -96,7 +96,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 26vh;
+  height: 100vh;
 }
 
 .spinner {
