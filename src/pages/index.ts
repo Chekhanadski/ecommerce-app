@@ -7,3 +7,4 @@ export { default as LoginPage } from './LoginPage/LoginPage';
 export { default as NotFoundPage } from './NotFoundPage/NotFoundPage';
 export { default as ProductPage } from './ProductPage/ProductPage';
 export { default as RegistrationPage } from './RegistrationPage/RegistrationPage';
+export { default as About } from './About/About';

@@ -7,7 +7,8 @@ import {
   AddressPage,
   ProductPage,
   NotFoundPage,
-  CartPage
+  CartPage,
+  About
 } from '.';
 
 const ROUTES = [
@@ -19,6 +20,7 @@ const ROUTES = [
   { path: '/account/address', element: AddressPage },
   { path: '/catalog/:productId', element: ProductPage },
   { path: '/cart', element: CartPage },
+  { path: '/about', element: About },
   { path: '*', element: NotFoundPage }
 ];
 
