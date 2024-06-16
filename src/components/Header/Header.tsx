@@ -9,7 +9,7 @@ import { StoreContext } from '../../store/store';
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { setStore, store } = useContext(StoreContext);
-  const { isAuthorized } = store;
+  const { isAuthorized, cartItemCount } = store;
 
   useEffect(() => {
     if (isOpen) {
@@ -72,6 +72,7 @@ function Header() {
         <div className={styles.headerIcons}>
           <Link onClick={() => setIsOpen(false)} className={styles.iconLink} to="/cart">
             <IoCartOutline size={25} />
+            {cartItemCount > 0 && <span className={styles.cartCount}>{cartItemCount}</span>}
           </Link>
           {isAuthorized && (
             <Link onClick={() => setIsOpen(false)} className={styles.iconLink} to="/account">
@@ -86,4 +87,5 @@ function Header() {
     </header>
   );
 }
+
 export default Header;

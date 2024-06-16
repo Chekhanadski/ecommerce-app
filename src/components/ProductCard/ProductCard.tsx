@@ -1,12 +1,14 @@
 import { IoCartOutline } from 'react-icons/io5';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ProductData } from '../../store/types/products';
 import styles from './styles.module.css';
 import { addToCart } from '../../api/cart';
+import { StoreContext } from '../../store/store';
 
 function ProductCard({ product, onImageClick }: { product: ProductData; onImageClick: (imageUrl: string) => void }) {
   const [loading, setLoading] = useState(false);
+  const { setStore } = useContext(StoreContext);
 
   const { productId, productName, productDescription, productImage, fullPrice, discountedPrice } = useMemo(() => {
     if (!product.masterData || !product.masterData.current.masterVariant.prices[0]) {
@@ -38,16 +40,20 @@ function ProductCard({ product, onImageClick }: { product: ProductData; onImageC
 
   const handleAddToCart = async () => {
     if (!productId) {
-      // Handle the case where productId is undefined
       throw new Error(`Product ID is undefined`);
     }
 
     setLoading(true);
     try {
-      await addToCart(productId);
-      // Show success message or other feedback
+      const updatedCart = await addToCart(productId);
+      const itemCount = updatedCart ? updatedCart.lineItems.reduce((count, item) => count + item.quantity, 0) : 0;
+      setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
+      if (!updatedCart) {
+        throw new Error('Failed to add product to cart');
+      }
     } catch (error) {
-      // Show error message or other feedback
+      const message = error instanceof Error ? error.message : 'An unknown error occurred';
+      setStore((prevStore) => ({ ...prevStore, errorMessage: `Error adding product to cart: ${message}` }));
     } finally {
       setLoading(false);
     }

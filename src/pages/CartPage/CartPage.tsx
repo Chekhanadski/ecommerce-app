@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
 import { getUserCart, getAnonymousCart } from '../../api/cart';
 import { Cart } from '../../store/types/cart';
 import cartImg from '../../assets/icons/empty-cart.png';
 import Button from '../../components/Button/Button';
+import { StoreContext } from '../../store/store';
 
 export default function CartPage() {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const { setStore } = useContext(StoreContext);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -21,6 +23,8 @@ export default function CartPage() {
           data = await getAnonymousCart();
         }
         setCart(data);
+        const itemCount = data ? data.lineItems.reduce((count, item) => count + item.quantity, 0) : 0;
+        setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
       } catch (error) {
         throw new Error(`Failed to fetch cart: ${error}`);
       } finally {
@@ -29,7 +33,7 @@ export default function CartPage() {
     };
 
     fetchCart();
-  }, []);
+  }, [setStore]);
 
   if (loading) {
     return (
