@@ -167,8 +167,9 @@ export async function signUp(data: FormData) {
     };
 
     const userLoginData = await authenticateUser(loginData, newAccessToken);
+
     return userLoginData;
-  } catch (error) {
+  } catch (error: unknown) {
     if (error instanceof Error) {
       return `Error: ${error.message}`;
     }
