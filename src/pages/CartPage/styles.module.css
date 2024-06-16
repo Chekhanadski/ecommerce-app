@@ -92,6 +92,24 @@
   margin-top: 1rem;
 }
 
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 26vh;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #b1b5b8;
+  border-bottom-color: #4e5a64;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
 @media screen and (max-width: 950px) {
   .wrapper {
     margin: 0;

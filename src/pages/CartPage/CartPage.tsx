@@ -32,7 +32,11 @@ export default function CartPage() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className={styles.spinnerContainer}>
+        <span className={styles.spinner} />
+      </div>
+    );
   }
 
   if (!cart || !cart.lineItems) {
