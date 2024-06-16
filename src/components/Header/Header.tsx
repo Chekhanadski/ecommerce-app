@@ -4,6 +4,7 @@ import { IoCartOutline } from 'react-icons/io5';
 import { FiUser } from 'react-icons/fi';
 import styles from './styles.module.css';
 import { StoreContext } from '../../store/store';
+import logout from '../../utils/authUtils';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,20 +12,11 @@ function Header() {
   const { isAuthorized, cartItemCount } = store;
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'visible';
-    }
+    document.body.style.overflow = isOpen ? 'hidden' : 'visible';
   }, [isOpen]);
 
   const handleLogout = () => {
-    localStorage.removeItem('customerId');
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('anonymousId');
-    localStorage.removeItem('anonymousAccessToken');
-    setStore((prevStore) => ({ ...prevStore, isAuthorized: false, cartItemCount: 0 }));
-    setIsOpen(false);
+    logout(setStore, setIsOpen);
   };
 
   const links = [
@@ -74,7 +66,7 @@ function Header() {
         <div className={styles.headerIcons}>
           <Link onClick={() => setIsOpen(false)} className={styles.iconLink} to="/cart">
             <IoCartOutline size={25} />
-            {cartItemCount > 0 && <span className={styles.cartCount}>{cartItemCount}</span>}
+            {cartItemCount > 0 ? <span className={styles.cartCount}>{cartItemCount}</span> : null}
           </Link>
           {isAuthorized && (
             <Link onClick={() => setIsOpen(false)} className={styles.iconLink} to="/account">
