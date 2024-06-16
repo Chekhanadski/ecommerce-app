@@ -37,7 +37,7 @@
 }
 
 .wrapper {
-  min-height: 73vh;
+  min-height: 70vh;
   margin: 50px 135px 140px;
 }
 
@@ -96,7 +96,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 70vh;
 }
 
 .spinner {
