@@ -100,6 +100,7 @@ function About() {
         our mentor, Semion Krapivin, we worked cohesively and effectively, achieving our set goals. Get to know each
         team member and learn more about their roles, contributions, and professional journeys.
       </p>
+      
       {teamMembers.map((member) => (
         <TeamMemberComponent key={member.name} member={member} />
       ))}
