@@ -2,13 +2,6 @@ export interface ImageData {
   url: string;
 }
 
-export interface PriceData {
-  value: PriceValue;
-  discounted?: {
-    value: PriceValue;
-  };
-}
-
 export interface PriceValue {
   type: string;
   currencyCode: string;
@@ -16,24 +9,39 @@ export interface PriceValue {
   fractionDigits: number;
 }
 
-export interface CartItem {
+export interface PriceData {
+  value: PriceValue;
+  discounted?: {
+    value: PriceValue;
+  };
+}
+
+export interface Variant {
   id: string;
-  quantity: number;
+  prices: PriceData[];
+  images: ImageData[];
+}
+
+export interface LineItem {
+  id: string;
   name: {
     'en-US': string;
   };
-  variant: {
-    images: ImageData[];
-    prices: PriceData[];
-  };
+  quantity: number;
+  variant: Variant;
   totalPrice: {
     centAmount: number;
+    currencyCode: string;
   };
 }
 
 export interface Cart {
-  lineItems: CartItem[];
+  id: string;
+  customerId?: string;
+  version: number;
+  lineItems: LineItem[];
   totalPrice: {
     centAmount: number;
+    currencyCode: string;
   };
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
 import { getUserCart, getAnonymousCart, removeLineItem, clearCart } from '../../api/cart';
-import { Cart } from '../../store/types/cart';
+import { Cart, LineItem } from '../../store/types/cart';
 import cartImg from '../../assets/icons/empty-cart.png';
 import Button from '../../components/Button/Button';
 import { StoreContext } from '../../store/store';
@@ -12,6 +12,7 @@ export default function CartPage() {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const { setStore } = useContext(StoreContext);
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export default function CartPage() {
         const itemCount = data ? data.lineItems.reduce((count, item) => count + item.quantity, 0) : 0;
         setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
       } catch (error) {
-        throw new Error(`Failed to fetch cart: ${error}`);
+        setError(`Failed to fetch cart: ${error}`);
       } finally {
         setLoading(false);
       }
@@ -44,7 +45,7 @@ export default function CartPage() {
       setStore((prevStore) => ({ ...prevStore, cartItemCount: 0 }));
       setIsModalOpen(false);
     } catch (error) {
-      throw Error(`Failed to clear cart: ${error}`);
+      setError(`Failed to clear cart: ${error}`);
     }
   };
 
@@ -64,8 +65,34 @@ export default function CartPage() {
         setCart(null);
       }
     } catch (error) {
-      throw new Error(`Failed to remove item from cart: ${error}`);
+      setError(`Failed to remove item from cart: ${error}`);
     }
+  };
+
+  const renderCartItem = (item: LineItem) => {
+    const name = item.name && item.name['en-US'];
+    const { quantity, variant, totalPrice } = item;
+    const img = variant.images[0]?.url;
+    const price = variant.prices[0];
+    const fullPrice = price.value.centAmount / 100;
+    const discountedPrice = price.discounted ? price.discounted.value.centAmount / 100 : undefined;
+
+    return (
+      <div key={item.id} className={styles.cartItem}>
+        <div className={styles.product}>
+          <img className={styles.cartItemImg} src={img} alt={name} />
+          <span>{name}</span>
+        </div>
+        <div className={styles.price}>{`Price: ${discountedPrice || fullPrice}€`}</div>
+        <div className={styles.quantity}>
+          <input type="number" value={quantity} min="1" readOnly />
+        </div>
+        <div className={styles.subtotal}>{`${totalPrice.centAmount / 100}€`}</div>
+        <Button className="removeButton" type="button" onClick={() => handleRemoveFromCart(item.id)}>
+          x
+        </Button>
+      </div>
+    );
   };
 
   if (loading) {
@@ -74,6 +101,10 @@ export default function CartPage() {
         <span className={styles.spinner} />
       </div>
     );
+  }
+
+  if (error) {
+    return <div className={styles.errorMessage}>{error}</div>;
   }
 
   if (!cart || !cart.lineItems.length) {
@@ -99,38 +130,13 @@ export default function CartPage() {
           <div>Subtotal</div>
           <div className={styles.emptyDiv}> </div>
         </div>
-        {cart.lineItems.map((item) => {
-          const name = item.name && item.name['en-US'];
-          const { quantity, variant, totalPrice } = item;
-          const img = variant.images[0]?.url;
-          const price = variant.prices[0];
-          const fullPrice = price.value.centAmount / 100;
-          const discountedPrice = price.discounted ? price.discounted.value.centAmount / 100 : undefined;
-
-          return (
-            <div key={item.id} className={styles.cartItem}>
-              <div className={styles.product}>
-                <img className={styles.cartItemImg} src={img} alt={name} />
-                <span>{name}</span>
-              </div>
-              <div className={styles.price}>{`Price: ${discountedPrice || fullPrice}€`}</div>
-              <div className={styles.quantity}>
-                <input type="number" value={quantity} min="1" readOnly />
-              </div>
-              <div className={styles.subtotal}>{`${totalPrice.centAmount / 100}€`}</div>
-              <Button className="removeButton" type="button" onClick={() => handleRemoveFromCart(item.id)}>
-                x
-              </Button>
-            </div>
-          );
-        })}
+        {cart.lineItems.map(renderCartItem)}
         <div className={styles.clearCartBlock}>
           <Button className="clearCartButton" type="button" onClick={() => setIsModalOpen(true)}>
             Clear Shopping Cart
           </Button>
         </div>
-
-        {cart && cart.totalPrice && (
+        {cart.totalPrice && (
           <div className={styles.totalPrice}>{`Total Cart Price: ${cart.totalPrice.centAmount / 100}€`}</div>
         )}
         <Button type="button">Order</Button>
