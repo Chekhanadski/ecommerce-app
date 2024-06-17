@@ -66,6 +66,39 @@
   animation: rotation 1s linear infinite;
 }
 
+.paginationControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pageButton {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 16px;
+  margin: 0 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.75;
+  text-transform: uppercase;
+}
+
+.pageButton:hover {
+  background-color: #303f9f;
+}
+
+.pageButton:disabled {
+  background-color: #c5cae9;
+}
+
+.pageText {
+  margin: 0 16px;
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);
