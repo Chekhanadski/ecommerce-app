@@ -3,23 +3,26 @@ import { generateUUID, getAnonymousToken } from '../api/auth';
 
 const state = proxy({
   isAuthorized: false,
-  logout() {
+  async logout() {
     this.isAuthorized = false;
     localStorage.removeItem('accessToken');
     localStorage.removeItem('customerId');
 
-    const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
-    if (!anonymousAccessToken) {
-      const anonymousId = generateUUID();
+    let anonymousId = localStorage.getItem('anonymousId');
+    if (!anonymousId) {
+      anonymousId = generateUUID();
       localStorage.setItem('anonymousId', anonymousId);
+    }
 
-      getAnonymousToken(anonymousId)
-        .then((newAnonymousAccessToken) => {
-          localStorage.setItem('anonymousAccessToken', newAnonymousAccessToken);
-        })
-        .catch((error) => {
-          throw new Error(`Error getting anonymous token: : ${error.message}`);
-        });
+    try {
+      const newAnonymousAccessToken = await getAnonymousToken(anonymousId);
+      localStorage.setItem('anonymousAccessToken', newAnonymousAccessToken);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw Error(`Error getting anonymous token: ${error.message}`);
+      } else {
+        throw Error('An unknown error occurred while getting the anonymous token');
+      }
     }
   }
 });

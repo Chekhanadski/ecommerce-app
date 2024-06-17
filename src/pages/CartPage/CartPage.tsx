@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
-import { getUserCart, getAnonymousCart } from '../../api/cart';
+import { getUserCart, getAnonymousCart, removeLineItem } from '../../api/cart';
 import { Cart } from '../../store/types/cart';
 import cartImg from '../../assets/icons/empty-cart.png';
 import Button from '../../components/Button/Button';
@@ -10,6 +10,7 @@ import { StoreContext } from '../../store/store';
 export default function CartPage() {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const { setStore } = useContext(StoreContext);
 
   useEffect(() => {
@@ -26,7 +27,7 @@ export default function CartPage() {
         const itemCount = data ? data.lineItems.reduce((count, item) => count + item.quantity, 0) : 0;
         setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
       } catch (error) {
-        throw new Error(`Failed to fetch cart: ${error}`);
+        setError(`Failed to fetch cart: ${error}`);
       } finally {
         setLoading(false);
       }
@@ -43,7 +44,11 @@ export default function CartPage() {
     );
   }
 
-  if (!cart || !cart.lineItems) {
+  if (error) {
+    return <div className={styles.errorMessage}>{error}</div>;
+  }
+
+  if (!cart || !cart.lineItems.length) {
     return (
       <div className={styles.cartComponent}>
         <img className={styles.emptyCartImg} src={cartImg} alt="Empty Cart" />
@@ -56,6 +61,26 @@ export default function CartPage() {
     );
   }
 
+  const handleRemoveFromCart = async (lineItemId: string) => {
+    const customerId = localStorage.getItem('customerId');
+    try {
+      let updatedCart;
+      if (customerId) {
+        updatedCart = await removeLineItem(lineItemId);
+      } else {
+        updatedCart = await removeLineItem(lineItemId, true);
+      }
+      setCart(updatedCart);
+      const itemCount = updatedCart ? updatedCart.lineItems.reduce((count, item) => count + item.quantity, 0) : 0;
+      setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
+      if (!updatedCart.lineItems.length) {
+        setCart(null);
+      }
+    } catch (error) {
+      setError(`Failed to remove item from cart: ${error}`);
+    }
+  };
+
   return (
     <main className={styles.wrapper}>
       <div className={styles.cartPage}>
@@ -64,6 +89,7 @@ export default function CartPage() {
           <div>Price</div>
           <div>Quantity</div>
           <div>Subtotal</div>
+          <div className={styles.emptyDiv}> </div>
         </div>
         {cart.lineItems.map((item) => {
           const name = item.name && item.name['en-US'];
@@ -81,12 +107,16 @@ export default function CartPage() {
               </div>
               <div className={styles.price}>{`Price: ${discountedPrice || fullPrice}€`}</div>
               <div className={styles.quantity}>
-                <input type="number" value={quantity} min="1" />
+                <input type="number" value={quantity} min="1" readOnly />
               </div>
               <div className={styles.subtotal}>{`${totalPrice.centAmount / 100}€`}</div>
+              <Button className="removeButton" type="button" onClick={() => handleRemoveFromCart(item.id)}>
+                x
+              </Button>
             </div>
           );
         })}
+
         {cart && cart.totalPrice && (
           <div className={styles.totalPrice}>{`Total Cart Price: ${cart.totalPrice.centAmount / 100}€`}</div>
         )}

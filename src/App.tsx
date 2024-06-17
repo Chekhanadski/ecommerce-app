@@ -32,9 +32,9 @@ function App(): React.ReactElement {
         setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
       } catch (error: unknown) {
         if (error instanceof Error) {
-          throw new Error(`Failed to initialize cart item count: ${error.message}`);
+          throw Error(`Failed to initialize cart item count: ${error.message}`);
         } else {
-          throw new Error('Failed to initialize cart item count: An unknown error occurred');
+          throw Error('Failed to initialize cart item count: An unknown error occurred');
         }
       }
     };

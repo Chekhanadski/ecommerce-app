@@ -11,6 +11,10 @@
   transform: scale(0.99);
 }
 
+.button:hover {
+  background-color: #c23737;
+}
+
 .button:disabled {
   background-color: #a8a8a8;
   cursor: not-allowed;
@@ -26,4 +30,15 @@
 
 .accountPageButton {
   width: 160px;
+}
+
+.removeButton {
+  width: 30px;
+  height: 30px;
+  background-color: #db4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
 }
