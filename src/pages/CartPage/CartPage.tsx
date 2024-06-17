@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
-import { getUserCart, getAnonymousCart, removeLineItem, clearCart } from '../../api/cart';
+import { getUserCart, getAnonymousCart, removeLineItem, clearCart, updateLineItemQuantity } from '../../api/cart';
 import { Cart, LineItem } from '../../store/types/cart';
 import cartImg from '../../assets/icons/empty-cart.png';
 import Button from '../../components/Button/Button';
@@ -69,6 +69,24 @@ export default function CartPage() {
     }
   };
 
+  const handleQuantityChange = async (lineItemId: string, quantity: number) => {
+    if (quantity < 1) return;
+    const customerId = localStorage.getItem('customerId');
+    try {
+      let updatedCart;
+      if (customerId) {
+        updatedCart = await updateLineItemQuantity(lineItemId, quantity);
+      } else {
+        updatedCart = await updateLineItemQuantity(lineItemId, quantity, true);
+      }
+      setCart(updatedCart);
+      const itemCount = updatedCart ? updatedCart.lineItems.reduce((count, item) => count + item.quantity, 0) : 0;
+      setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
+    } catch (error) {
+      setError(`Failed to update item quantity: ${error}`);
+    }
+  };
+
   const renderCartItem = (item: LineItem) => {
     const name = item.name && item.name['en-US'];
     const { quantity, variant, totalPrice } = item;
@@ -85,7 +103,12 @@ export default function CartPage() {
         </div>
         <div className={styles.price}>{`Price: ${discountedPrice || fullPrice}€`}</div>
         <div className={styles.quantity}>
-          <input type="number" value={quantity} min="1" readOnly />
+          <input
+            type="number"
+            value={quantity}
+            min="1"
+            onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value, 10))}
+          />
         </div>
         <div className={styles.subtotal}>{`${totalPrice.centAmount / 100}€`}</div>
         <Button className="removeButton" type="button" onClick={() => handleRemoveFromCart(item.id)}>

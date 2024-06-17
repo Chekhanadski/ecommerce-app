@@ -186,3 +186,43 @@ export async function clearCart(): Promise<void> {
     throw new Error('Failed to clear cart');
   }
 }
+
+export async function updateLineItemQuantity(lineItemId: string, quantity: number, isAnonymous = false): Promise<Cart> {
+  const accessToken = localStorage.getItem('accessToken');
+  const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
+  const cart = await (isAnonymous ? getAnonymousCart() : getUserCart());
+  let cartId;
+  let version;
+
+  if (!cart) {
+    throw new Error('No cart found to update item quantity');
+  } else {
+    cartId = cart.id;
+    version = cart.version;
+  }
+
+  const response = await fetch(`${BASE_URL}/me/carts/${cartId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken || anonymousAccessToken}`
+    },
+    body: JSON.stringify({
+      version,
+      actions: [
+        {
+          action: 'changeLineItemQuantity',
+          lineItemId,
+          quantity
+        }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to update item quantity in cart');
+  }
+
+  const data = await response.json();
+  return data;
+}
