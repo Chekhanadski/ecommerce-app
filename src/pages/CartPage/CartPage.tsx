@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
-import { getUserCart, getAnonymousCart, removeLineItem } from '../../api/cart';
+import { getUserCart, getAnonymousCart, removeLineItem, clearCart } from '../../api/cart';
 import { Cart } from '../../store/types/cart';
 import cartImg from '../../assets/icons/empty-cart.png';
 import Button from '../../components/Button/Button';
 import { StoreContext } from '../../store/store';
+import Modal from '../../components/Modal/Modal';
 
 export default function CartPage() {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { setStore } = useContext(StoreContext);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export default function CartPage() {
         const itemCount = data ? data.lineItems.reduce((count, item) => count + item.quantity, 0) : 0;
         setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
       } catch (error) {
-        setError(`Failed to fetch cart: ${error}`);
+        throw new Error(`Failed to fetch cart: ${error}`);
       } finally {
         setLoading(false);
       }
@@ -36,30 +37,16 @@ export default function CartPage() {
     fetchCart();
   }, [setStore]);
 
-  if (loading) {
-    return (
-      <div className={styles.spinnerContainer}>
-        <span className={styles.spinner} />
-      </div>
-    );
-  }
-
-  if (error) {
-    return <div className={styles.errorMessage}>{error}</div>;
-  }
-
-  if (!cart || !cart.lineItems.length) {
-    return (
-      <div className={styles.cartComponent}>
-        <img className={styles.emptyCartImg} src={cartImg} alt="Empty Cart" />
-        <h2 className={styles.emptyCartTitle}>Your cart is empty</h2>
-        <p className={styles.emptyCartMessage}>Continue shopping to add items to your cart.</p>
-        <Link className={styles.catalogLink} to="/catalog">
-          Go to Catalog
-        </Link>
-      </div>
-    );
-  }
+  const handleClearCart = async () => {
+    try {
+      await clearCart();
+      setCart(null);
+      setStore((prevStore) => ({ ...prevStore, cartItemCount: 0 }));
+      setIsModalOpen(false);
+    } catch (error) {
+      throw Error(`Failed to clear cart: ${error}`);
+    }
+  };
 
   const handleRemoveFromCart = async (lineItemId: string) => {
     const customerId = localStorage.getItem('customerId');
@@ -77,9 +64,30 @@ export default function CartPage() {
         setCart(null);
       }
     } catch (error) {
-      setError(`Failed to remove item from cart: ${error}`);
+      throw new Error(`Failed to remove item from cart: ${error}`);
     }
   };
+
+  if (loading) {
+    return (
+      <div className={styles.spinnerContainer}>
+        <span className={styles.spinner} />
+      </div>
+    );
+  }
+
+  if (!cart || !cart.lineItems.length) {
+    return (
+      <div className={styles.cartComponent}>
+        <img className={styles.emptyCartImg} src={cartImg} alt="Empty Cart" />
+        <h2 className={styles.emptyCartTitle}>Your cart is empty</h2>
+        <p className={styles.emptyCartMessage}>Continue shopping to add items to your cart.</p>
+        <Link className={styles.catalogLink} to="/catalog">
+          Go to Catalog
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <main className={styles.wrapper}>
@@ -116,12 +124,24 @@ export default function CartPage() {
             </div>
           );
         })}
+        <div className={styles.clearCartBlock}>
+          <Button className="clearCartButton" type="button" onClick={() => setIsModalOpen(true)}>
+            Clear Shopping Cart
+          </Button>
+        </div>
 
         {cart && cart.totalPrice && (
           <div className={styles.totalPrice}>{`Total Cart Price: ${cart.totalPrice.centAmount / 100}€`}</div>
         )}
         <Button type="button">Order</Button>
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleClearCart}
+        title="Clear Cart"
+        message="Are you sure you want to clear your cart?"
+      />
     </main>
   );
 }

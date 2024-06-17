@@ -114,6 +114,11 @@
   animation: rotation 1s linear infinite;
 }
 
+.clearCartBlock {
+  display: flex;
+  justify-content: end;
+}
+
 @media screen and (max-width: 950px) {
   .wrapper {
     margin: 0;

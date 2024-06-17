@@ -1,4 +1,7 @@
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 16px;
   color: #ffffff;
   background-color: #db4444;
@@ -40,5 +43,16 @@
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+  border-radius: 5px;
+}
+
+.modalButton {
+  height: 30px;
+  width: 100px;
+}
+
+.clearCartButton {
+  height: 30px;
+  width: 200px;
   border-radius: 5px;
 }

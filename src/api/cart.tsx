@@ -153,3 +153,36 @@ export async function removeLineItem(lineItemId: string, isAnonymous = false): P
   const data = await response.json();
   return data;
 }
+
+export async function clearCart(): Promise<void> {
+  const accessToken = localStorage.getItem('accessToken');
+  const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
+  const cart = await (accessToken ? getUserCart() : getAnonymousCart());
+
+  if (!cart) {
+    throw new Error('No cart found to clear');
+  }
+
+  const { id, version, lineItems } = cart;
+
+  const actions = lineItems.map((item) => ({
+    action: 'removeLineItem',
+    lineItemId: item.id
+  }));
+
+  const response = await fetch(`${BASE_URL}/me/carts/${id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken || anonymousAccessToken}`
+    },
+    body: JSON.stringify({
+      version,
+      actions
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to clear cart');
+  }
+}
