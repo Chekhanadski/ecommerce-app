@@ -4,6 +4,7 @@
 }
 
 .emptyCartImg {
+  height: 400px;
   width: 400px;
 }
 
@@ -38,7 +39,7 @@
 
 .wrapper {
   min-height: 70vh;
-  margin: 50px 135px 140px;
+  margin: 50px 135px 0;
 }
 
 .cartPage {
@@ -100,7 +101,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  height: 100vh;
+  margin-bottom: 0 140px;
 }
 
 .spinner {
