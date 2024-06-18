@@ -13,7 +13,6 @@ export default function AccountPage() {
 
   const [isDisabled, setIsDisabled] = useState(true);
 
-  // State variables for form inputs
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -21,7 +20,6 @@ export default function AccountPage() {
 
   const [version, setVersion] = useState(0);
 
-  // Fetch customer data on component mount
   useEffect(() => {
     getCustomerData().then((data) => {
       setFirstName(data?.firstName ?? '');
