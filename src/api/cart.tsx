@@ -226,3 +226,42 @@ export async function updateLineItemQuantity(lineItemId: string, quantity: numbe
   const data = await response.json();
   return data;
 }
+
+export async function applyDiscountCode(code: string): Promise<Cart> {
+  const accessToken = localStorage.getItem('accessToken');
+  const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
+  const cart = await (accessToken ? getUserCart() : getAnonymousCart());
+  let cartId;
+  let version;
+
+  if (!cart) {
+    throw new Error('No cart found to apply discount code');
+  } else {
+    cartId = cart.id;
+    version = cart.version;
+  }
+
+  const response = await fetch(`${BASE_URL}/me/carts/${cartId}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken || anonymousAccessToken}`
+    },
+    body: JSON.stringify({
+      version,
+      actions: [
+        {
+          action: 'addDiscountCode',
+          code
+        }
+      ]
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to apply discount code');
+  }
+
+  const data = await response.json();
+  return data;
+}

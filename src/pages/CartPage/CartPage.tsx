@@ -1,7 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './styles.module.css';
-import { getUserCart, getAnonymousCart, removeLineItem, clearCart, updateLineItemQuantity } from '../../api/cart';
+import {
+  getUserCart,
+  getAnonymousCart,
+  removeLineItem,
+  clearCart,
+  updateLineItemQuantity,
+  applyDiscountCode
+} from '../../api/cart';
 import { Cart, LineItem } from '../../store/types/cart';
 import cartImg from '../../assets/icons/empty-cart.png';
 import Button from '../../components/Button/Button';
@@ -12,6 +19,7 @@ export default function CartPage() {
   const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [promoCode, setPromoCode] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const { setStore } = useContext(StoreContext);
 
@@ -87,6 +95,18 @@ export default function CartPage() {
     }
   };
 
+  const handleApplyPromoCode = async () => {
+    try {
+      const updatedCart = await applyDiscountCode(promoCode);
+      setCart(updatedCart);
+      setPromoCode('');
+      const itemCount = updatedCart ? updatedCart.lineItems.reduce((count, item) => count + item.quantity, 0) : 0;
+      setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
+    } catch (error) {
+      setError(`Failed to apply promo code: ${error}`);
+    }
+  };
+
   const renderCartItem = (item: LineItem) => {
     const name = item.name && item.name['en-US'];
     const { quantity, variant, totalPrice } = item;
@@ -154,11 +174,27 @@ export default function CartPage() {
           <div className={styles.emptyDiv}> </div>
         </div>
         {cart.lineItems.map(renderCartItem)}
-        <div className={styles.clearCartBlock}>
-          <Button className="clearCartButton" type="button" onClick={() => setIsModalOpen(true)}>
-            Clear Shopping Cart
-          </Button>
+
+        <div className={styles.buttonsBlock}>
+          <div className={styles.promoCodeBlock}>
+            <input
+              type="text"
+              value={promoCode}
+              onChange={(e) => setPromoCode(e.target.value)}
+              placeholder="Enter promo code"
+            />
+            <Button className="inputButton" type="button" onClick={handleApplyPromoCode}>
+              Apply
+            </Button>
+          </div>
+
+          <div className={styles.clearCartBlock}>
+            <Button className="clearCartButton" type="button" onClick={() => setIsModalOpen(true)}>
+              Clear Shopping Cart
+            </Button>
+          </div>
         </div>
+
         {cart.totalPrice && (
           <div className={styles.totalPrice}>{`Total Cart Price: ${cart.totalPrice.centAmount / 100}€`}</div>
         )}

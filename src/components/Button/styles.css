@@ -56,3 +56,8 @@
   width: 200px;
   border-radius: 5px;
 }
+
+.inputButton {
+  border-radius: 0 5px 5px 0;
+  height: 32px;
+}
