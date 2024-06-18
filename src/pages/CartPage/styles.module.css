@@ -121,6 +121,15 @@
   justify-content: end;
 }
 
+.promoCodeBlock {
+  display: flex;
+}
+
+.buttonsBlock {
+  display: flex;
+  justify-content: space-between;
+}
+
 @media screen and (max-width: 950px) {
   .wrapper {
     margin: 0;
@@ -155,5 +164,12 @@
 
   .quantity input {
     width: 100%;
+  }
+
+  .buttonsBlock {
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
   }
 }
