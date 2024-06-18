@@ -61,12 +61,7 @@ export default function CartPage() {
   const handleRemoveFromCart = async (lineItemId: string) => {
     const customerId = localStorage.getItem('customerId');
     try {
-      let updatedCart;
-      if (customerId) {
-        updatedCart = await removeLineItem(lineItemId);
-      } else {
-        updatedCart = await removeLineItem(lineItemId, true);
-      }
+      const updatedCart = await removeLineItem(lineItemId, !customerId);
       setCart(updatedCart);
       const itemCount = updatedCart ? updatedCart.lineItems.reduce((count, item) => count + item.quantity, 0) : 0;
       setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
