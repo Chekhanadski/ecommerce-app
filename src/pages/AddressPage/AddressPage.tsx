@@ -12,7 +12,6 @@ export default function AddressPage() {
   const [addresses, setAddresses] = useState<CustomerAddress[]>([]);
   const [isDisabled, setIsDisabled] = useState(true);
 
-  // Fetch customer data on component mount
   useEffect(() => {
     getCustomerData().then((data) => {
       setCustomerData(data);
@@ -22,7 +21,6 @@ export default function AddressPage() {
 
   const notifyChange = () => toast('Data Changed!');
 
-  // Handle change for input fields
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>,
     index: number

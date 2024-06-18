@@ -7,10 +7,15 @@
 .contentBlock {
   display: flex;
   flex-direction: column;
-  /* margin-right: 40px;  */
   padding: 40px 0 30px;
   border-bottom: 1px solid rgb(190, 190, 190);
   max-width: 700px;
+}
+
+.buttonBlock {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 .imgBlock {
@@ -146,5 +151,10 @@
     justify-content: center;
     max-width: 300px;
     margin-top: 30px;
+  }
+
+  .buttonBlock {
+    flex-direction: column;
+    align-items: center;
   }
 }

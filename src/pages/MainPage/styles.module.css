@@ -1,6 +1,6 @@
 .mainSection {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   margin: 0 135px 135px;
   min-height: 52vh;
 }
@@ -15,7 +15,6 @@
   flex-direction: column;
   justify-content: center;
   gap: 15px;
-
   margin: 40px 16px 0;
 }
 
@@ -24,9 +23,35 @@
   list-style-type: none;
 }
 
+.bannerAndPromoBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bannerAndPromoBlock li {
+  list-style-type: none;
+}
+
+.bannerAndPromoBlock ul {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.promoCodesSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 50px;
+  padding: 80px 30px;
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 200px;
+}
+
 .placeholderBanner {
   display: flex;
-  flex: 2;
   justify-content: space-evenly;
   align-items: center;
   gap: 20px;
@@ -103,6 +128,10 @@
     border-right: none;
   }
 
+  .promoCodesSection {
+    margin: 20px 0;
+  }
+
   .categories {
     display: flex;
     flex: 1;
@@ -130,7 +159,7 @@
   }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 420px) {
   .textBanner {
     flex-direction: column;
   }
