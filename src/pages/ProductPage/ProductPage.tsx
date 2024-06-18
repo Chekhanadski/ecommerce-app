@@ -19,6 +19,8 @@ export default function ProductPage() {
   const [isInCart, setIsInCart] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -45,6 +47,20 @@ export default function ProductPage() {
     setIsModalOpen(false);
   };
 
+  const handleAddToCart = async () => {
+    if (!product) return;
+
+    try {
+      const updatedCart = await addToCart(product.id);
+      const itemCount = updatedCart.lineItems.reduce((count, item) => count + item.quantity, 0);
+      setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
+      setIsInCart(true);
+    } catch (error) {
+      setError('Failed to add product to cart');
+      setIsErrorModalOpen(true);
+    }
+  };
+
   const handleRemoveFromCart = async () => {
     if (!product) return;
 
@@ -57,23 +73,11 @@ export default function ProductPage() {
         const itemCount = updatedCart.lineItems.reduce((count, item) => count + item.quantity, 0);
         setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
         setIsInCart(false);
+        setSuccessMessage('Product successfully removed from the cart.');
+        setIsSuccessModalOpen(true);
       }
     } catch (error) {
       setError('Failed to remove product from cart');
-      setIsErrorModalOpen(true);
-    }
-  };
-
-  const handleAddToCart = async () => {
-    if (!product) return;
-
-    try {
-      const updatedCart = await addToCart(product.id);
-      const itemCount = updatedCart.lineItems.reduce((count, item) => count + item.quantity, 0);
-      setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
-      setIsInCart(true);
-    } catch (error) {
-      setError('Failed to add product to cart');
       setIsErrorModalOpen(true);
     }
   };
@@ -126,11 +130,11 @@ export default function ProductPage() {
           </div>
           <p>{productDescription}</p>
           <div className={styles.buttonBlock}>
-            <Button type="button" className="clearCartButton" onClick={handleAddToCart} disabled={isInCart}>
+            <Button type="button" onClick={handleAddToCart} className="clearCartButton" disabled={isInCart}>
               {isInCart ? 'Already in Cart' : 'Add to Cart'}
             </Button>
             {isInCart && (
-              <Button type="button" className="clearCartButton" onClick={handleRemoveFromCart}>
+              <Button type="button" onClick={handleRemoveFromCart} className="clearCartButton">
                 Remove from Cart
               </Button>
             )}
@@ -148,6 +152,21 @@ export default function ProductPage() {
           }}
           title="Error"
           message={error || 'An unexpected error occurred'}
+          onConfirm={() => {
+            setIsErrorModalOpen(false);
+          }}
+        />
+      )}
+
+      {isSuccessModalOpen && (
+        <Modal
+          isOpen={isSuccessModalOpen}
+          onClose={() => {
+            setIsSuccessModalOpen(false);
+            setSuccessMessage(null);
+          }}
+          title="Success"
+          message={successMessage || ''}
         />
       )}
     </main>

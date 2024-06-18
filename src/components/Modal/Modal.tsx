@@ -22,9 +22,11 @@ function Modal({ isOpen, onClose, onConfirm, title, message }: ModalProps) {
           <Button className="modalButton" type="button" onClick={onClose}>
             Cancel
           </Button>
-          <Button className="modalButton" type="button" onClick={onConfirm}>
-            Confirm
-          </Button>
+          {onConfirm && (
+            <Button className="modalButton" type="button" onClick={onConfirm}>
+              Confirm
+            </Button>
+          )}
         </div>
       </div>
     </div>
