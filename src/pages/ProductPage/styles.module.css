@@ -152,4 +152,9 @@
     max-width: 300px;
     margin-top: 30px;
   }
+
+  .buttonBlock {
+    flex-direction: column;
+    align-items: center;
+  }
 }
