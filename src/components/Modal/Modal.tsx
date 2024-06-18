@@ -5,7 +5,7 @@ import styles from './styles.module.css';
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm?: () => void;
   title: string;
   message: string;
 }
