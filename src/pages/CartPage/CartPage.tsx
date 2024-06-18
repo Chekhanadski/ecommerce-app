@@ -77,12 +77,8 @@ export default function CartPage() {
     if (quantity < 1) return;
     const customerId = localStorage.getItem('customerId');
     try {
-      let updatedCart;
-      if (customerId) {
-        updatedCart = await updateLineItemQuantity(lineItemId, quantity);
-      } else {
-        updatedCart = await updateLineItemQuantity(lineItemId, quantity, true);
-      }
+      const updatedCart = await updateLineItemQuantity(lineItemId, quantity, !customerId);
+
       setCart(updatedCart);
       const itemCount = updatedCart ? updatedCart.lineItems.reduce((count, item) => count + item.quantity, 0) : 0;
       setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
