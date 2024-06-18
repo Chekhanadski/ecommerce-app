@@ -18,6 +18,7 @@ export default function ProductPage() {
   const { setStore } = useContext(StoreContext);
   const [isInCart, setIsInCart] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -54,7 +55,7 @@ export default function ProductPage() {
       setIsInCart(true);
     } catch (error) {
       setError('Failed to add product to cart');
-      setIsModalOpen(true);
+      setIsErrorModalOpen(true);
     }
   };
 
@@ -112,11 +113,11 @@ export default function ProductPage() {
       </div>
       {isModalOpen ? <ImageModal imageUrl={modalImage} onClose={closeModal} /> : null}
 
-      {isModalOpen && (
+      {isErrorModalOpen && (
         <Modal
-          isOpen={isModalOpen}
+          isOpen={isErrorModalOpen}
           onClose={() => {
-            setIsModalOpen(false);
+            setIsErrorModalOpen(false);
             setError(null);
           }}
           title="Error"

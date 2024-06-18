@@ -1,13 +1,23 @@
 .mainBlock {
   display: flex;
-  flex-direction: column; /*temp*/
   gap: 50px;
   margin: 0 135px 140px 135px;
 }
 
 .contentBlock {
-  padding: 100px 0 30px;
+  display: flex;
+  flex-direction: column;
+  /* margin-right: 40px;  */
+  padding: 40px 0 30px;
   border-bottom: 1px solid rgb(190, 190, 190);
+  max-width: 700px;
+}
+
+.imgBlock {
+  display: flex;
+  justify-content: center;
+  max-width: 400px;
+  margin-top: 40px;
 }
 
 .productImg {
@@ -129,5 +139,12 @@
   .productImg {
     width: 360px;
     height: 360px;
+  }
+
+  .imgBlock {
+    display: flex;
+    justify-content: center;
+    max-width: 300px;
+    margin-top: 30px;
   }
 }
