@@ -22,6 +22,7 @@ export default function CartPage() {
   const [promoCode, setPromoCode] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const { setStore } = useContext(StoreContext);
+  const [isPromoCodeValid, setIsPromoCodeValid] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -100,10 +101,11 @@ export default function CartPage() {
       const updatedCart = await applyDiscountCode(promoCode);
       setCart(updatedCart);
       setPromoCode('');
+      setIsPromoCodeValid(true);
       const itemCount = updatedCart ? updatedCart.lineItems.reduce((count, item) => count + item.quantity, 0) : 0;
       setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
     } catch (error) {
-      setError(`Failed to apply promo code: ${error}`);
+      setIsPromoCodeValid(false);
     }
   };
 
@@ -200,6 +202,14 @@ export default function CartPage() {
         )}
         <Button type="button">Order</Button>
       </div>
+      {!isPromoCodeValid && (
+        <Modal
+          isOpen={!isPromoCodeValid}
+          onClose={() => setIsPromoCodeValid(true)}
+          title="Invalid Promo Code"
+          message="The promo code you entered is invalid or does not exist."
+        />
+      )}
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
