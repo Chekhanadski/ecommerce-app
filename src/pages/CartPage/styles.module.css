@@ -1,3 +1,21 @@
+.totalPriceContainer {
+  margin-top: 20px;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+
+.totalPrice {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.totalPriceBeforeDiscount {
+  text-align: right;
+  margin-top: 10px;
+  text-decoration: line-through;
+  color: #888;
+}
+
 .cartComponent {
   display: grid;
   place-items: center;
