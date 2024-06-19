@@ -23,6 +23,7 @@ export default function CartPage() {
   const [error, setError] = useState<string | null>(null);
   const { setStore } = useContext(StoreContext);
   const [isPromoCodeValid, setIsPromoCodeValid] = useState<boolean>(true);
+  const [totalPriceBeforeDiscount, setTotalPriceBeforeDiscount] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -89,6 +90,9 @@ export default function CartPage() {
 
   const handleApplyPromoCode = async () => {
     try {
+      if (cart) {
+        setTotalPriceBeforeDiscount(cart.totalPrice.centAmount / 100);
+      }
       const updatedCart = await applyDiscountCode(promoCode);
       setCart(updatedCart);
       setPromoCode('');
@@ -188,9 +192,14 @@ export default function CartPage() {
           </div>
         </div>
 
-        {cart.totalPrice && (
-          <div className={styles.totalPrice}>{`Total Cart Price: ${cart.totalPrice.centAmount / 100}€`}</div>
-        )}
+        <div className={styles.totalPriceContainer}>
+          {totalPriceBeforeDiscount !== null && totalPriceBeforeDiscount !== cart.totalPrice.centAmount / 100 && (
+            <div className={styles.totalPriceBeforeDiscount}>{`Original Price: ${totalPriceBeforeDiscount}€`}</div>
+          )}
+          {cart.totalPrice && (
+            <div className={styles.totalPrice}>{`Discounted Price: ${cart.totalPrice.centAmount / 100}€`}</div>
+          )}
+        </div>
         <Button type="button">Order</Button>
       </div>
       {!isPromoCodeValid && (
