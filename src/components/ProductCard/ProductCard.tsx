@@ -1,10 +1,15 @@
 import { IoCartOutline } from 'react-icons/io5';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { ProductData } from '../../store/types/products';
 import styles from './styles.module.css';
+import { addToCart } from '../../api/cart';
+import { StoreContext } from '../../store/store';
 
 function ProductCard({ product, onImageClick }: { product: ProductData; onImageClick: (imageUrl: string) => void }) {
+  const [loading, setLoading] = useState(false);
+  const { setStore } = useContext(StoreContext);
+
   const { productId, productName, productDescription, productImage, fullPrice, discountedPrice } = useMemo(() => {
     if (!product.masterData || !product.masterData.current.masterVariant.prices[0]) {
       return {};
@@ -33,6 +38,27 @@ function ProductCard({ product, onImageClick }: { product: ProductData; onImageC
     };
   }, [product]);
 
+  const handleAddToCart = async () => {
+    if (!productId) {
+      throw new Error(`Product ID is undefined`);
+    }
+
+    setLoading(true);
+    try {
+      const updatedCart = await addToCart(productId);
+      const itemCount = updatedCart ? updatedCart.lineItems.reduce((count, item) => count + item.quantity, 0) : 0;
+      setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
+      if (!updatedCart) {
+        throw new Error('Failed to add product to cart');
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'An unknown error occurred';
+      setStore((prevStore) => ({ ...prevStore, errorMessage: `Error adding product to cart: ${message}` }));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={styles.productCard}>
       <img
@@ -41,18 +67,22 @@ function ProductCard({ product, onImageClick }: { product: ProductData; onImageC
         alt={productName}
         onClick={() => (productImage ? onImageClick(productImage) : undefined)}
       />
-      <Link className={styles.linkCard} to={`/catalog/${productId}`}>
+      <Link className={styles.linkCard} to={productId ? `/catalog/${productId}` : '#'}>
         <div className={styles.descriptionBlock}>
           <p>{productDescription}</p>
         </div>
       </Link>
-      <Link className={styles.linkCard} to="/cart">
-        <button type="button" className={styles.productCartButton}>
-          <IoCartOutline size={25} />
-          <span>Add To Cart</span>
-        </button>
-      </Link>
-      <Link className={styles.linkCard} to={`/catalog/${productId}`}>
+      <button type="button" className={styles.productCartButton} onClick={handleAddToCart} disabled={loading}>
+        {loading ? (
+          'Adding...'
+        ) : (
+          <>
+            <IoCartOutline size={25} />
+            <span>Add To Cart</span>
+          </>
+        )}
+      </button>
+      <Link className={styles.linkCard} to={productId ? `/catalog/${productId}` : '#'}>
         <div className={styles.namePriceBlock}>
           <h3>{productName}</h3>
           <div className={styles.priceBlock}>

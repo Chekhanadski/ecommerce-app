@@ -1,14 +1,51 @@
 import { FormData, LoginData } from '../store/types/auth';
 
+export const generateUUID = () =>
+  'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = Math.floor(Math.random() * 16);
+    const v = c === 'x' ? r : (r % 4) + 8;
+    return v.toString(16);
+  });
+
+export async function getAnonymousToken(anonymousId: string) {
+  try {
+    const response = await fetch(
+      'https://auth.europe-west1.gcp.commercetools.com/oauth/e-commerce-project/anonymous/token',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: `Basic ${btoa('n51dy-ZHRdmABYqQ_fYHn2Xs:UHjXti3DGgaidqcFvMKYZQbnm0dJRyBN')}`
+        },
+        body: `grant_type=client_credentials&scope=manage_project:e-commerce-project&anonymous_id=${anonymousId}`
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      throw new Error('Failed to get anonymous token');
+    }
+
+    return responseData.access_token;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`An error occurred while getting the anonymous token: ${error.message}`);
+    } else {
+      throw new Error('An unknown error occurred while getting the anonymous token');
+    }
+  }
+}
+
 export async function getAccessToken() {
   try {
     const authResponse = await fetch('https://auth.europe-west1.gcp.commercetools.com/oauth/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Basic ${btoa('dpVH1yIfwBBTMqhnk6jS8bsZ:Hco86YSJUnoZiE8bhDWlAoU4X48pUEe-')}`
+        Authorization: `Basic ${btoa('n51dy-ZHRdmABYqQ_fYHn2Xs:UHjXti3DGgaidqcFvMKYZQbnm0dJRyBN')}`
       },
-      body: `grant_type=client_credentials&scopes=[manage_associate_roles:e-commerce-project, view_api_clients:e-commerce-project, manage_customer_groups:e-commerce-project, manage_connectors:e-commerce-project, manage_sessions:e-commerce-project, manage_subscriptions:e-commerce-project, manage_types:e-commerce-project, manage_categories:e-commerce-project, manage_extensions:e-commerce-project, manage_api_clients:e-commerce-project, manage_shopping_lists:e-commerce-project, manage_standalone_prices:e-commerce-project, manage_project_settings:e-commerce-project, manage_discount_codes:e-commerce-project, manage_connectors_deployments:e-commerce-project, manage_tax_categories:e-commerce-project, manage_states:e-commerce-project, manage_import_containers:e-commerce-project, manage_business_units:e-commerce-project, manage_audit_log:e-commerce-project, manage_stores:e-commerce-project, manage_cart_discounts:e-commerce-project, manage_quote_requests:e-commerce-project, manage_attribute_groups:e-commerce-project, manage_order_edits:e-commerce-project, manage_staged_quotes:e-commerce-project, manage_project:e-commerce-project, manage_quotes:e-commerce-project, manage_checkout_payment_intents:e-commerce-project, manage_customers:e-commerce-project, view_audit_log:e-commerce-project, manage_shipping_methods:e-commerce-project]`
+      body: `grant_type=client_credentials&scopes=manage_project:e-commerce-project`
     });
 
     const authData = await authResponse.json();
@@ -44,7 +81,7 @@ export async function authenticateUser(data: LoginData, accessToken: string) {
   return responseData;
 }
 
-export async function loginUser(data: LoginData) {
+async function getCustomerToken(email: string, password: string) {
   const response = await fetch(
     'https://auth.europe-west1.gcp.commercetools.com/oauth/e-commerce-project/customers/token',
     {
@@ -53,26 +90,30 @@ export async function loginUser(data: LoginData) {
         Authorization: `Basic ${btoa('dpVH1yIfwBBTMqhnk6jS8bsZ:Hco86YSJUnoZiE8bhDWlAoU4X48pUEe-')}`,
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: `grant_type=password&username=${data.email}&password=${data.password}&scope=manage_customers:e-commerce-project`
+      body: `grant_type=password&username=${email}&password=${password}&scope=manage_project:e-commerce-project`
     }
   );
 
   const responseData = await response.json();
 
-  // save customer ID to local storage
-  if (responseData.scope) {
-    localStorage.setItem('customerId', responseData.scope.split(' ')[1].split(':')[1]);
-  }
-
-  // save access token to local storage
-  localStorage.setItem('accessToken', responseData.access_token);
-
   if (!response.ok) {
     throw new Error('Incorrect email or password');
   }
 
-  const loginData = await authenticateUser(data, responseData.access_token);
+  if (responseData.scope) {
+    localStorage.setItem('customerId', responseData.scope.split(' ')[1].split(':')[1]);
+  }
 
+  localStorage.setItem('accessToken', responseData.access_token);
+  localStorage.removeItem('anonymousId');
+  localStorage.removeItem('anonymousAccessToken');
+
+  return responseData.access_token;
+}
+
+export async function loginUser(data: LoginData) {
+  const accessToken = await getCustomerToken(data.email, data.password);
+  const loginData = await authenticateUser(data, accessToken);
   return loginData;
 }
 
@@ -111,19 +152,24 @@ export async function signUp(data: FormData) {
 
     const responseData = await response.json();
 
-    // save customer ID to local storage
+    localStorage.removeItem('anonymousId');
+    localStorage.removeItem('anonymousAccessToken');
+
     localStorage.setItem('customerId', responseData.customer.id);
 
-    if (responseData) {
-      const loginData = {
-        email: data.email,
-        password: data.password
-      };
-      const userLoginData = await authenticateUser(loginData, accessToken);
-      return userLoginData;
-    }
-    return false;
-  } catch (error) {
+    const newAccessToken = await getCustomerToken(data.email, data.password);
+
+    localStorage.setItem('accessToken', newAccessToken);
+
+    const loginData: LoginData = {
+      email: data.email,
+      password: data.password
+    };
+
+    const userLoginData = await authenticateUser(loginData, newAccessToken);
+
+    return userLoginData;
+  } catch (error: unknown) {
     if (error instanceof Error) {
       return `Error: ${error.message}`;
     }

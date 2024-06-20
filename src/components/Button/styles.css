@@ -1,4 +1,7 @@
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 16px;
   color: #ffffff;
   background-color: #db4444;
@@ -9,6 +12,10 @@
 
 .button:active {
   transform: scale(0.99);
+}
+
+.button:hover {
+  background-color: #c23737;
 }
 
 .button:disabled {
@@ -26,4 +33,32 @@
 
 .accountPageButton {
   width: 160px;
+}
+
+.removeButton {
+  width: 30px;
+  height: 30px;
+  background-color: #db4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.modalButton {
+  height: 30px;
+  width: 100px;
+  border-radius: 5px;
+}
+
+.clearCartButton {
+  height: 30px;
+  width: 200px;
+  border-radius: 5px;
+}
+
+.inputButton {
+  border-radius: 0 5px 5px 0;
+  height: 32px;
 }

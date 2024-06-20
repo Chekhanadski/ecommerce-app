@@ -1,7 +1,8 @@
 import { getAccessToken } from './auth';
 
-export async function getProducts() {
-  const url = `https://api.europe-west1.gcp.commercetools.com/e-commerce-project/products`;
+export async function getProducts(page: number = 1, limit: number = 4) {
+  const offset = (page - 1) * limit;
+  const url = `https://api.europe-west1.gcp.commercetools.com/e-commerce-project/products?limit=${limit}&offset=${offset}`;
   const accessToken = await getAccessToken();
 
   try {
