@@ -1,0 +1,163 @@
+.header {
+  display: flex;
+  height: 80px;
+  width: 100%;
+  border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+.headerWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 0 135px;
+}
+
+.nameShop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.exclusiveLogo {
+  height: 60px;
+}
+
+.headerNav {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.headerNavList {
+  display: flex;
+  gap: 48px;
+  margin: 0;
+  list-style-type: none;
+}
+
+.headerIcons {
+  display: flex;
+  justify-content: right;
+  gap: 25px;
+  width: 100px;
+}
+
+.navLink {
+  color: #000000;
+  text-decoration: none;
+}
+
+.navLink:hover {
+  text-decoration-line: underline;
+}
+
+.navLink:hover {
+  color: #db4444;
+}
+
+.navLink:active {
+  color: #000000;
+}
+
+.burger {
+  display: none;
+  margin-right: 10px;
+  font-size: 40px;
+  border: none;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 22px;
+  background: none;
+  border: none;
+  font-size: 40px;
+  cursor: pointer;
+  color: #ffffff;
+  display: none;
+}
+
+.nameShopLink {
+  text-decoration: none;
+  color: black;
+}
+
+.iconLink {
+  color: #000000;
+}
+
+.iconLink:hover {
+  color: #db4444;
+}
+
+.cartCount {
+  position: absolute;
+
+  background: red;
+  color: white;
+  border-radius: 50%;
+  padding: 0 5px;
+  font-size: 14px;
+}
+
+@media screen and (max-width: 970px) {
+  .headerWrapper {
+    margin: 0 20px;
+  }
+}
+
+@media screen and (max-width: 825px) {
+  .headerWrapper {
+    margin: 0 10px;
+    z-index: 1;
+  }
+
+  .burger {
+    display: block;
+  }
+
+  .headerNav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 120px;
+    font-size: 30px;
+    font-weight: 600;
+    display: none;
+  }
+
+  .headerNav.open {
+    display: flex;
+  }
+
+  .headerNavList {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+
+  .navLink {
+    color: #ffffff;
+  }
+
+  .headerIcons {
+    justify-content: right;
+  }
+
+  .closeButton {
+    display: block;
+  }
+}
