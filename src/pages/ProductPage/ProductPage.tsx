@@ -28,7 +28,7 @@ export default function ProductPage() {
         const data = await getProductData(productId);
         setProduct(data);
 
-        const cart = await (localStorage.getItem('customerId') ? getUserCart() : getAnonymousCart());
+        const cart = await (sessionStorage.getItem('customerId') ? getUserCart() : getAnonymousCart());
         if (cart && cart.lineItems.some((item) => item.productId === productId)) {
           setIsInCart(true);
         }
@@ -65,11 +65,11 @@ export default function ProductPage() {
     if (!product) return;
 
     try {
-      const cart = await (localStorage.getItem('customerId') ? getUserCart() : getAnonymousCart());
+      const cart = await (sessionStorage.getItem('customerId') ? getUserCart() : getAnonymousCart());
       const lineItem = cart?.lineItems.find((item) => item.productId === product.id);
 
       if (lineItem) {
-        const updatedCart = await removeLineItem(lineItem.id, !localStorage.getItem('customerId'));
+        const updatedCart = await removeLineItem(lineItem.id, !sessionStorage.getItem('customerId'));
         const itemCount = updatedCart.lineItems.reduce((count, item) => count + item.quantity, 0);
         setStore((prevStore) => ({ ...prevStore, cartItemCount: itemCount }));
         setIsInCart(false);

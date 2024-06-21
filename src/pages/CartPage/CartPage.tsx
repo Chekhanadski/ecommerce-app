@@ -27,7 +27,7 @@ export default function CartPage() {
 
   useEffect(() => {
     const fetchCart = async () => {
-      const customerId = localStorage.getItem('customerId');
+      const customerId = sessionStorage.getItem('customerId');
       try {
         let data;
         if (customerId) {
@@ -60,7 +60,7 @@ export default function CartPage() {
   };
 
   const handleRemoveFromCart = async (lineItemId: string) => {
-    const customerId = localStorage.getItem('customerId');
+    const customerId = sessionStorage.getItem('customerId');
     try {
       const updatedCart = await removeLineItem(lineItemId, !customerId);
       setCart(updatedCart);
@@ -76,7 +76,7 @@ export default function CartPage() {
 
   const handleQuantityChange = async (lineItemId: string, quantity: number) => {
     if (quantity < 1) return;
-    const customerId = localStorage.getItem('customerId');
+    const customerId = sessionStorage.getItem('customerId');
     try {
       const updatedCart = await updateLineItemQuantity(lineItemId, quantity, !customerId);
 

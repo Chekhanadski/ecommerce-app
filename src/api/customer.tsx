@@ -1,7 +1,7 @@
 import { getAccessToken } from './auth';
 
 export async function getCustomerData() {
-  const customerId = localStorage.getItem('customerId');
+  const customerId = sessionStorage.getItem('customerId');
 
   const url = `https://api.europe-west1.gcp.commercetools.com/e-commerce-project/customers/${customerId}`;
   const accessToken = await getAccessToken();
@@ -32,7 +32,7 @@ export async function getCustomerData() {
 
 export async function updateCustomerData(customerData: string) {
   // get customer ID from local storage
-  const customerId = localStorage.getItem('customerId');
+  const customerId = sessionStorage.getItem('customerId');
 
   const url = `https://api.europe-west1.gcp.commercetools.com/e-commerce-project/customers/${customerId}`;
   const accessToken = await getAccessToken();

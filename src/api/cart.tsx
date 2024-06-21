@@ -12,7 +12,7 @@ interface Cart {
 }
 
 export async function getAnonymousCart(): Promise<Cart | null> {
-  const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
+  const anonymousAccessToken = sessionStorage.getItem('anonymousAccessToken');
 
   const response = await fetch(`${BASE_URL}/me/carts`, {
     method: 'GET',
@@ -31,8 +31,8 @@ export async function getAnonymousCart(): Promise<Cart | null> {
 }
 
 export async function getUserCart(): Promise<Cart | null> {
-  const accessToken = localStorage.getItem('accessToken');
-  const customerId = localStorage.getItem('customerId');
+  const accessToken = sessionStorage.getItem('accessToken');
+  const customerId = sessionStorage.getItem('customerId');
 
   const response = await fetch(`${BASE_URL}/me/carts`, {
     method: 'GET',
@@ -51,8 +51,8 @@ export async function getUserCart(): Promise<Cart | null> {
 }
 
 export async function createCart(): Promise<Cart> {
-  const accessToken = localStorage.getItem('accessToken');
-  const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
+  const accessToken = sessionStorage.getItem('accessToken');
+  const anonymousAccessToken = sessionStorage.getItem('anonymousAccessToken');
 
   const response = await fetch(`${BASE_URL}/me/carts`, {
     method: 'POST',
@@ -74,9 +74,9 @@ export async function createCart(): Promise<Cart> {
 }
 
 export async function addToCart(productId: string): Promise<Cart> {
-  const accessToken = localStorage.getItem('accessToken');
-  const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
-  let cart = await (localStorage.getItem('customerId') ? getUserCart() : getAnonymousCart());
+  const accessToken = sessionStorage.getItem('accessToken');
+  const anonymousAccessToken = sessionStorage.getItem('anonymousAccessToken');
+  let cart = await (sessionStorage.getItem('customerId') ? getUserCart() : getAnonymousCart());
   let cartId;
   let version;
 
@@ -116,8 +116,8 @@ export async function addToCart(productId: string): Promise<Cart> {
 }
 
 export async function removeLineItem(lineItemId: string, isAnonymous = false): Promise<Cart> {
-  const accessToken = localStorage.getItem('accessToken');
-  const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
+  const accessToken = sessionStorage.getItem('accessToken');
+  const anonymousAccessToken = sessionStorage.getItem('anonymousAccessToken');
   const cart = await (isAnonymous ? getAnonymousCart() : getUserCart());
   let cartId;
   let version;
@@ -155,8 +155,8 @@ export async function removeLineItem(lineItemId: string, isAnonymous = false): P
 }
 
 export async function clearCart(): Promise<void> {
-  const accessToken = localStorage.getItem('accessToken');
-  const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
+  const accessToken = sessionStorage.getItem('accessToken');
+  const anonymousAccessToken = sessionStorage.getItem('anonymousAccessToken');
   const cart = await (accessToken ? getUserCart() : getAnonymousCart());
 
   if (!cart) {
@@ -188,8 +188,8 @@ export async function clearCart(): Promise<void> {
 }
 
 export async function updateLineItemQuantity(lineItemId: string, quantity: number, isAnonymous = false): Promise<Cart> {
-  const accessToken = localStorage.getItem('accessToken');
-  const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
+  const accessToken = sessionStorage.getItem('accessToken');
+  const anonymousAccessToken = sessionStorage.getItem('anonymousAccessToken');
   const cart = await (isAnonymous ? getAnonymousCart() : getUserCart());
   let cartId;
   let version;
@@ -228,8 +228,8 @@ export async function updateLineItemQuantity(lineItemId: string, quantity: numbe
 }
 
 export async function applyDiscountCode(code: string): Promise<Cart> {
-  const accessToken = localStorage.getItem('accessToken');
-  const anonymousAccessToken = localStorage.getItem('anonymousAccessToken');
+  const accessToken = sessionStorage.getItem('accessToken');
+  const anonymousAccessToken = sessionStorage.getItem('anonymousAccessToken');
   const cart = await (accessToken ? getUserCart() : getAnonymousCart());
   let cartId;
   let version;

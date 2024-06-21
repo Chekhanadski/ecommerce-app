@@ -1,18 +1,18 @@
 import { getAnonymousToken, generateUUID } from '../api/auth';
 
 const logout = async (setStore, setIsOpen) => {
-  localStorage.removeItem('customerId');
-  localStorage.removeItem('accessToken');
+  sessionStorage.removeItem('customerId');
+  sessionStorage.removeItem('accessToken');
 
-  let anonymousId = localStorage.getItem('anonymousId');
+  let anonymousId = sessionStorage.getItem('anonymousId');
   if (!anonymousId) {
     anonymousId = generateUUID();
-    localStorage.setItem('anonymousId', anonymousId);
+    sessionStorage.setItem('anonymousId', anonymousId);
   }
 
   try {
     const anonymousAccessToken = await getAnonymousToken(anonymousId);
-    localStorage.setItem('anonymousAccessToken', anonymousAccessToken);
+    sessionStorage.setItem('anonymousAccessToken', anonymousAccessToken);
   } catch (error) {
     throw Error(`Error getting anonymous token: ${error.message}`);
   }
