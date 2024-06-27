@@ -12,7 +12,6 @@ export default function AddressPage() {
   const [addresses, setAddresses] = useState<CustomerAddress[]>([]);
   const [isDisabled, setIsDisabled] = useState(true);
 
-  // Fetch customer data on component mount
   useEffect(() => {
     getCustomerData().then((data) => {
       setCustomerData(data);
@@ -22,7 +21,6 @@ export default function AddressPage() {
 
   const notifyChange = () => toast('Data Changed!');
 
-  // Handle change for input fields
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>,
     index: number
@@ -114,7 +112,8 @@ export default function AddressPage() {
                       name="country"
                       value={addresses[0]?.country || ''}
                       onChange={(e) => handleInputChange(e, 0)}
-                      disabled={isDisabled}>
+                      disabled={isDisabled}
+                    >
                       <option value="" disabled hidden>
                         Select Country
                       </option>
@@ -187,7 +186,8 @@ export default function AddressPage() {
                       name="country"
                       value={addresses[1]?.country || ''}
                       onChange={(e) => handleInputChange(e, 1)}
-                      disabled={isDisabled}>
+                      disabled={isDisabled}
+                    >
                       <option value="" disabled hidden>
                         Select Country
                       </option>
@@ -212,7 +212,8 @@ export default function AddressPage() {
                   if (!isDisabled) {
                     notifyChange();
                   }
-                }}>
+                }}
+              >
                 {isDisabled ? 'Change' : 'Save Changes'}
               </Button>
             </div>

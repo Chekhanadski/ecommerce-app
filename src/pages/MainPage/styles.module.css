@@ -1,7 +1,8 @@
 .mainSection {
   display: flex;
-  justify-content: space-between;
-  margin: 0 135px 140px;
+  /* justify-content: space-between; */
+  margin: 0 135px 135px;
+  min-height: 52vh;
 }
 
 .wrapperCategories {
@@ -14,7 +15,6 @@
   flex-direction: column;
   justify-content: center;
   gap: 15px;
-
   margin: 40px 16px 0;
 }
 
@@ -23,9 +23,35 @@
   list-style-type: none;
 }
 
+.bannerAndPromoBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bannerAndPromoBlock li {
+  list-style-type: none;
+}
+
+.bannerAndPromoBlock ul {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.promoCodesSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 50px;
+  padding: 80px 30px;
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 200px;
+}
+
 .placeholderBanner {
   display: flex;
-  flex: 2;
   justify-content: space-evenly;
   align-items: center;
   gap: 20px;
@@ -64,6 +90,24 @@
   min-width: 360px;
 }
 
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35vh;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #b1b5b8;
+  border-bottom-color: #4e5a64;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
 @media screen and (max-width: 1277px) {
   .mainSection {
     display: flex;
@@ -82,6 +126,10 @@
 
   .wrapperCategories {
     border-right: none;
+  }
+
+  .promoCodesSection {
+    margin: 20px 0;
   }
 
   .categories {
@@ -111,7 +159,7 @@
   }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 420px) {
   .textBanner {
     flex-direction: column;
   }

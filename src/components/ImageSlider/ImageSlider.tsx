@@ -19,7 +19,8 @@ function ImageSlider({ images, onImageClick }: ProductImageSliderProps) {
       spaceBetween={1}
       slidesPerView="auto"
       navigation={images.length > 1}
-      pagination={images.length > 1 ? { clickable: true } : false}>
+      pagination={images.length > 1 ? { clickable: true } : false}
+    >
       {images.map((image, index) => (
         <SwiperSlide key={image}>
           <img src={image} alt={`This is ${index + 1}`} className={styles.image} onClick={() => onImageClick(image)} />

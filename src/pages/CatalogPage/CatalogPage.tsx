@@ -10,17 +10,23 @@ import styles from './styles.module.css';
 function CatalogPage() {
   const [products, setProducts] = useState<ProductData[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [total, setTotal] = useState<number>(0);
   const { setStore } = useContext(StoreContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const data = await getProducts();
+      const data = await getProducts(currentPage, 4);
       setProducts(data.results);
+      setTotal(Math.ceil(data.total / 4));
       setStore((prevStore) => ({ ...prevStore, products: data.results }));
     };
 
     fetchProducts();
-  }, [setStore]);
+  }, [setStore, currentPage]);
+
+  const goToNextPage = () => setCurrentPage((page) => Math.min(page + 1, total));
+  const goToPreviousPage = () => setCurrentPage((page) => Math.max(page - 1, 1));
 
   const openModal = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -48,6 +54,17 @@ function CatalogPage() {
             <span className={styles.spinner} />
           </div>
         )}
+      </div>
+      <div className={styles.paginationControls}>
+        <button type="button" className={styles.pageButton} onClick={goToPreviousPage} disabled={currentPage === 1}>
+          Previous
+        </button>
+        <span>
+          Page {currentPage} of {total}
+        </span>
+        <button type="button" className={styles.pageButton} onClick={goToNextPage} disabled={currentPage === total}>
+          Next
+        </button>
       </div>
       {selectedImage && <ImageModal imageUrl={selectedImage} onClose={closeModal} />}
     </main>

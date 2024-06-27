@@ -1,8 +1,7 @@
 import { getAccessToken } from './auth';
 
 export async function getCustomerData() {
-  // get customer ID from local storage
-  const customerId = sessionStorage.getItem('customerId');
+  const customerId = localStorage.getItem('customerId');
 
   const url = `https://api.europe-west1.gcp.commercetools.com/e-commerce-project/customers/${customerId}`;
   const accessToken = await getAccessToken();
