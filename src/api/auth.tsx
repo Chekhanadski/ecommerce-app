@@ -105,8 +105,8 @@ async function getCustomerToken(email: string, password: string) {
   }
 
   sessionStorage.setItem('accessToken', responseData.access_token);
-  localStorage.removeItem('anonymousId');
-  localStorage.removeItem('anonymousAccessToken');
+  sessionStorage.removeItem('anonymousId');
+  sessionStorage.removeItem('anonymousAccessToken');
 
   return responseData.access_token;
 }
@@ -152,14 +152,14 @@ export async function signUp(data: FormData) {
 
     const responseData = await response.json();
 
-    localStorage.removeItem('anonymousId');
-    localStorage.removeItem('anonymousAccessToken');
+    sessionStorage.removeItem('anonymousId');
+    sessionStorage.removeItem('anonymousAccessToken');
 
-    localStorage.setItem('customerId', responseData.customer.id);
+    sessionStorage.setItem('customerId', responseData.customer.id);
 
     const newAccessToken = await getCustomerToken(data.email, data.password);
 
-    localStorage.setItem('accessToken', newAccessToken);
+    sessionStorage.setItem('accessToken', newAccessToken);
 
     const loginData: LoginData = {
       email: data.email,

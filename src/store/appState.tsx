@@ -5,18 +5,18 @@ const state = proxy({
   isAuthorized: false,
   async logout() {
     this.isAuthorized = false;
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('customerId');
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('customerId');
 
-    let anonymousId = localStorage.getItem('anonymousId');
+    let anonymousId = sessionStorage.getItem('anonymousId');
     if (!anonymousId) {
       anonymousId = generateUUID();
-      localStorage.setItem('anonymousId', anonymousId);
+      sessionStorage.setItem('anonymousId', anonymousId);
     }
 
     try {
       const newAnonymousAccessToken = await getAnonymousToken(anonymousId);
-      localStorage.setItem('anonymousAccessToken', newAnonymousAccessToken);
+      sessionStorage.setItem('anonymousAccessToken', newAnonymousAccessToken);
     } catch (error) {
       if (error instanceof Error) {
         throw Error(`Error getting anonymous token: ${error.message}`);

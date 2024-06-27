@@ -12,18 +12,18 @@ function App(): React.ReactElement {
 
   useEffect(() => {
     const initializeCartItemCount = async () => {
-      const customerId = localStorage.getItem('customerId');
+      const customerId = sessionStorage.getItem('customerId');
       let data;
       try {
         if (customerId) {
           data = await getUserCart();
           setStore((prevStore) => ({ ...prevStore, isAuthorized: true }));
         } else {
-          const anonymousId = localStorage.getItem('anonymousId') || generateUUID();
-          localStorage.setItem('anonymousId', anonymousId);
-          if (!localStorage.getItem('anonymousAccessToken')) {
+          const anonymousId = sessionStorage.getItem('anonymousId') || generateUUID();
+          sessionStorage.setItem('anonymousId', anonymousId);
+          if (!sessionStorage.getItem('anonymousAccessToken')) {
             const anonymousAccessToken = await getAnonymousToken(anonymousId);
-            localStorage.setItem('anonymousAccessToken', anonymousAccessToken);
+            sessionStorage.setItem('anonymousAccessToken', anonymousAccessToken);
           }
           data = await getAnonymousCart();
           setStore((prevStore) => ({ ...prevStore, isAuthorized: false }));
