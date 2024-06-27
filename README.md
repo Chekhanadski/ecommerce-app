@@ -2,11 +2,11 @@
 
 # Welcome to the 'Exclusive' online shopping platform
 
-# Deploy "Exclusive" online shopping platform
+## Deploy "Exclusive" online shopping platform
 
 You can view the deployment of our online shopping platform here: [Exclusive](https://shop-exclusive.netlify.app/).
 
-# Description
+## Description
 
   
 
@@ -46,7 +46,7 @@ Our application is powered by **CommerceTools** 🌐, a leading provider of comm
 
   
 
-## Team
+### Team
 
 **Name team:** s4mm4ael
 
@@ -60,7 +60,7 @@ Our application is powered by **CommerceTools** 🌐, a leading provider of comm
 
   
 
-## Technology Stack
+### Technology Stack
 
 **General:**
 
@@ -106,7 +106,7 @@ Our application is powered by **CommerceTools** 🌐, a leading provider of comm
 
   
 
-# Available Scripts in the Project
+## Available Scripts in the Project
 
   
 
@@ -114,7 +114,7 @@ This project includes several scripts for development, building, testing, and co
 
   
 
-## `start`
+### `start`
 
   
 
@@ -126,7 +126,7 @@ This script starts the development server.
 
   
 
-## `build`
+### `build`
 
   
 
@@ -138,7 +138,7 @@ This script creates a production-ready build of the application.
 
   
 
-## `test`
+### `test`
 
   
 
@@ -150,7 +150,7 @@ This script runs the test suite using Jest. Use to run all tests in the project 
 
   
 
-## `validate`
+### `validate`
 
   
 
@@ -162,7 +162,7 @@ This script validates the branch naming to local convention.
 
   
 
-## `lint`
+### `lint`
 
   
 
@@ -174,7 +174,7 @@ This script runs ESLint on the codebase. Use to catch and fix syntax errors, fin
 
   
 
-## `format`
+### `format`
 
   
 
@@ -191,7 +191,7 @@ Remember to replace `npm` with `yarn` if you are using yarn as your package mana
   
   
 
-# Setting Up and Running the Project Locally
+## Setting Up and Running the Project Locally
 
   
 
@@ -199,7 +199,7 @@ Here are the steps to get you started:
 
   
 
-## Prerequisites
+### Prerequisites
 
   
 
@@ -213,7 +213,7 @@ Before you begin, ensure you have met the following requirements:
 
   
 
-## Setting Up the Project
+### Setting Up the Project
 
   
 
