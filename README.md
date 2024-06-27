@@ -1,6 +1,6 @@
 
 
-# Exclusive shop
+# Exclusive platform
 
   
 
@@ -8,7 +8,7 @@
 
   
 
-Welcome to our **Exclusive shop platform**! This digital marketplace is designed to mirror the experience of shopping in the physical world 🏪. It’s a comprehensive portal for online shopping that offers users an interactive and seamless journey from product discovery to checkout, thereby enhancing user engagement and boosting their confidence in making purchases 🚀.
+Welcome to our **Exclusive platform**! This digital marketplace is designed to mirror the experience of shopping in the physical world 🏪. It’s a comprehensive portal for online shopping that offers users an interactive and seamless journey from product discovery to checkout, thereby enhancing user engagement and boosting their confidence in making purchases 🚀.
 
   
 
