@@ -2,7 +2,7 @@
 
 # Welcome to the 'Exclusive' online shopping platform
 
-## Deploy our platform
+## View the Project
 
 You can view the deployment of our online shopping platform here: [Exclusive](https://shop-exclusive.netlify.app/).
 
