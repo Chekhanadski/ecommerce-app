@@ -61,11 +61,11 @@ export async function loginUser(data: LoginData) {
 
   // save customer ID to local storage
   if (responseData.scope) {
-    localStorage.setItem('customerId', responseData.scope.split(' ')[1].split(':')[1]);
+    sessionStorage.setItem('customerId', responseData.scope.split(' ')[1].split(':')[1]);
   }
 
   // save access token to local storage
-  localStorage.setItem('accessToken', responseData.access_token);
+  sessionStorage.setItem('accessToken', responseData.access_token);
 
   if (!response.ok) {
     throw new Error('Incorrect email or password');
@@ -112,7 +112,7 @@ export async function signUp(data: FormData) {
     const responseData = await response.json();
 
     // save customer ID to local storage
-    localStorage.setItem('customerId', responseData.customer.id);
+    sessionStorage.setItem('customerId', responseData.customer.id);
 
     if (responseData) {
       const loginData = {

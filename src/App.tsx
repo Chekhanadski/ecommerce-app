@@ -10,7 +10,7 @@ function App(): React.ReactElement {
   const value = useMemo(() => ({ store, setStore }), [store, setStore]);
 
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
+    const token = sessionStorage.getItem('accessToken');
     setStore((prevStore) => ({ ...prevStore, isAuthorized: !!token?.length }));
   }, []);
 
