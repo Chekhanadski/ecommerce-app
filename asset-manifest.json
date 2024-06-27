@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/ecommerce-app/static/css/main.fa220d1e.css",
+    "main.js": "/ecommerce-app/static/js/main.af8bfd78.js",
+    "static/js/453.ce58f9bb.chunk.js": "/ecommerce-app/static/js/453.ce58f9bb.chunk.js",
+    "static/media/Inter-VariableFont_slnt,wght.ttf": "/ecommerce-app/static/media/Inter-VariableFont_slnt,wght.853e01975d2783d9fa29.ttf",
+    "static/media/empty-cart.png": "/ecommerce-app/static/media/empty-cart.a77e8cf4ce223affb98a.png",
+    "index.html": "/ecommerce-app/index.html",
+    "main.fa220d1e.css.map": "/ecommerce-app/static/css/main.fa220d1e.css.map",
+    "main.af8bfd78.js.map": "/ecommerce-app/static/js/main.af8bfd78.js.map",
+    "453.ce58f9bb.chunk.js.map": "/ecommerce-app/static/js/453.ce58f9bb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fa220d1e.css",
+    "static/js/main.af8bfd78.js"
+  ]
+}
