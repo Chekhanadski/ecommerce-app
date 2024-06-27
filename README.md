@@ -1,8 +1,10 @@
 
 
-# Exclusive platform
+# Welcome to the 'Exclusive' online shopping platform
 
-  
+# Deploy "Exclusive" online shopping platform
+
+You can view the deployment of our online shopping platform here: [Exclusive](https://shop-exclusive.netlify.app/).
 
 # Description
 
