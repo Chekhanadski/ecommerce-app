@@ -1,6 +1,6 @@
 
 
-# Welcome to the 'Exclusive' online shopping platform
+# Welcome to Exclusive' online shopping platform
 
 ## View the Project
 
