@@ -6,6 +6,8 @@
 
 You can view the deployment of our online shopping platform here: [Exclusive](https://shop-exclusive.netlify.app/).
 
+**Important**: Please note that this project uses **commercetools**. After **commercetools** trial period ends, the deployment of this application will no longer be valid and will produce many errors related to data retrieval.
+
 ## Description
 
   
