@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('/src/assets/fonts/Inter/Inter-VariableFont_slnt\,wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.sale-offer {
+  height: 48px;
+  width: 100%;
+  background: #000000;
+  margin-bottom: 12px;
+}
+
+@media screen and (max-width: 767px) {
+  .sale-offer {
+    display: none;
+  }
+}

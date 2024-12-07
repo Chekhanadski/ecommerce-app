@@ -1,0 +1,166 @@
+.mainSection {
+  display: flex;
+  /* justify-content: space-between; */
+  margin: 0 135px 135px;
+  min-height: 52vh;
+}
+
+.wrapperCategories {
+  border-right: 1px solid rgb(190, 190, 190);
+}
+
+.categories {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 15px;
+  margin: 40px 16px 0;
+}
+
+.categoryLink {
+  color: black;
+  list-style-type: none;
+}
+
+.bannerAndPromoBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bannerAndPromoBlock li {
+  list-style-type: none;
+}
+
+.bannerAndPromoBlock ul {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.promoCodesSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 50px;
+  padding: 80px 30px;
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 200px;
+}
+
+.placeholderBanner {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
+  background-color: black;
+  border-radius: 4px;
+  margin: 40px 0 0 45px;
+  padding: 20px;
+}
+
+.placeholderBanner h2 {
+  flex: 1;
+  text-align: center;
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 30px;
+  letter-spacing: 0.03em;
+  text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+  margin: 0;
+  padding: 0;
+}
+
+.placeholderBanner img {
+  flex: 1;
+  max-width: 40%;
+}
+
+.textBanner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.imgIphone {
+  min-width: 360px;
+}
+
+.spinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35vh;
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #b1b5b8;
+  border-bottom-color: #4e5a64;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@media screen and (max-width: 1277px) {
+  .mainSection {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 30px 140px;
+  }
+}
+
+@media screen and (max-width: 1070px) {
+  .mainSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 0 140px;
+  }
+
+  .wrapperCategories {
+    border-right: none;
+  }
+
+  .promoCodesSection {
+    margin: 20px 0;
+  }
+
+  .categories {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    gap: 30px;
+    margin: 40px 16px 0;
+  }
+
+  .placeholderBanner {
+    display: flex;
+    flex: 2;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    background-color: black;
+    border-radius: 4px;
+    margin-left: 0;
+    padding: 20px;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .placeholderBanner {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .textBanner {
+    flex-direction: column;
+  }
+}

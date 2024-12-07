@@ -1,0 +1,140 @@
+.mainSection {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 135px 140px;
+  padding: 20px;
+}
+
+.rsschoolLogo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 70px;
+  transition: transform 0.3s ease;
+}
+
+.rsschoolLogo:active {
+  transform: scale(0.99);
+}
+
+.h1 {
+  text-align: center;
+  font-size: 2em;
+}
+
+.intro {
+  text-align: left;
+  margin-bottom: 80px;
+  font-size: 19px;
+}
+
+.teamMember {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.teamMemberPhoto {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.teamMemberDetails {
+  flex: 1;
+}
+
+.teamMemberDetails ul {
+  list-style-type: none;
+}
+
+.collaborationSuccess {
+  margin-top: 40px;
+}
+
+.collaborationSuccess h3 {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.collaborationSuccess p {
+  text-align: justify;
+  font-size: 20px;
+}
+
+.gitHubLink {
+  position: relative;
+  text-decoration: none;
+  font-weight: 600;
+  color: #000000;
+  display: inline-block;
+}
+
+.gitHubLink:hover {
+  color: red;
+}
+
+.gitHubLink::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #000000;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+}
+
+li {
+  padding: 5px;
+}
+
+@media (max-width: 1000px) {
+  .mainSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+}
+
+@media (max-width: 500px) {
+  .teamMember {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .teamMemberPhoto {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .teamMemberDetails {
+    text-align: left;
+  }
+
+  .h1 {
+    font-size: 1.5em;
+  }
+
+  .intro {
+    font-size: 1em;
+    margin-bottom: 10px;
+  }
+
+  .collaborationSuccess h3 {
+    font-size: 1.2em;
+  }
+
+  .collaborationSuccess p {
+    font-size: 0.9em;
+  }
+}

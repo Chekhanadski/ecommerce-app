@@ -1,0 +1,112 @@
+.loginForm {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  font-size: 16px;
+}
+
+.loginForm input,
+.loginForm select {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgb(190, 190, 190);
+}
+
+.loginForm input:focus,
+.loginForm select:focus {
+  outline: none;
+}
+
+.loginForm .error {
+  position: absolute;
+  left: 0;
+  height: 20px;
+  color: red;
+  width: 100%;
+}
+
+.error {
+  font-size: 10px;
+  color: red;
+}
+
+select:not(:focus) {
+  color: #808080;
+}
+
+.logInContainer {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.logInLink {
+  position: relative;
+  text-decoration: none;
+  font-weight: 600;
+  color: #000000;
+}
+
+.logInLink::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: #000000;
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+}
+
+.messageContainer {
+  position: relative;
+}
+
+@keyframes grow {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.serverError {
+  position: absolute;
+  top: -25px;
+  display: flex;
+  justify-content: center;
+  color: #ff0000;
+  font-size: 13px;
+  text-align: center;
+  width: 100%;
+  animation: grow 0.5s ease-out;
+}
+
+.success {
+  position: absolute;
+  top: -25px;
+  display: flex;
+  justify-content: center;
+  color: #00a600;
+  font-size: 15px;
+  text-align: center;
+  width: 100%;
+  animation: grow 0.5s ease-out;
+}
+
+.h1 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.inputPasswordContainer {
+  display: flex;
+}
+
+.eyeIcon {
+  background-color: #ffffff;
+  border: none;
+  border-bottom: 1px solid rgb(190, 190, 190);
+}
